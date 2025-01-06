@@ -542,58 +542,6 @@
 								</li>
 							</ul>
 						</li>
-						<li>
-							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon icon-color-6"> <i class="bx bx-donate-blood"></i>
-								</div>
-								<div class="menu-title">Pages</div>
-							</a>
-							<ul>
-								<li> <a href="user-profile.html"><i class="bx bx-right-arrow-alt"></i>User Profile</a>
-								</li>
-								<li> <a href="timeline.html"><i class="bx bx-right-arrow-alt"></i>Timeline</a>
-								</li>
-								<li> <a href="pricing-table.html"><i class="bx bx-right-arrow-alt"></i>Pricing</a>
-								</li>
-								<li> <a class="has-arrow" href="javascript:;"><i class="bx bx-right-arrow-alt"></i>Errors</a>
-									<ul>
-										<li> <a href="errors-404-error.html"><i class="bx bx-right-arrow-alt"></i>404 Error</a>
-										</li>
-										<li> <a href="errors-500-error.html"><i class="bx bx-right-arrow-alt"></i>500 Error</a>
-										</li>
-										<li> <a href="errors-coming-soon.html"><i class="bx bx-right-arrow-alt"></i>Coming Soon</a>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon"><i class='bx bx-message-square-edit'></i>
-								</div>
-								<div class="menu-title">Forms</div>
-							</a>
-							<ul>
-								<li> <a href="form-elements.html"><i class="bx bx-right-arrow-alt"></i>Form Elements</a>
-								</li>
-								<li> <a href="form-input-group.html"><i class="bx bx-right-arrow-alt"></i>Input Groups</a>
-								</li>
-								<li> <a href="form-layouts.html"><i class="bx bx-right-arrow-alt"></i>Forms Layouts</a>
-								</li>
-								<li> <a href="form-validations.html"><i class="bx bx-right-arrow-alt"></i>Form Validation</a>
-								</li>
-								<li> <a href="form-wizard.html"><i class="bx bx-right-arrow-alt"></i>Form Wizard</a>
-								</li>
-								<li> <a href="form-text-editor.html"><i class="bx bx-right-arrow-alt"></i>Text Editor</a>
-								</li>
-								<li> <a href="form-file-upload.html"><i class="bx bx-right-arrow-alt"></i>File Upload</a>
-								</li>
-								<li> <a href="form-date-time-pickes.html"><i class="bx bx-right-arrow-alt"></i>Date Pickers</a>
-								</li>
-								<li> <a href="form-select2.html"><i class="bx bx-right-arrow-alt"></i>Select2</a>
-								</li>
-							</ul>
-						</li>
 					</ul>
 				</nav>
 			</div>
