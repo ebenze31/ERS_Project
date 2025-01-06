@@ -2238,7 +2238,7 @@ textarea.form-control-lg {
 	border-color: #8833ff;
 	outline: 0;
 	box-shadow: 0 0 0 .25rem rgb(136 51 255 / 25%)
-
+	
 }
 
 .form-select[multiple],
@@ -3407,47 +3407,6 @@ fieldset:disabled .btn {
 	background-color: transparent
 }
 
-.btn-outline-pink {
-	color: #fa93f0;
-	border-color: #fa93f0
-}
-
-.btn-outline-pink:hover {
-	color: #fff;
-	background-color: #fa93f0;
-	border-color: #fa93f0
-}
-
-.btn-check:focus+.btn-outline-pink,
-.btn-outline-pink:focus {
-	box-shadow: 0 0 0 .25rem rgba(204, 41, 174, 0.5)
-}
-
-.btn-check:active+.btn-outline-pink,
-.btn-check:checked+.btn-outline-pink,
-.btn-outline-pink.active,
-.btn-outline-pink.dropdown-toggle.show,
-.btn-outline-pink:active {
-	color: #fff;
-	background-color: #fa93f0;
-	border-color: #fa93f0
-}
-
-.btn-check:active+.btn-outline-pink:focus,
-.btn-check:checked+.btn-outline-pink:focus,
-.btn-outline-pink.active:focus,
-.btn-outline-pink.dropdown-toggle.show:focus,
-.btn-outline-pink:active:focus {
-	box-shadow: 0 0 0 .25rem rgba(204, 41, 169, 0.5)
-}
-
-.btn-outline-pink.disabled,
-.btn-outline-pink:disabled {
-	color: #fa93f0;
-	background-color: transparent
-}
-
-
 .btn-outline-warning {
 	color: #ffc107;
 	border-color: #ffc107
@@ -3485,47 +3444,6 @@ fieldset:disabled .btn {
 .btn-outline-warning.disabled,
 .btn-outline-warning:disabled {
 	color: #ffc107;
-	background-color: transparent
-}
-
-
-.btn-outline-purple {
-	color: #7b2bec;
-	border-color: #7b2bec
-}
-
-.btn-outline-purple:hover {
-	color: #fff !important;
-	background-color: #7b2bec;
-	border-color: #7b2bec
-}
-
-.btn-check:focus+.btn-outline-purple,
-.btn-outline-purple:focus {
-	box-shadow: 0 0 0 .25rem rgba(204, 41, 174, 0.5)
-}
-
-.btn-check:active+.btn-outline-purple,
-.btn-check:checked+.btn-outline-purple,
-.btn-outline-purple.active,
-.btn-outline-purple.dropdown-toggle.show,
-.btn-outline-purple:active {
-	color: #fff  !important;
-	background-color: #7b2bec;
-	border-color: #7b2bec
-}
-
-.btn-check:active+.btn-outline-purple:focus,
-.btn-check:checked+.btn-outline-purple:focus,
-.btn-outline-purple.active:focus,
-.btn-outline-purple.dropdown-toggle.show:focus,
-.btn-outline-purple:active:focus {
-	box-shadow: 0 0 0 .25rem rgba(106, 41, 204, 0.5)
-}
-
-.btn-outline-purple.disabled,
-.btn-outline-purple:disabled {
-	color: #7b2bec;
 	background-color: transparent
 }
 

@@ -122,20 +122,15 @@ function img_default_noti() {
 	});
 }
 
-function img_info_noti(img , msg) {
-
-	let text_msg = '<h4 class="text-dark"><b>' + msg + '</b></h4>' ;
-	// console.log(text_msg);
-
+function img_info_noti() {
 	Lobibox.notify('info', {
 		pauseDelayOnHover: true,
 		continueDelayOnInactiveTab: false,
 		icon: 'bx bx-info-circle',
 		position: 'top right',
-		img: img, //path to image
-		msg: text_msg
+		img: 'assets/plugins/notifications/img/2.jpg', //path to image
+		msg: 'Lorem ipsum dolor sit amet hears farmer indemnity inherent.'
 	});
-
 }
 
 function img_warning_noti() {
