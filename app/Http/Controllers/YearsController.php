@@ -50,11 +50,27 @@ class YearsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // การตรวจสอบข้อมูลที่ผู้ใช้ส่งมา
+        $request->validate([
+            'round' => 'required|integer|min:1',
+            'year' => 'required|integer|min:' . date('Y'), // ตรวจสอบว่า year เป็นปีปัจจุบันหรือมากกว่า
+        ], [
+            'round.required' => 'กรุณากรอกข้อมูลรอบการเลือกตั้ง',
+            'round.integer' => 'รอบการเลือกตั้งต้องเป็นตัวเลข',
+            'round.min' => 'รอบการเลือกตั้งต้องมีค่ามากกว่า 0',
+
+            'year.required' => 'กรุณากรอกปีการเลือกตั้ง',
+            'year.integer' => 'ปีการเลือกตั้งต้องเป็นตัวเลข',
+            'year.min' => 'ปีการเลือกตั้งต้องเป็นปีปัจจุบันหรืออนาคต',
+        ]);
+
+        // รับข้อมูลที่ผ่านการตรวจสอบแล้ว
         $requestData = $request->all();
-        
+
+        // บันทึกข้อมูลลงฐานข้อมูล
         Year::create($requestData);
 
+        // Redirect กลับไปยังหน้า years พร้อมข้อความแจ้งเตือน
         return redirect('years')->with('flash_message', 'Year added!');
     }
 
@@ -96,9 +112,9 @@ class YearsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $year = Year::findOrFail($id);
         $year->update($requestData);
 

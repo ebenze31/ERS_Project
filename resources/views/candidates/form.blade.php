@@ -1,15 +1,15 @@
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-    <label for="name" class="control-label">{{ 'Name' }}</label>
+    <label for="name" class="control-label">{{ 'ชื่อ-สกุล' }}</label>
     <input class="form-control" name="name" type="text" id="name" value="{{ isset($candidate->name) ? $candidate->name : ''}}" >
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('img') ? 'has-error' : ''}}">
-    <label for="img" class="control-label">{{ 'Img' }}</label>
+    <label for="img" class="control-label">{{ 'รูปผู้สมัคร' }}</label>
     <input class="form-control" name="img" type="file" id="img" value="{{ isset($candidate->img) ? $candidate->img : ''}}" >
     {!! $errors->first('img', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('number') ? 'has-error' : ''}}">
-    <label for="number" class="control-label">{{ 'Number' }}</label>
+    <label for="number" class="control-label">{{ 'เบอร์ผู้สมัคร' }}</label>
     <input class="form-control" name="number" type="text" id="number" value="{{ isset($candidate->number) ? $candidate->number : ''}}" >
     {!! $errors->first('number', '<p class="help-block">:message</p>') !!}
 </div>
@@ -50,6 +50,6 @@
 </div>
 
 
-<div class="form-group">
+<div class="form-group mt-4 " >
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>

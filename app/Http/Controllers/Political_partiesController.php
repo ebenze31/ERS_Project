@@ -10,11 +10,7 @@ use Illuminate\Http\Request;
 
 class Political_partiesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function index(Request $request)
     {
         $keyword = $request->get('search');
@@ -32,44 +28,49 @@ class Political_partiesController extends Controller
         return view('political_parties.index', compact('political_parties'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function create()
     {
         return view('political_parties.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
+
     public function store(Request $request)
     {
-        
+        // การ validate ข้อมูลจากฟอร์ม
+        $request->validate([
+            'name' => 'required|string|max:255', // ชื่อพรรค ต้องไม่ว่าง และต้องเป็น string สูงสุด 255 ตัวอักษร
+            'logo' => 'required|mimes:jpg,jpeg,png,gif|max:10240', // โลโก้ ต้องไม่ว่าง และต้องเป็นไฟล์ประเภทภาพ (jpg, jpeg, png, gif) ขนาดไม่เกิน 10MB
+            'color' => 'required|string|max:7', // สีของธีม ต้องไม่ว่าง และต้องเป็น string (ปกติจะใช้ hex color code ที่มีความยาวไม่เกิน 7 ตัวอักษร)
+        ], [
+            'name.required' => 'กรุณากรอกชื่อพรรค', // ข้อความข้อผิดพลาดถ้าผู้ใช้ไม่กรอกชื่อพรรค
+            'name.string' => 'ชื่อพรรคต้องเป็นตัวอักษรเท่านั้น', // ข้อความข้อผิดพลาดถ้าผู้ใช้กรอกข้อมูลไม่ใช่ตัวอักษร
+            'name.max' => 'ชื่อพรรคต้องมีความยาวไม่เกิน 255 ตัวอักษร', // ข้อความข้อผิดพลาดถ้าชื่อพรรคยาวเกิน 255 ตัวอักษร
+
+            'logo.required' => 'กรุณาเลือกโลโก้พรรค', // ข้อความข้อผิดพลาดถ้าผู้ใช้ไม่เลือกไฟล์
+            'logo.mimes' => 'โลโก้พรรคต้องเป็นไฟล์ภาพประเภท jpg, jpeg, png หรือ gif เท่านั้น', // ข้อความข้อผิดพลาดถ้าผู้ใช้เลือกไฟล์ที่ไม่ใช่ภาพ
+            'logo.max' => 'ขนาดไฟล์โลโก้พรรคต้องไม่เกิน 10MB', // ข้อความข้อผิดพลาดถ้าขนาดไฟล์เกิน 10MB
+
+            'color.required' => 'กรุณากรอกสีของธีม', // ข้อความข้อผิดพลาดถ้าผู้ใช้ไม่กรอกสี
+            'color.string' => 'สีของธีมต้องเป็นตัวอักษรเท่านั้น', // ข้อความข้อผิดพลาดถ้าผู้ใช้กรอกข้อมูลที่ไม่ใช่ตัวอักษร
+            'color.max' => 'สีของธีมต้องมีความยาวไม่เกิน 7 ตัวอักษร', // ข้อความข้อผิดพลาดถ้าค่าของสีเกิน 7 ตัวอักษร
+        ]);
+
+        // หลังจาก validate ผ่านแล้ว สามารถบันทึกข้อมูลได้
         $requestData = $request->all();
-                if ($request->hasFile('logo')) {
-            $requestData['logo'] = $request->file('logo')
-                ->store('uploads', 'public');
+
+        // อัพโหลดโลโก้
+        if ($request->hasFile('logo')) {
+            $filePath = $request->file('logo')->store('uploads', 'public');
+            $requestData['logo'] = $filePath;
         }
 
-        Political_party::create($requestData);
+        Political_party::create($requestData); // บันทึกข้อมูลลงในฐานข้อมูล
 
-        return redirect('political_parties')->with('flash_message', 'Political_party added!');
+        return redirect('political_parties')->with('flash_message', 'Political Party added!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function show($id)
     {
         $political_party = Political_party::findOrFail($id);
@@ -77,13 +78,6 @@ class Political_partiesController extends Controller
         return view('political_parties.show', compact('political_party'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\View\View
-     */
     public function edit($id)
     {
         $political_party = Political_party::findOrFail($id);
@@ -91,17 +85,9 @@ class Political_partiesController extends Controller
         return view('political_parties.edit', compact('political_party'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param  int  $id
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
                 if ($request->hasFile('logo')) {
             $requestData['logo'] = $request->file('logo')
@@ -114,13 +100,7 @@ class Political_partiesController extends Controller
         return redirect('political_parties')->with('flash_message', 'Political_party updated!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
+
     public function destroy($id)
     {
         Political_party::destroy($id);

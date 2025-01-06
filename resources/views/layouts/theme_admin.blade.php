@@ -23,13 +23,17 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css')}}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css')}}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css')}}" />
-	<title>Synadmin – Bootstrap5 Admin Template</title>
+    <!-- fontawesome icon -->
+    <link rel="stylesheet" href="{{ asset('/partner/fonts/fontawesome/css/fontawesome-all.min.css') }}">
+ 	<link href="https://kit-pro.fontawesome.com/releases/v6.4.2/css/pro.min.css" rel="stylesheet">
+
+	<title>ERS_PROJECT</title>
 </head>
 
 <body>
 	<!--wrapper-->
 	<div class="wrapper">
-		<!--start header wrapper-->	
+		<!--start header wrapper-->
 		<div class="header-wrapper">
 			<!--start header -->
 			<header>
@@ -548,7 +552,7 @@
 			<!--end navigation-->
 		   </div>
 		   <!--end header wrapper-->
-		
+
         <!-- CONTENT -->
 		<div class="page-wrapper">
 			<div class="page-content">
@@ -558,7 +562,7 @@
 			</div>
 		</div>
 		<!-- EDN CONTENT -->
-         
+
 		<!--end page wrapper -->
 		<!--start overlay-->
 		<div class="overlay toggle-icon"></div>

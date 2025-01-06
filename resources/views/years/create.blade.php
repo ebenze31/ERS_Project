@@ -1,15 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.theme_admin')
 
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create New Year</div>
+                    <div class="card-header">สร้างปีการเลือกตั้ง</div>
                     <div class="card-body">
-                        <a href="{{ url('/years') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/years') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ</button></a>
                         <br />
                         <br />
 
