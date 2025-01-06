@@ -1,0 +1,20 @@
+{
+    "fields": [
+        {
+            "name": "name_sub_districts",
+            "type": "string"
+        },
+        {
+            "name": "province_id",
+            "type": "string"
+        },
+        {
+            "name": "district_id",
+            "type": "string"
+        },
+        {
+            "name": "electorate_id",
+            "type": "string"
+        }
+    ]
+}

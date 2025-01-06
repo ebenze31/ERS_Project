@@ -1,0 +1,40 @@
+{
+    "fields": [
+        {
+            "name": "candidate_id",
+            "type": "string"
+        },
+        {
+            "name": "yesr_id",
+            "type": "string"
+        },
+        {
+            "name": "polling_unit_id",
+            "type": "string"
+        },
+        {
+            "name": "sub_district_id",
+            "type": "string"
+        },
+        {
+            "name": "electorate_id",
+            "type": "string"
+        },
+        {
+            "name": "district_id",
+            "type": "string"
+        },
+        {
+            "name": "province_id",
+            "type": "string"
+        },
+        {
+            "name": "score",
+            "type": "integer"
+        },
+        {
+            "name": "round",
+            "type": "string"
+        }
+    ]
+}

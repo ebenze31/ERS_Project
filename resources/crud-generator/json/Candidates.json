@@ -1,0 +1,44 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "img",
+            "type": "file"
+        },
+        {
+            "name": "number",
+            "type": "string"
+        },
+        {
+            "name": "province_id",
+            "type": "string"
+        },
+        {
+            "name": "district_id",
+            "type": "string"
+        },
+        {
+            "name": "electorate_id",
+            "type": "string"
+        },
+        {
+            "name": "sub_district_id",
+            "type": "string"
+        },
+        {
+            "name": "political_partie_id",
+            "type": "string"
+        },
+        {
+            "name": "year_id",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "fields": [
+        {
+            "name": "year",
+            "type": "string"
+        },
+        {
+            "name": "round",
+            "type": "string"
+        }
+    ]
+}

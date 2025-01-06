@@ -1,0 +1,12 @@
+{
+    "fields": [
+        {
+            "name": "name_district",
+            "type": "string"
+        },
+        {
+            "name": "province_id",
+            "type": "string"
+        }
+    ]
+}

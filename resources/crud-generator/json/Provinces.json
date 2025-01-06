@@ -1,0 +1,20 @@
+{
+    "fields": [
+        {
+            "name": "name_province",
+            "type": "string"
+        },
+        {
+            "name": "logo",
+            "type": "file"
+        },
+        {
+            "name": "banner",
+            "type": "file"
+        },
+        {
+            "name": "status",
+            "type": "string"
+        }
+    ]
+}

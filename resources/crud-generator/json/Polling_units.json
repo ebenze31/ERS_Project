@@ -1,0 +1,28 @@
+{
+    "fields": [
+        {
+            "name": "name_polling_unit",
+            "type": "string"
+        },
+        {
+            "name": "province_id",
+            "type": "string"
+        },
+        {
+            "name": "district_id",
+            "type": "string"
+        },
+        {
+            "name": "electorate_id",
+            "type": "string"
+        },
+        {
+            "name": "sub_district_id",
+            "type": "string"
+        },
+        {
+            "name": "eligible_voters",
+            "type": "string"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "logo",
+            "type": "file"
+        },
+        {
+            "name": "color",
+            "type": "string"
+        }
+    ]
+}
