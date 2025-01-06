@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/for_admin', 'AdminController@index');
 
 Route::resource('political_parties', 'Political_partiesController');
 Route::resource('type_candidates', 'Type_candidatesController');

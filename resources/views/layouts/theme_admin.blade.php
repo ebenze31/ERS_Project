@@ -33,12 +33,7 @@
 		<div class="sidebar-wrapper" data-simplebar="true">
 			<div class="sidebar-header">
 				<div>
-					<img src="assets/images/logo-icon.png" class="logo-icon">
-				</div>
-				<div>
-					<h4 class="logo-text">Synadmin</h4>
-				</div>
-				<div class="toggle-icon ms-auto"><i class='bx bx-first-page'></i>
+					<h4 class="logo-text" style="color: #222121;">ERS - Management</h4>
 				</div>
 			</div>
 			<!--navigation-->
@@ -194,13 +189,22 @@
 			</div>
 		</header>
 		<!--end header -->
+
+		<!-- CONTENT -->
+		<div class="page-wrapper">
+			<div class="page-content">
+				<div class="container-fluid">
+					@yield('content')
+				</div>
+			</div>
+		</div>
+		<!-- EDN CONTENT -->
+
 		<!--start overlay-->
 		<div class="overlay toggle-icon"></div>
 		<!--end overlay-->
-		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-		<!--End Back To Top Button-->
 		<footer class="page-footer">
-			<p class="mb-0">Copyright © 2021. All right reserved.</p>
+			<p class="mb-0">Power By ViiCHECK</p>
 		</footer>
 	</div>
 	<!--end wrapper-->
