@@ -24,10 +24,10 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css')}}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css')}}" />
     <!-- fontawesome icon -->
-    <link rel="stylesheet" href="{{ asset('/partner/fonts/fontawesome/css/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
  	<link href="https://kit-pro.fontawesome.com/releases/v6.4.2/css/pro.min.css" rel="stylesheet">
 
-	<title>ERS_PROJECT</title>
+	<title>Admin - ERS</title>
 </head>
 
 <body>
@@ -44,26 +44,15 @@
 								<img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
 							</div>
 							<div class="">
-								<h4 class="logo-text">Synadmin</h4>
+								<h4 class="logo-text" style="color: #383333;">ERS - Management</h4>
 							</div>
 						</div>
 						<div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
 						<div class="top-menu-left d-none d-lg-block ps-3">
 							<ul class="nav">
-							  <li class="nav-item">
-								<a class="nav-link" href="app-emailbox.html"><i class='bx bx-envelope'></i></a>
-							  </li>
-							  <li class="nav-item">
-								<a class="nav-link" href="app-chat-box.html"><i class='bx bx-message'></i></a>
-							  </li>
-							  <li class="nav-item">
-								<a class="nav-link" href="app-fullcalender.html"><i class='bx bx-calendar'></i></a>
-							  </li>
-							  <li class="nav-item">
-								  <a class="nav-link" href="app-to-do.html"><i class='bx bx-check-square'></i></a>
-							  </li>
-						  </ul>
-						 </div>
+								ระบบการจัดการรายงานผลการเลือกตั้ง (อย่างไม่เป็นทางการ)
+						  	</ul>
+						</div>
 						<div class="search-bar flex-grow-1">
 							<div class="position-relative search-bar-box">
 								<input type="text" class="form-control search-control" placeholder="Type to search..."> <span class="position-absolute top-50 search-show translate-middle-y"><i class='bx bx-search'></i></span>
@@ -71,7 +60,7 @@
 							</div>
 						</div>
 						<div class="top-menu ms-auto">
-							<ul class="navbar-nav align-items-center">
+							<ul class="navbar-nav align-items-center d-none">
 								<li class="nav-item mobile-search-icon">
 									<a class="nav-link" href="#">	<i class='bx bx-search'></i>
 									</a>
@@ -387,8 +376,8 @@
 							<a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								<img src="assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
 								<div class="user-info ps-3">
-									<p class="user-name mb-0">Pauline Seitz</p>
-									<p class="designattion mb-0">Web Designer</p>
+									<p class="user-name mb-0">ชื่อ..........................</p>
+									<!-- <p class="designattion mb-0">Web Designer</p> -->
 								</div>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-end">
@@ -420,7 +409,7 @@
 						<img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
 					</div>
 					<div>
-						<h4 class="logo-text">Synadmin</h4>
+						<h4 class="logo-text">ERS</h4>
 					</div>
 					<div class="toggle-icon ms-auto"><i class='bx bx-first-page'></i>
 					</div>
@@ -428,121 +417,54 @@
 				<nav class="topbar-nav">
 					<ul class="metismenu" id="menu">
 						<li>
-							<a href="javascript:;" class="has-arrow">
-								<div class="parent-icon"><i class='bx bx-home-circle'></i>
+							<a href="{{ url('/for_admin') }}" class="">
+								<div class="parent-icon">
+									<i class="fa-solid fa-house"></i>
 								</div>
-								<div class="menu-title">Dashboard</div>
+								<div class="menu-title">หน้าแรก</div>
 							</a>
-							<ul>
-								<li> <a href="index.html"><i class="bx bx-right-arrow-alt"></i>Analytics</a>
-								</li>
-								<li> <a href="index2.html"><i class="bx bx-right-arrow-alt"></i>Sales</a>
-								</li>
-								<li> <a href="index3.html"><i class="bx bx-right-arrow-alt"></i>eCommerce</a>
-								</li>
-								<li> <a href="index4.html"><i class="bx bx-right-arrow-alt"></i>Alternate</a>
-								</li>
-								<li> <a href="index5.html"><i class="bx bx-right-arrow-alt"></i>Hospitality</a>
-								</li>
-							</ul>
 						</li>
 						<li>
-							<a href="javascript:;" class="has-arrow">
-								<div class="parent-icon"><i class="bx bx-category"></i>
+							<a href="#" class="">
+								<div class="parent-icon">
+									<i class="fa-solid fa-user-tie"></i>
 								</div>
-								<div class="menu-title">Application</div>
+								<div class="menu-title">ผู้สมัคร</div>
 							</a>
-							<ul>
-								<li> <a href="app-emailbox.html"><i class="bx bx-right-arrow-alt"></i>Email</a>
-								</li>
-								<li> <a href="app-chat-box.html"><i class="bx bx-right-arrow-alt"></i>Chat Box</a>
-								</li>
-								<li> <a href="app-file-manager.html"><i class="bx bx-right-arrow-alt"></i>File Manager</a>
-								</li>
-								<li> <a href="app-contact-list.html"><i class="bx bx-right-arrow-alt"></i>Contatcs</a>
-								</li>
-								<li> <a href="app-to-do.html"><i class="bx bx-right-arrow-alt"></i>Todo List</a>
-								</li>
-								<li> <a href="app-invoice.html"><i class="bx bx-right-arrow-alt"></i>Invoice</a>
-								</li>
-								<li> <a href="app-fullcalender.html"><i class="bx bx-right-arrow-alt"></i>Calendar</a>
-								</li>
-							</ul>
+						</li>
+						<li>
+							<a href="#" class="">
+								<div class="parent-icon">
+									<i class="fa-duotone fa-solid fa-building-flag"></i>
+								</div>
+								<div class="menu-title">หน่วยเลือกตั้ง</div>
+							</a>
+						</li>
+						<li>
+							<a href="#" class="">
+								<div class="parent-icon">
+									<i class="fa-solid fa-pen-field"></i>
+								</div>
+								<div class="menu-title">การลงคะแนน</div>
+							</a>
 						</li>
 						<li>
 							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon"><i class="bx bx-line-chart"></i>
+								<div class="parent-icon">
+									<i class="fa-solid fa-bars"></i>
 								</div>
-								<div class="menu-title">Charts</div>
+								<div class="menu-title">อื่นๆ</div>
 							</a>
 							<ul>
-								<li> <a href="charts-apex-chart.html"><i class="bx bx-right-arrow-alt"></i>Apex</a>
+								<li>
+									<a href="authentication-signin.html" target="_blank">
+										<i class="bx bx-right-arrow-alt"></i>เพิ่มพรรคการเมือง
+									</a>
 								</li>
-								<li> <a href="charts-chartjs.html"><i class="bx bx-right-arrow-alt"></i>Chartjs</a>
-								</li>
-								<li> <a href="charts-highcharts.html"><i class="bx bx-right-arrow-alt"></i>Highcharts</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-								</div>
-								<div class="menu-title">Components</div>
-							</a>
-							<ul>
-								<li> <a href="widgets.html"><i class="bx bx-right-arrow-alt"></i>Widgets</a>
-								</li>
-								<li> <a href="component-alerts.html"><i class="bx bx-right-arrow-alt"></i>Alerts</a>
-								</li>
-								<li> <a href="component-accordions.html"><i class="bx bx-right-arrow-alt"></i>Accordions</a>
-								</li>
-								<li> <a href="component-buttons.html"><i class="bx bx-right-arrow-alt"></i>Buttons</a>
-								</li>
-								<li> <a href="component-cards.html"><i class="bx bx-right-arrow-alt"></i>Cards</a>
-								</li>
-								<li> <a href="component-list-groups.html"><i class="bx bx-right-arrow-alt"></i>List Groups</a>
-								</li>
-								<li> <a href="component-media-object.html"><i class="bx bx-right-arrow-alt"></i>Media Objects</a>
-								</li>
-								<li> <a href="component-modals.html"><i class="bx bx-right-arrow-alt"></i>Modals</a>
-								</li>
-								<li> <a href="component-navs-tabs.html"><i class="bx bx-right-arrow-alt"></i>Navs & Tabs</a>
-								</li>
-								<li> <a href="component-navbar.html"><i class="bx bx-right-arrow-alt"></i>Navbar</a>
-								</li>
-								<li> <a href="component-popovers-tooltips.html"><i class="bx bx-right-arrow-alt"></i>Popovers & Tooltips</a>
-								</li>
-								<li> <a href="component-progress-bars.html"><i class="bx bx-right-arrow-alt"></i>Progress</a>
-								</li>
-								<li> <a href="component-spinners.html"><i class="bx bx-right-arrow-alt"></i>Spinners</a>
-								</li>
-								<li> <a href="component-notifications.html"><i class="bx bx-right-arrow-alt"></i>Notifications</a>
-								</li>
-								<li> <a href="component-avtars-chips.html"><i class="bx bx-right-arrow-alt"></i>Avatrs & Chips</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon"><i class="bx bx-lock"></i>
-								</div>
-								<div class="menu-title">Authentication</div>
-							</a>
-							<ul>
-								<li> <a href="authentication-signin.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Sign In</a>
-								</li>
-								<li> <a href="authentication-signup.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Sign Up</a>
-								</li>
-								<li> <a href="authentication-signin-with-header-footer.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Sign In with Header & Footer</a>
-								</li>
-								<li> <a href="authentication-signup-with-header-footer.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Sign Up with Header & Footer</a>
-								</li>
-								<li> <a href="authentication-forgot-password.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Forgot Password</a>
-								</li>
-								<li> <a href="authentication-reset-password.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Reset Password</a>
-								</li>
-								<li> <a href="authentication-lock-screen.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Lock Screen</a>
+								<li>
+									<a href="authentication-signin.html" target="_blank">
+										<i class="bx bx-right-arrow-alt"></i>จัดการผู้ใช้
+									</a>
 								</li>
 							</ul>
 						</li>
@@ -550,8 +472,8 @@
 				</nav>
 			</div>
 			<!--end navigation-->
-		   </div>
-		   <!--end header wrapper-->
+		</div>
+		<!--end header wrapper-->
 
         <!-- CONTENT -->
 		<div class="page-wrapper">
@@ -570,75 +492,10 @@
 		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 		<!--End Back To Top Button-->
 		<footer class="page-footer">
-			<p class="mb-0">Copyright © 2021. All right reserved.</p>
+			<p class="mb-0">Power By ViiCHECK</p>
 		</footer>
 	</div>
 	<!--end wrapper-->
-	<!--start switcher-->
-	<div class="switcher-wrapper">
-		<div class="switcher-btn"> <i class='bx bx-cog bx-spin'></i>
-		</div>
-		<div class="switcher-body">
-			<div class="d-flex align-items-center">
-				<h5 class="mb-0 text-uppercase">Theme Customizer</h5>
-				<button type="button" class="btn-close ms-auto close-switcher" aria-label="Close"></button>
-			</div>
-			<hr/>
-			<h6 class="mb-0">Theme Styles</h6>
-			<hr/>
-			<div class="d-flex align-items-center justify-content-between">
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="flexRadioDefault" id="lightmode" checked>
-					<label class="form-check-label" for="lightmode">Light</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="flexRadioDefault" id="darkmode">
-					<label class="form-check-label" for="darkmode">Dark</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="flexRadioDefault" id="semidark">
-					<label class="form-check-label" for="semidark">Semi Dark</label>
-				</div>
-			</div>
-			<hr/>
-			<div class="form-check">
-				<input class="form-check-input" type="radio" id="minimaltheme" name="flexRadioDefault">
-				<label class="form-check-label" for="minimaltheme">Minimal Theme</label>
-			</div>
-			<hr/>
-			<h6 class="mb-0">Header Colors</h6>
-			<hr/>
-			<div class="header-colors-indigators">
-				<div class="row row-cols-auto g-3">
-					<div class="col">
-						<div class="indigator headercolor1" id="headercolor1"></div>
-					</div>
-					<div class="col">
-						<div class="indigator headercolor2" id="headercolor2"></div>
-					</div>
-					<div class="col">
-						<div class="indigator headercolor3" id="headercolor3"></div>
-					</div>
-					<div class="col">
-						<div class="indigator headercolor4" id="headercolor4"></div>
-					</div>
-					<div class="col">
-						<div class="indigator headercolor5" id="headercolor5"></div>
-					</div>
-					<div class="col">
-						<div class="indigator headercolor6" id="headercolor6"></div>
-					</div>
-					<div class="col">
-						<div class="indigator headercolor7" id="headercolor7"></div>
-					</div>
-					<div class="col">
-						<div class="indigator headercolor8" id="headercolor8"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--end switcher-->
 	<!-- Bootstrap JS -->
 
 	<script src="{{ asset('assets/js/bootstrap.bundle.min.js')}}"></script>

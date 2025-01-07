@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/excel_add_districts/', 'For_DevController@excel_add_districts');
+Route::post('/excel_add_sub_districts/', 'For_DevController@excel_add_sub_districts');
+
+Route::get('/install_provinces/', 'For_DevController@install_provinces');
+Route::get('/install_districts/', 'For_DevController@install_districts');
+Route::get('/install_sub_districts/', 'For_DevController@install_sub_districts');

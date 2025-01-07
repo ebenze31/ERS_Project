@@ -32,3 +32,8 @@ Route::resource('districts', 'DistrictsController');
 Route::resource('electorates', 'ElectoratesController');
 Route::resource('sub_districts', 'Sub_districtsController');
 Route::resource('polling_units', 'Polling_unitsController');
+
+
+// --------- FOR DEV --------- //
+    Route::get('/add_districts', 'For_DevController@add_districts');
+// --------- END FOR DEV --------- //
