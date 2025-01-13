@@ -41,7 +41,12 @@ class Political_partiesController extends Controller
         $request->validate([
             'name' => 'required|string|max:255', // ชื่อพรรค ต้องไม่ว่าง และต้องเป็น string สูงสุด 255 ตัวอักษร
             'logo' => 'required|mimes:jpg,jpeg,png,gif|max:10240', // โลโก้ ต้องไม่ว่าง และต้องเป็นไฟล์ประเภทภาพ (jpg, jpeg, png, gif) ขนาดไม่เกิน 10MB
-            'color' => 'required|string|max:7', // สีของธีม ต้องไม่ว่าง และต้องเป็น string (ปกติจะใช้ hex color code ที่มีความยาวไม่เกิน 7 ตัวอักษร)
+            'color' => [
+                'required',
+                'string',
+                'max:7',
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', // ตรวจสอบ HEX color
+            ],
         ], [
             'name.required' => 'กรุณากรอกชื่อพรรค', // ข้อความข้อผิดพลาดถ้าผู้ใช้ไม่กรอกชื่อพรรค
             'name.string' => 'ชื่อพรรคต้องเป็นตัวอักษรเท่านั้น', // ข้อความข้อผิดพลาดถ้าผู้ใช้กรอกข้อมูลไม่ใช่ตัวอักษร
@@ -54,6 +59,7 @@ class Political_partiesController extends Controller
             'color.required' => 'กรุณากรอกสีของธีม', // ข้อความข้อผิดพลาดถ้าผู้ใช้ไม่กรอกสี
             'color.string' => 'สีของธีมต้องเป็นตัวอักษรเท่านั้น', // ข้อความข้อผิดพลาดถ้าผู้ใช้กรอกข้อมูลที่ไม่ใช่ตัวอักษร
             'color.max' => 'สีของธีมต้องมีความยาวไม่เกิน 7 ตัวอักษร', // ข้อความข้อผิดพลาดถ้าค่าของสีเกิน 7 ตัวอักษร
+            'color.regex' => 'สีของธีมต้องเป็นรหัสสี HEX ที่ถูกต้อง (เช่น #FFFFFF หรือ #FFF)', // ข้อความข้อผิดพลาดเมื่อรูปแบบไม่ตรง
         ]);
 
         // หลังจาก validate ผ่านแล้ว สามารถบันทึกข้อมูลได้
@@ -89,9 +95,10 @@ class Political_partiesController extends Controller
     {
 
         $requestData = $request->all();
-                if ($request->hasFile('logo')) {
-            $requestData['logo'] = $request->file('logo')
-                ->store('uploads', 'public');
+
+        if ($request->hasFile('logo')) {
+            $filePath = $request->file('logo')->store('uploads', 'public');
+            $requestData['logo'] = $filePath;
         }
 
         $political_party = Political_party::findOrFail($id);
@@ -107,4 +114,5 @@ class Political_partiesController extends Controller
 
         return redirect('political_parties')->with('flash_message', 'Political_party deleted!');
     }
+
 }

@@ -24,3 +24,7 @@ Route::post('/excel_add_sub_districts/', 'For_DevController@excel_add_sub_distri
 Route::get('/install_provinces/', 'For_DevController@install_provinces');
 Route::get('/install_districts/', 'For_DevController@install_districts');
 Route::get('/install_sub_districts/', 'For_DevController@install_sub_districts');
+
+Route::get('/getData_Candidate', 'CandidatesController@getDataCandidateAPI');
+Route::get('/getData_Type_Candidate', 'YearsController@getDataTypeCandidateAPI');
+
