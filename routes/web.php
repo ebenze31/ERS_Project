@@ -38,7 +38,7 @@ Route::middleware(['auth', 'role:admin,dev-admin'])->group(function () {
 
 // ----- Officer ----- //
 Route::middleware(['auth', 'role:admin,dev-admin,officer'])->group(function () {
-    
+
 });
 // ----- End Officer ----- //
 
@@ -50,6 +50,7 @@ Route::resource('type_candidates', 'Type_candidatesController');
 Route::resource('years', 'YearsController');
 Route::resource('candidates', 'CandidatesController');
 Route::resource('scores', 'ScoresController');
+Route::resource('admin_report_score', 'ScoresController@admin_report_score');
 Route::resource('provinces', 'ProvincesController');
 Route::resource('districts', 'DistrictsController');
 Route::resource('electorates', 'ElectoratesController');

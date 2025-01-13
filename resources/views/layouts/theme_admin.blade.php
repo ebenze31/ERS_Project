@@ -441,12 +441,24 @@
 							</a>
 						</li>
 						<li>
-							<a href="#" class="">
+                            <a class="has-arrow" href="javascript:;">
 								<div class="parent-icon">
-									<i class="fa-solid fa-pen-field"></i>
+									<i class="fa-solid fa-bars"></i>
 								</div>
-								<div class="menu-title">การลงคะแนน</div>
+								<div class="menu-title">คะแนนเลือกตั้ง</div>
 							</a>
+                            <ul>
+								<li>
+									<a href="{{ url('/admin_report_score') }}" target="_blank">
+										<i class="bx bx-right-arrow-alt"></i>ผลคะแนนเลือกตั้ง
+									</a>
+								</li>
+								<li>
+									<a href="authentication-signin.html" target="_blank">
+										<i class="bx bx-right-arrow-alt"></i>การลงคะแนน
+									</a>
+								</li>
+							</ul>
 						</li>
 						<li>
 							<a class="has-arrow" href="javascript:;">
