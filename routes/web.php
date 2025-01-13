@@ -20,7 +20,30 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/for_admin', 'AdminController@index');
+
+// ----- DEV ----- //
+Route::middleware(['auth', 'role:dev-admin'])->group(function () {
+    Route::get('/add_districts', 'For_DevController@add_districts');
+});
+// ----- End DEV ----- //
+
+// -------------------------------------------------------------------------
+
+// ----- Admin ----- //
+Route::middleware(['auth', 'role:admin,dev-admin'])->group(function () {
+    Route::get('/for_admin', 'AdminController@index');
+    Route::resource('polling_units', 'Polling_unitsController');
+});
+// ----- End Admin ----- //
+
+// ----- Officer ----- //
+Route::middleware(['auth', 'role:admin,dev-admin,officer'])->group(function () {
+    
+});
+// ----- End Officer ----- //
+
+// -------------------------------------------------------------------------
+
 
 Route::resource('political_parties', 'Political_partiesController');
 Route::resource('type_candidates', 'Type_candidatesController');
@@ -31,9 +54,4 @@ Route::resource('provinces', 'ProvincesController');
 Route::resource('districts', 'DistrictsController');
 Route::resource('electorates', 'ElectoratesController');
 Route::resource('sub_districts', 'Sub_districtsController');
-Route::resource('polling_units', 'Polling_unitsController');
 
-
-// --------- FOR DEV --------- //
-    Route::get('/add_districts', 'For_DevController@add_districts');
-// --------- END FOR DEV --------- //

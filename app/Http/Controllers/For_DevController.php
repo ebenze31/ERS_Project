@@ -117,7 +117,7 @@ class For_DevController extends Controller
             $data_add['name_sub_districts'] = $row[2] ;
             Sub_district::create($data_add);
 
-            echo $count . " เพิ่ม " . $row[2] . " >> " . $row[1] . " >> " . $row[0];
+            echo $count . " เพิ่ม " . $row[2] . " >> " . $data_A->name_district . " >> " . $data_P->name_province;
             echo "<br>";
         }
 

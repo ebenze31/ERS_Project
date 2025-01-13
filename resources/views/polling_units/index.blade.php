@@ -1,63 +1,52 @@
-@extends('layouts.app')
+@extends('layouts.theme_admin')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Polling_units</div>
-                    <div class="card-body">
-                        <a href="{{ url('/polling_units/create') }}" class="btn btn-success btn-sm" title="Add New Polling_unit">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
-
-                        <form method="GET" action="{{ url('/polling_units') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
-
-                        <br/>
-                        <br/>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th><th>Name Polling Unit</th><th>Province Id</th><th>District Id</th><th>Electorate Id</th><th>Sub District Id</th><th>Eligible Voters</th><th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($polling_units as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->name_polling_unit }}</td><td>{{ $item->province_id }}</td><td>{{ $item->district_id }}</td><td>{{ $item->electorate_id }}</td><td>{{ $item->sub_district_id }}</td><td>{{ $item->eligible_voters }}</td>
-                                        <td>
-                                            <a href="{{ url('/polling_units/' . $item->id) }}" title="View Polling_unit"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/polling_units/' . $item->id . '/edit') }}" title="Edit Polling_unit"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                                            <form method="POST" action="{{ url('/polling_units' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete Polling_unit" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <div class="pagination-wrapper"> {!! $polling_units->appends(['search' => Request::get('search')])->render() !!} </div>
-                        </div>
-
-                    </div>
-                </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card">
+                <form id="uploadForm">
+                    <input type="file" id="excelFile" accept=".xlsx, .xls" />
+                    <button class="btn btn-sm btn-info" type="submit">Upload</button>
+                </form>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const fileInput = document.getElementById("excelFile");
+                const file = fileInput.files[0];
+
+                if (!file) {
+                    alert("Please select an Excel file.");
+                    return;
+                }
+
+                const apiUrl = `{{ url('/') }}/api/excel_add_polling_units`;
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    console.log("API Response:", result);
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            });
+        });
+
+    </script>
 @endsection

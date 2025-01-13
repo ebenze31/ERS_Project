@@ -7,6 +7,8 @@ use App\Http\Requests;
 
 use App\Models\Polling_unit;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class Polling_unitsController extends Controller
 {
@@ -121,5 +123,26 @@ class Polling_unitsController extends Controller
         Polling_unit::destroy($id);
 
         return redirect('polling_units')->with('flash_message', 'Polling_unit deleted!');
+    }
+
+    function excel_add_polling_units(Request $request)
+    {
+        // ตรวจสอบว่ามีการอัปโหลดไฟล์หรือไม่
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
+
+        // รับไฟล์และเก็บใน storage
+        $file = $request->file('file');
+        $path = $file->store('uploads');  // หรือกำหนดตำแหน่งการเก็บตามต้องการ
+
+        // อ่านข้อมูลจากไฟล์ Excel
+        $data = Excel::toArray([], $file);
+
+        // ข้ามแถวแรก (header) โดยใช้ array_slice()
+        $rows = array_slice($data[0], 1);
+
+        return $rows ;
+
     }
 }

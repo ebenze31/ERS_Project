@@ -31,8 +31,8 @@
 		            return;
 		        }
 
-		        const apiUrl = `{{ url('/') }}/api/excel_add_districts`;
-		        // const apiUrl = `{{ url('/') }}/api/excel_add_sub_districts`;
+		        // const apiUrl = `{{ url('/') }}/api/excel_add_districts`;
+		        const apiUrl = `{{ url('/') }}/api/excel_add_sub_districts`;
 
 		        const formData = new FormData();
 		        formData.append("file", file);
