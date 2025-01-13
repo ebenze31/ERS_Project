@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
  	<link href="https://kit-pro.fontawesome.com/releases/v6.4.2/css/pro.min.css" rel="stylesheet">
 
+ 	<!-- datatable -->
+ 	<link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
+
 	<title>Admin - ERS</title>
 </head>
 
@@ -387,6 +390,11 @@
 	<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js')}}"></script>
 	<!--app JS-->
 	<script src="{{ asset('assets/js/app.js')}}"></script>
+
+	<!-- datatable -->
+	<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
+	<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
+
 </body>
 
 </html>

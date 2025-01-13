@@ -25,7 +25,7 @@ class Polling_unit extends Model
      *
      * @var array
      */
-    protected $fillable = ['name_polling_unit', 'province_id', 'district_id', 'electorate_id', 'sub_district_id', 'eligible_voters'];
+    protected $fillable = ['name_polling_unit', 'province_id', 'district_id', 'electorate_id', 'sub_district_id', 'eligible_voters','user_id'];
 
     
 }

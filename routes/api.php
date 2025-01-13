@@ -22,6 +22,8 @@ Route::post('/excel_add_districts/', 'For_DevController@excel_add_districts');
 Route::post('/excel_add_sub_districts/', 'For_DevController@excel_add_sub_districts');
 Route::post('/excel_add_polling_units/', 'Polling_unitsController@excel_add_polling_units');
 
+Route::get('/create_user_units/{province}', 'Polling_unitsController@create_user_units');
+
 Route::get('/install_provinces/', 'For_DevController@install_provinces');
 Route::get('/install_districts/', 'For_DevController@install_districts');
 Route::get('/install_sub_districts/', 'For_DevController@install_sub_districts');

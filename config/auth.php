@@ -69,6 +69,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+            'username' => 'username', // กำหนด username เป็นฟิลด์ล็อกอิน
         ],
 
         // 'users' => [

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card">
-    
+
     <!-- เพิ่มข้อมูลหน่วย -->
     @if( $count_units == 0 )
     <div class="row justify-content-center p-4">
@@ -72,12 +72,66 @@
     <!-- ข้อมูลหน่วย -->
     <div class="row justify-content-center p-4">
         <div class="card-header">
-            <h4>หน่วยเลือกตั้ง</h4>
+            <h4>
+                หน่วยเลือกตั้ง <span style="font-size: 14px;">(ทั้งหมด {{ $count_units }} หน่วย)</span>
+                @if( Auth::user()->role == "dev-admin" )
+                <button class="btn btn-info float-end" onclick="create_user_units();">
+                    สร้างรหัสผู้ใช้
+                </button>
+                @endif
+            </h4>
         </div>
         <div class="card-body">
-            scxsc
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="table_polling_units" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>อำเภอ</th>
+                                    <th>เขตเลือกตั้งที่</th>
+                                    <th>ตำบล</th>
+                                    <th>หน่วยเลือกตั้งที่</th>
+                                    <th>เจ้าหน้าที่</th>
+                                    <th>จำนวนผู้มีสิทธิ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($polling_units as $item)
+                                <tr>
+                                    <td>{{ $item->name_district }}</td>
+                                    <td>{{ $item->name_electorate }}</td>
+                                    <td>{{ explode(" ",$item->name_polling_unit)[0] }}</td>
+                                    <td>{{ explode(" ",$item->name_polling_unit)[2] }}</td>
+                                    <td>{{ $item->name_user }}</td>
+                                    <td>{{ $item->eligible_voters }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+        });
+
+        function create_user_units(){
+            let province = "{{ Auth::user()->province }}";
+
+            fetch("{{ url('/') }}/api/create_user_units/" + province)
+            .then(response => response.text())
+            .then(result => {
+                if(result){
+                    console.log(result);
+                }
+            });
+        }
+
+    </script>
     <!-- จบข้อมูลหน่วย -->
     @endif
 

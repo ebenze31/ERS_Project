@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\User;
 use App\Models\Electorate;
 use App\Models\Polling_unit;
 use Illuminate\Http\Request;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Province;
 use App\Models\District;
 use App\Models\Sub_district;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class Polling_unitsController extends Controller
 {
@@ -23,22 +26,31 @@ class Polling_unitsController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $polling_units = Polling_unit::where('name_polling_unit', 'LIKE', "%$keyword%")
-                ->orWhere('province_id', 'LIKE', "%$keyword%")
-                ->orWhere('district_id', 'LIKE', "%$keyword%")
-                ->orWhere('electorate_id', 'LIKE', "%$keyword%")
-                ->orWhere('sub_district_id', 'LIKE', "%$keyword%")
-                ->orWhere('eligible_voters', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $polling_units = Polling_unit::latest()->paginate($perPage);
-        }
+        $data_user = Auth::user();
+        $province = $data_user->province ;
+        // $polling_units = Polling_unit::get();
+        $polling_units = DB::table('polling_units')
+            ->leftjoin('provinces', 'polling_units.province_id', '=', 'provinces.id')
+            ->leftjoin('districts', 'polling_units.district_id', '=', 'districts.id')
+            ->leftjoin('electorates', 'polling_units.electorate_id', '=', 'electorates.id')
+            ->leftjoin('sub_districts', 'polling_units.sub_district_id', '=', 'sub_districts.id')
+            ->leftjoin('users', 'polling_units.user_id', '=', 'users.id')
+            ->where('provinces.name_province', '=' ,$province)
+            ->select(
+                    'polling_units.*',
+                    'provinces.*',
+                    'districts.*',
+                    'electorates.*',
+                    'sub_districts.*',
+                    'users.name as name_user'
+                )
+            ->get();
 
         $count_units = count($polling_units);
+
+        // echo "<pre>";
+        // print_r($polling_units);
+        // echo "<pre>";
 
         return view('polling_units.index', compact('polling_units', 'count_units'));
     }
@@ -212,4 +224,62 @@ class Polling_unitsController extends Controller
         return "SUCCESS" ;
 
     }
+
+    function create_user_units($province){
+
+
+        $polling_units = DB::table('polling_units')
+            ->leftjoin('provinces', 'polling_units.province_id', '=', 'provinces.id')
+            ->where('provinces.name_province' ,$province)
+            ->where('polling_units.user_id' , null)
+            ->select('polling_units.*')
+            ->get();
+
+        if ($polling_units->isEmpty()) {
+            // หากไม่มีข้อมูล polling_units ให้หยุดการทำงาน
+            return "Empty polling units";
+        }
+
+        $usedPasswords = [];
+        $count_create = 0 ;
+
+        foreach ($polling_units as $item) {
+
+            do {
+                // สร้างรหัสผ่านตัวเลข 6 หลักที่ไม่ซ้ำ
+                $password = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            } while (in_array($password, $usedPasswords));
+
+            $usedPasswords[] = $password; // เก็บรหัสผ่านที่ใช้แล้ว
+            $username = "officer" . ($item->province_id ?? "0") . "-" . ($item->id ?? "0");
+
+            $user = new User();
+            $user->name = "กรุณาเพิ่มชื่อของคุณ";
+            $user->email = "-";
+            $user->username = $username;
+            $user->password = Hash::make($password);
+            $user->role = "officer";
+            $user->status = "active";
+            $user->province = $province;
+
+            $user->province_id = $item->province_id;
+            $user->district_id = $item->district_id;
+            $user->electorate_id = $item->electorate_id;
+            $user->sub_district_id = $item->sub_district_id;
+            $user->polling_unit_id = $item->id;
+
+            $user->save();
+
+            DB::table('polling_units')
+                ->where('id', $item->id)
+                ->update(
+                    ['user_id' => $user->id]
+                );
+
+            $count_create = $count_create + 1 ;
+        }
+
+        return $count_create ;
+    }
+
 }
