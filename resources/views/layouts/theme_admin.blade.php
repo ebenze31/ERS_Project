@@ -232,138 +232,7 @@
 											</div>
 										</a>
 										<div class="header-message-list">
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-1.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Daisy Anderson <span class="msg-time float-end">5 sec
-													ago</span></h6>
-														<p class="msg-info">The standard chunk of lorem</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-2.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Althea Cabardo <span class="msg-time float-end">14
-													sec ago</span></h6>
-														<p class="msg-info">Many desktop publishing packages</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-3.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Oscar Garner <span class="msg-time float-end">8 min
-													ago</span></h6>
-														<p class="msg-info">Various versions have evolved over</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-4.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Katherine Pechon <span class="msg-time float-end">15
-													min ago</span></h6>
-														<p class="msg-info">Making this the first true generator</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-5.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Amelia Doe <span class="msg-time float-end">22 min
-													ago</span></h6>
-														<p class="msg-info">Duis aute irure dolor in reprehenderit</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-6.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Cristina Jhons <span class="msg-time float-end">2 hrs
-													ago</span></h6>
-														<p class="msg-info">The passage is attributed to an unknown</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-7.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">James Caviness <span class="msg-time float-end">4 hrs
-													ago</span></h6>
-														<p class="msg-info">The point of using Lorem</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-8.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Peter Costanzo <span class="msg-time float-end">6 hrs
-													ago</span></h6>
-														<p class="msg-info">It was popularised in the 1960s</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-9.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">David Buckley <span class="msg-time float-end">2 hrs
-													ago</span></h6>
-														<p class="msg-info">Various versions have evolved over</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-10.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Thomas Wheeler <span class="msg-time float-end">2 days
-													ago</span></h6>
-														<p class="msg-info">If you are going to use a passage</p>
-													</div>
-												</div>
-											</a>
-											<a class="dropdown-item" href="javascript:;">
-												<div class="d-flex align-items-center">
-													<div class="user-online">
-														<img src="assets/images/avatars/avatar-11.png" class="msg-avatar" alt="user avatar">
-													</div>
-													<div class="flex-grow-1">
-														<h6 class="msg-name">Johnny Seitz <span class="msg-time float-end">5 days
-													ago</span></h6>
-														<p class="msg-info">All the Lorem Ipsum generators</p>
-													</div>
-												</div>
-											</a>
+											<!--  -->
 										</div>
 										<a href="javascript:;">
 											<div class="text-center msg-footer">View All Messages</div>
@@ -433,7 +302,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="#" class="">
+							<a href="{{ url('/polling_units') }}" class="">
 								<div class="parent-icon">
 									<i class="fa-duotone fa-solid fa-building-flag"></i>
 								</div>
@@ -443,7 +312,7 @@
 						<li>
                             <a class="has-arrow" href="javascript:;">
 								<div class="parent-icon">
-									<i class="fa-solid fa-bars"></i>
+									<i class="fa-solid fa-pen-field"></i>
 								</div>
 								<div class="menu-title">คะแนนเลือกตั้ง</div>
 							</a>

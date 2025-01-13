@@ -37,7 +37,7 @@
                                 @foreach($scores as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->candidate_id }}</td><td>{{ $item->yesr_id }}</td><td>{{ $item->polling_unit_id }}</td><td>{{ $item->sub_district_id }}</td><td>{{ $item->electorate_id }}</td><td>{{ $item->district_id }}</td><td>{{ $item->province_id }}</td><td>{{ $item->score }}</td><td>{{ $item->round }}</td>
+                                        <td>{{ $item->candidate_id }}</td><td>{{ $item->year_id }}</td><td>{{ $item->polling_unit_id }}</td><td>{{ $item->sub_district_id }}</td><td>{{ $item->electorate_id }}</td><td>{{ $item->district_id }}</td><td>{{ $item->province_id }}</td><td>{{ $item->score }}</td><td>{{ $item->round }}</td>
                                         <td>
                                             <a href="{{ url('/scores/' . $item->id) }}" title="View Score"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/scores/' . $item->id . '/edit') }}" title="Edit Score"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

@@ -3,10 +3,10 @@
     <input class="form-control" name="candidate_id" type="text" id="candidate_id" value="{{ isset($score->candidate_id) ? $score->candidate_id : ''}}" >
     {!! $errors->first('candidate_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('yesr_id') ? 'has-error' : ''}}">
-    <label for="yesr_id" class="control-label">{{ 'Yesr Id' }}</label>
-    <input class="form-control" name="yesr_id" type="text" id="yesr_id" value="{{ isset($score->yesr_id) ? $score->yesr_id : ''}}" >
-    {!! $errors->first('yesr_id', '<p class="help-block">:message</p>') !!}
+<div class="form-group {{ $errors->has('year_id') ? 'has-error' : ''}}">
+    <label for="year_id" class="control-label">{{ 'Yesr Id' }}</label>
+    <input class="form-control" name="year_id" type="text" id="year_id" value="{{ isset($score->year_id) ? $score->year_id : ''}}" >
+    {!! $errors->first('year_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('polling_unit_id') ? 'has-error' : ''}}">
     <label for="polling_unit_id" class="control-label">{{ 'Polling Unit Id' }}</label>

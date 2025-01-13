@@ -25,7 +25,7 @@ class Score extends Model
      *
      * @var array
      */
-    protected $fillable = ['candidate_id', 'yesr_id', 'polling_unit_id', 'sub_district_id', 'electorate_id', 'district_id', 'province_id', 'score', 'round'];
+    protected $fillable = ['candidate_id', 'year_id', 'polling_unit_id', 'sub_district_id', 'electorate_id', 'district_id', 'province_id', 'score', 'round'];
 
     
 }

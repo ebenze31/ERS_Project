@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Models\Electorate;
 use App\Models\Polling_unit;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -141,6 +142,42 @@ class Polling_unitsController extends Controller
 
         // ข้ามแถวแรก (header) โดยใช้ array_slice()
         $rows = array_slice($data[0], 1);
+
+        $old_P = "" ;
+        $old_A = "" ;
+        foreach ($rows as $row) {
+            // จังหวัด
+            $province = $row[0] ;
+            // อำเภอ
+            $district = $row[1];
+            // เขตเลือกตั้งที่
+            $name_electorate = $row[2];
+            // ชื่อหน่วยเลือกตั้ง(ตำบล)
+            $name_polling_unit = $row[3];
+            // หน่วยเลือกตั้งที่
+            $number_polling_unit = $row[4];
+            // จำนวนผู้มีสิทธิ
+            $eligible_voters = $row[5];
+
+            if($old_P != $province){
+                $data_P = Province::where('name_province',$province)->first();
+                $old_P = $province ;
+            }
+
+            if($old_A != $district){
+                $data_A = District::where('name_district',$district)
+                    ->where('province_id' , $data_P->id)
+                    ->first();
+                $old_A = $district ;
+            }
+
+            // เพิ่มใน Electorates (เขตเลือกตั้ง)
+            $data_Electorates = [];
+            $data_Electorates['name_electorate'] = $name_electorate ;
+            $data_Electorates['province_id'] = $data_P->id ;
+            $data_Electorates['district_id'] = $data_A->id ;
+            Electorate::create($data_Electorates);
+        }
 
         return $rows ;
 

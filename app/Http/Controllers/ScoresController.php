@@ -18,7 +18,7 @@ class ScoresController extends Controller
 
         if (!empty($keyword)) {
             $scores = Score::where('candidate_id', 'LIKE', "%$keyword%")
-                ->orWhere('yesr_id', 'LIKE', "%$keyword%")
+                ->orWhere('year_id', 'LIKE', "%$keyword%")
                 ->orWhere('polling_unit_id', 'LIKE', "%$keyword%")
                 ->orWhere('sub_district_id', 'LIKE', "%$keyword%")
                 ->orWhere('electorate_id', 'LIKE', "%$keyword%")

@@ -27,7 +27,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $score->id }}</td>
                                     </tr>
-                                    <tr><th> Candidate Id </th><td> {{ $score->candidate_id }} </td></tr><tr><th> Yesr Id </th><td> {{ $score->yesr_id }} </td></tr><tr><th> Polling Unit Id </th><td> {{ $score->polling_unit_id }} </td></tr><tr><th> Sub District Id </th><td> {{ $score->sub_district_id }} </td></tr><tr><th> Electorate Id </th><td> {{ $score->electorate_id }} </td></tr><tr><th> District Id </th><td> {{ $score->district_id }} </td></tr><tr><th> Province Id </th><td> {{ $score->province_id }} </td></tr><tr><th> Score </th><td> {{ $score->score }} </td></tr><tr><th> Round </th><td> {{ $score->round }} </td></tr>
+                                    <tr><th> Candidate Id </th><td> {{ $score->candidate_id }} </td></tr><tr><th> Yesr Id </th><td> {{ $score->year_id }} </td></tr><tr><th> Polling Unit Id </th><td> {{ $score->polling_unit_id }} </td></tr><tr><th> Sub District Id </th><td> {{ $score->sub_district_id }} </td></tr><tr><th> Electorate Id </th><td> {{ $score->electorate_id }} </td></tr><tr><th> District Id </th><td> {{ $score->district_id }} </td></tr><tr><th> Province Id </th><td> {{ $score->province_id }} </td></tr><tr><th> Score </th><td> {{ $score->score }} </td></tr><tr><th> Round </th><td> {{ $score->round }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
