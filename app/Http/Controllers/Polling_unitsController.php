@@ -10,6 +10,9 @@ use App\Models\Polling_unit;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use App\Models\Province;
+use App\Models\District;
+use App\Models\Sub_district;
 
 class Polling_unitsController extends Controller
 {
@@ -35,7 +38,9 @@ class Polling_unitsController extends Controller
             $polling_units = Polling_unit::latest()->paginate($perPage);
         }
 
-        return view('polling_units.index', compact('polling_units'));
+        $count_units = count($polling_units);
+
+        return view('polling_units.index', compact('polling_units', 'count_units'));
     }
 
     /**
@@ -145,6 +150,9 @@ class Polling_unitsController extends Controller
 
         $old_P = "" ;
         $old_A = "" ;
+        $old_electorate_A = "" ;
+        $old_name_electorate = "" ;
+
         foreach ($rows as $row) {
             // จังหวัด
             $province = $row[0] ;
@@ -156,6 +164,8 @@ class Polling_unitsController extends Controller
             $name_polling_unit = $row[3];
             // หน่วยเลือกตั้งที่
             $number_polling_unit = $row[4];
+            // ชื่อหน่วย
+            $name_unit = $name_polling_unit . " หน่วยที่ " . $number_polling_unit ;
             // จำนวนผู้มีสิทธิ
             $eligible_voters = $row[5];
 
@@ -171,15 +181,35 @@ class Polling_unitsController extends Controller
                 $old_A = $district ;
             }
 
-            // เพิ่มใน Electorates (เขตเลือกตั้ง)
-            $data_Electorates = [];
-            $data_Electorates['name_electorate'] = $name_electorate ;
-            $data_Electorates['province_id'] = $data_P->id ;
-            $data_Electorates['district_id'] = $data_A->id ;
-            Electorate::create($data_Electorates);
+            if($old_electorate_A == $district && $old_name_electorate == $name_electorate){
+                // เหมือนกันทั้งอำเภอและเขต ข้าม
+            }
+            else{
+                // เพิ่มใน Electorates (เขตเลือกตั้ง)
+                $data_Electorates = [];
+                $data_Electorates['name_electorate'] = $name_electorate ;
+                $data_Electorates['province_id'] = $data_P->id ;
+                $data_Electorates['district_id'] = $data_A->id ;
+                $create_electorate = Electorate::create($data_Electorates);
+
+                $old_electorate_A = $district ;
+                $old_name_electorate = $name_electorate ;
+            }
+
+            // เพิ่มใน Polling_units (หน่วยลงคะแนนเสียง)
+            $data_Polling_unit = [];
+            $data_Polling_unit['name_polling_unit'] = $name_unit ;
+            $data_Polling_unit['province_id'] = $data_P->id ;
+            $data_Polling_unit['district_id'] = $data_A->id ;
+            $data_Polling_unit['electorate_id'] = $create_electorate->id ;
+            $data_Polling_unit['eligible_voters'] = $eligible_voters ;
+            // $data_Polling_unit['sub_district_id'] = xxx ;
+            // $data_Polling_unit['moo'] = xxx ;
+            // $data_Polling_unit['amount_home'] = xxx ;
+            Polling_unit::create($data_Polling_unit);
         }
 
-        return $rows ;
+        return "SUCCESS" ;
 
     }
 }
