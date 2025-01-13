@@ -25,6 +25,18 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth', 'role:dev-admin'])->group(function () {
     Route::get('/add_districts', 'For_DevController@add_districts');
 });
+
+Route::get('/after_login', function () {
+    return view('after_login');
+});
+
+Route::get('/mockup/after_login', function () {
+    return view('mockup/after_login');
+});
+
+Route::get('/mockup/score', function () {
+    return view('mockup/score');
+});
 // ----- End DEV ----- //
 
 // -------------------------------------------------------------------------

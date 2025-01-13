@@ -1,9 +1,37 @@
-@extends('layouts.app')
+@extends('layouts.theme')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="container mx-auto">
+
+    <div class="w-100 h-[calc(100dvh-96px)] mt-[48px] flex justify-center items-center h-100">
+
+        <div class="block max-w-[528px] shadow-lg w-full p-6 bg-white border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3">
+            <p class="text-[47px] font-extrabold header-text">Login</p>
+            <form method="POST" action="{{ route('login') }}" class="mt-2">
+                @csrf
+
+                <div class="form-group row">
+                    
+                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+                    <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" required autocomplete="email" autofocus/>
+                </div>
+                <div class="form-group row mt-4">
+                    
+                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                    <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" required autocomplete="email" autofocus/>
+                </div>
+
+         
+                <div class="flex w-100 my-2 mt-5">
+                    <button type="submit" class="btn rounded-full bg-slate-950 w-full text-white p-2 button ">Login</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- <div class="row justify-content-center">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -68,6 +96,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 @endsection
