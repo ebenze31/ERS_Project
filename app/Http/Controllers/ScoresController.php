@@ -84,11 +84,10 @@ class ScoresController extends Controller
         return redirect('scores')->with('flash_message', 'Score deleted!');
     }
 
-
-    public function admin_report_score($id)
+    public function admin_report_score()
     {
-        $admin_score = Score::get();
+        // $admin_score = Score::get();
 
-        return view('scores.admin_report_score', compact('admin_score'));
+        return view('scores.admin_report_score');
     }
 }
