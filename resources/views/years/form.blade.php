@@ -1,3 +1,8 @@
+<style>
+    label{
+        font-weight: bold;
+    }
+</style>
 <div class="form-group mt-2 {{ $errors->has('year') ? 'has-error' : '' }}">
     <label for="year" class="control-label">{{ 'ปีการเลือกตั้ง (พ.ศ.)' }}</label>
     @php

@@ -74,9 +74,9 @@ class Polling_unitsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         Polling_unit::create($requestData);
 
         return redirect('polling_units')->with('flash_message', 'Polling_unit added!');
@@ -120,9 +120,9 @@ class Polling_unitsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $polling_unit = Polling_unit::findOrFail($id);
         $polling_unit->update($requestData);
 

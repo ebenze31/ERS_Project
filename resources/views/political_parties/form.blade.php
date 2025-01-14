@@ -1,3 +1,8 @@
+<style>
+    label{
+        font-weight: bold;
+    }
+</style>
 <div class="form-group mt-2 {{ $errors->has('name') ? 'has-error' : ''}}">
     <label for="name" class="control-label">{{ 'ชื่อพรรค' }}</label>
     <input class="form-control" name="name" type="text" id="name" value="{{ isset($political_party->name) ? $political_party->name : ''}}" >

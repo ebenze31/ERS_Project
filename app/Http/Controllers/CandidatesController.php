@@ -7,6 +7,7 @@ use App\Http\Requests;
 
 use App\Models\Candidate;
 use App\Models\District;
+use App\Models\Electorate;
 use App\Models\Political_party;
 use App\Models\Province;
 use App\Models\Sub_district;
@@ -180,6 +181,7 @@ class CandidatesController extends Controller
         $data['provinces'] = Province::get();
         $data['districts'] = District::get();
         $data['sub_districts'] = Sub_district::get();
+        $data['electorates'] = Electorate::get();
         $data['type_candidates'] = Type_candidate::get();
 
         return $data;

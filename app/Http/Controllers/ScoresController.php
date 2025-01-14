@@ -7,6 +7,7 @@ use App\Http\Requests;
 
 use App\Models\Score;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ScoresController extends Controller
 {
@@ -86,8 +87,18 @@ class ScoresController extends Controller
 
     public function admin_report_score()
     {
-        // $admin_score = Score::get();
+        $scores = DB::table('scores')
+        ->join('candidates', 'scores.candidate_id', '=', 'candidates.id')
+        ->join('political_parties', 'candidates.political_partie_id', '=', 'political_parties.id')
+        ->select(
+            'scores.score',
+            'candidates.*',
+            'political_parties.name as political_party_name',
+            'political_parties.logo as political_party_logo',
+        )
+        ->get();
 
-        return view('scores.admin_report_score');
+
+        return view('scores.admin_report_score',compact('scores'));
     }
 }

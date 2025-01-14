@@ -341,13 +341,18 @@
 							</a>
 							<ul>
 								<li>
-									<a href="authentication-signin.html" target="_blank">
+									<a href="{{ url('/political_parties') }}" target="_blank">
 										<i class="bx bx-right-arrow-alt"></i>เพิ่มพรรคการเมือง
 									</a>
 								</li>
 								<li>
 									<a href="authentication-signin.html" target="_blank">
 										<i class="bx bx-right-arrow-alt"></i>จัดการผู้ใช้
+									</a>
+								</li>
+                                <li>
+									<a href="{{ url('/election_setting') }}" target="_blank">
+										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าการเลือกตั้ง
 									</a>
 								</li>
 							</ul>

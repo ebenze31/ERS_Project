@@ -1,3 +1,8 @@
+<style>
+    label{
+        font-weight: bold;
+    }
+</style>
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label for="name" class="control-label">{{ 'ชื่อ-สกุล' }}</label>
     <input class="form-control" name="name" type="text" id="name" value="{{ isset($candidate->name) ? $candidate->name : ''}}" >
@@ -22,7 +27,7 @@
 </div>
 
 <div class="form-group {{ $errors->has('province_id') ? 'has-error' : ''}}">
-    <label for="province_id" class="control-label">{{ 'Province Id' }}</label>
+    <label for="province_id" class="control-label">{{ 'จังหวัด' }}</label>
     <select class="form-control" name="province_id" id="province_id">
         <option value="">เลือกจังหวัด</option>
     </select>
@@ -30,7 +35,7 @@
 </div>
 
 <div class="form-group {{ $errors->has('district_id') ? 'has-error' : '' }}">
-    <label for="district_id" class="control-label">{{ 'District Id' }}</label>
+    <label for="district_id" class="control-label">{{ 'อำเภอ' }}</label>
     <select class="form-control" name="district_id" id="district_id">
         <option value="">เลือกอำเภอ</option>
     </select>
@@ -38,20 +43,27 @@
 </div>
 
 <div class="form-group {{ $errors->has('sub_district_id') ? 'has-error' : '' }}">
-    <label for="sub_district_id" class="control-label">{{ 'Sub District Id' }}</label>
+    <label for="sub_district_id" class="control-label">{{ 'ตำบล (optional)' }}</label>
     <select class="form-control" name="sub_district_id" id="sub_district_id">
         <option value="">เลือกตำบล</option>
     </select>
-    {!! $errors->first('sub_district_id', '<p class="help-block">:message</p>') !!}
 </div>
 
-<div  class="form-group {{ $errors->has('electorate_id') ? 'has-error' : ''}}">
+<div class="form-group {{ $errors->has('electorate_id') ? 'has-error' : '' }}">
+    <label for="electorate_id" class="control-label">{{ 'เขตเลือกตั้ง' }}</label>
+    <select class="form-control" name="electorate_id" id="electorate_id">
+        <option value="">เลือกเขตเลือกตั้ง</option>
+    </select>
+    {!! $errors->first('electorate_id', '<p class="help-block">:message</p>') !!}
+</div>
+
+{{-- <div  class="form-group {{ $errors->has('electorate_id') ? 'has-error' : ''}}">
     <label for="electorate_id" class="control-label">{{ 'Electorate Id' }}</label>
     <input disabled class="form-control" name="electorate_id" type="text" id="electorate_id" value="{{ isset($candidate->electorate_id) ? $candidate->electorate_id : ''}}" >
     {!! $errors->first('electorate_id', '<p class="help-block">:message</p>') !!}
-</div>
+</div> --}}
 <div class="form-group {{ $errors->has('year_id') ? 'has-error' : ''}}">
-    <label for="year_id" class="control-label">{{ 'Year Id' }}</label>
+    <label for="year_id" class="control-label">{{ 'ปี/รอบการเลือกตั้ง' }}</label>
     <select class="form-control" name="year_id" id="year_id">
 
     </select>
@@ -108,9 +120,11 @@
             return response.json();
         })
         .then(result => {
+
             console.log(result);
-            updatelist(result)
-            selectElectionArea(result)
+
+            selectElectionArea(result) // ฟังก์ชันเพิ่มข้อมูลใน select จังหวัด อำเภอ ตำบล และเขตการเลือกตั้ง
+            selectElectionVote(result) // ฟังก์ชันเพิ่มข้อมูลใน select พรรคการเมือง กับ select ปี/รอบการเลือกตั้ง
         }).catch(error => {
             console.error('Error:', error);
         });
@@ -120,16 +134,19 @@
         console.log(result.provinces);
         console.log(result.districts);
         console.log(result.sub_districts);
+        console.log(result.electorates);
 
         // ดึงข้อมูลจาก API
         const provinces = result.provinces;
         const districts = result.districts;
         const subDistricts = result.sub_districts;
+        const electorates = result.electorates;
 
         // อ้างอิง select element
         const provinceSelect = document.getElementById('province_id');
         const districtSelect = document.getElementById('district_id');
         const subDistrictSelect = document.getElementById('sub_district_id');
+        const electorateSelect = document.getElementById('electorate_id');
 
         // ฟังก์ชันสร้าง options
         function createOptions(data, selectElement, valueField, textField, placeholder) {
@@ -149,47 +166,34 @@
         provinceSelect.addEventListener('change', () => {
             const selectedProvinceId = provinceSelect.value;
 
-
             // กรองอำเภอที่ตรงกับจังหวัดที่เลือก
             const filteredDistricts = districts.filter(district => district.province_id === selectedProvinceId);
-
             // อัปเดตอำเภอใน dropdown
             createOptions(filteredDistricts, districtSelect, 'id', 'name_district', 'เลือกอำเภอ');
 
             // ล้างข้อมูลตำบล
             subDistrictSelect.innerHTML = '<option value="">เลือกตำบล</option>';
-            // subDistrictSelect.disabled = true;
-
-            // เปิดใช้งาน dropdown อำเภอ
-            // districtSelect.disabled = filteredDistricts.length === 0;
         });
 
         // Event listener สำหรับอำเภอ
         districtSelect.addEventListener('change', () => {
+            //============================= กรองตำบลที่ตรงกับอำเภอที่เลือก======================================
             const selectedDistrictId = districtSelect.value;
-            // console.log("districtSelect : "+districtSelect.value);
-            // กรองตำบลที่ตรงกับอำเภอที่เลือก
             const filteredSubDistricts = subDistricts.filter(subDistrict => subDistrict.district_id === selectedDistrictId);
-            console.log(filteredSubDistricts);
-            // อัปเดตตำบลใน dropdown
-            createOptions(filteredSubDistricts, subDistrictSelect, 'id', 'name_sub_districts', 'เลือกตำบล');
-            console.log("createOptions");
-            console.log(filteredSubDistricts);
-            console.log(subDistrictSelect);
 
-            // เปิดใช้งาน dropdown ตำบล
-            // subDistrictSelect.disabled = filteredSubDistricts.length === 0;
+            createOptions(filteredSubDistricts, subDistrictSelect, 'id', 'name_sub_districts', 'เลือกตำบล');
+
+            //========================== กรองเขตเลือกตั้งที่ตรงกับอำเภอที่เลือก =========================================
+
+            const filteredElectorates = electorates.filter(electorate => electorate.district_id === selectedDistrictId);
+
+            createOptions(filteredElectorates, electorateSelect, 'id', 'name_electorate', 'เลือกเขตเลือกตั้ง');
+
         });
 
-        // เริ่มต้นสถานะ
-        // districtSelect.disabled = true;
-        // subDistrictSelect.disabled = true;
     }
 
-    function updatelist(result) {
-        //================== datalist ประเภทผู้สมัคร ========================
-
-
+    function selectElectionVote(result) {
         //================== select พรรคการเมือง ========================
 
         const selectedPartyId = '{{ isset($candidate->political_partie_id) ? $candidate->political_partie_id : ''}}';
@@ -214,7 +218,7 @@
             politicalPartieSelect.appendChild(option);
         }
 
-        //================== select ปีและรอบการเลือกตั้ง  ========================
+        //============================== select ปีและรอบการเลือกตั้ง  ======================================
 
         const selectedYearId = '{{ isset($candidate->year_id) ? $candidate->year_id : ''}}';
         console.log("selectedYearId :"+selectedYearId);
@@ -242,7 +246,7 @@
 
     }
 
-    // ============================================================================================
+    // ==================================== สลับ input ประเภทผู้สมัคร ========================================================
     const selectWrapper = document.getElementById('select-wrapper');
     const inputWrapper = document.getElementById('input-wrapper');
     const selectElement = document.getElementById('type-select');
@@ -284,7 +288,7 @@
     // ตั้งค่าเริ่มต้นให้ Hidden Input
     hiddenInput.value = selectElement.value; // ค่าเริ่มต้นมาจาก Select
 
-    // ============================================================================================
+    // =====================================  ตรวจสอบข้อมูลก่อน submit =======================================================
 
     document.querySelector('form').addEventListener('submit', function (event) {
         let isValid = true;
@@ -300,7 +304,7 @@
             { id: 'political_partie_id', message: 'กรุณาเลือกพรรคการเมือง' },
             { id: 'province_id', message: 'กรุณาเลือกจังหวัด' },
             { id: 'district_id', message: 'กรุณาเลือกอำเภอ' },
-            { id: 'sub_district_id', message: 'กรุณาเลือกตำบล' },
+            { id: 'electorate_id', message: 'กรุณาเลือกเขตเลือกตั้ง' },
             { id: 'year_id', message: 'กรุณาเลือกปีการเลือกตั้ง' },
         ];
 
@@ -354,6 +358,7 @@
         }
     }
 
+    // ============================================================================================
 
 </script>
 

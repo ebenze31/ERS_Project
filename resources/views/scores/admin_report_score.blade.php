@@ -1,29 +1,57 @@
 @extends('layouts.theme_admin')
 
 @section('content')
-<div class="container mt-4">
-    <div class="row">
-        <h2 class="text-center mb-4">ผลคะแนนการเลือกตั้ง</h2>
+    <div class="container mt-4">
+        <div class="row">
+            <h2 class="text-center mb-4">ผลคะแนนการเลือกตั้ง</h2>
 
-        {{-- @foreach ($data as $result) --}}
-            <div class="col-12 col-md-4 mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>{ $result->district }</span>
-                        <a href="{ route('election.details', $result->id) }" class="btn btn-sm btn-primary">ดูข้อมูลเพิ่มเติม</a>
-                    </div>
-                    <div class="card-body d-flex align-items-center">
-                        <img src="{ asset('images/' . $result->candidate_image) }" alt="รูปผู้สมัคร" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
-                        <div class="ms-3">
-                            <h5 class="mb-1">{ $result->candidate_name }</h5>
-                            <p class="mb-0 text-muted">{ number_format($result->votes) } คะแนน</p>
+            @foreach ($scores as $result)
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card shadow-sm" style="border-radius: 1.5rem;">
+                        <div class="card-header d-flex justify-content-between align-items-center"
+                            style="border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem;">
+                            <span>{ $result->district }</span>
+                            <a href="{ route('election.details', $result->id) }" class="text-dark">เพิ่มเติม</a>
+                        </div>
+                        <div class="d-flex align-items-center mx-3 mt-2">
+                            @if(!empty($result->img))
+                                <img class="rounded-circle me-3" src="{{ url('/storage'."/" . $result->img) }}" alt="User Avatar" style="width: 48px; height: 48px;">
+                            @else
+                                <img class="rounded-circle me-3" src="https://placehold.co/48x48" alt="User Avatar" style="width: 48px; height: 48px;">
+                            @endif
+                            <div>
+                                <h2 class="h5 mb-0">{{ $result->name }}</h2>
+                                <p class="text-secondary mb-0">
+                                    @if(!empty($result->political_party_logo))
+                                        <img class="rounded-circle me-1" src="{{ url('/storage'."/" . $result->political_party_logo) }}" alt="User Avatar" style="width: 14px; height: 14px;">
+                                    @else
+                                        <img class="rounded-circle me-1" src="https://placehold.co/48x48" alt="User Avatar" style="width: 14px; height: 14px;">
+                                    @endif
+                                    {{ $result->political_party_name }}
+                                </p>
+                            </div>
+                            <span class="ms-auto text-success fw-bold fs-4">904</span>
+                        </div>
+                        <hr class="mx-3 mb-2">
+                        <div class="d-flex align-items-center mx-3 mb-2 ">
+                            <div>
+                                <h2 class="h6 mb-0">{{ $result->name }}</h2>
+                                <p class="text-secondary mb-0">
+                                    @if(!empty($result->political_party_logo))
+                                        <img class="rounded-circle me-1" src="{{ url('/storage'."/" . $result->political_party_logo) }}" alt="User Avatar" style="width: 14px; height: 14px;">
+                                    @else
+                                        <img class="rounded-circle me-1" src="https://placehold.co/48x48" alt="User Avatar" style="width: 14px; height: 14px;">
+                                    @endif
+                                    {{ $result->political_party_name }}
+                                </p>
+                            </div>
+                            <span class="ms-auto text-dark fs-5">222</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        {{-- @endforeach --}}
+            @endforeach
 
+
+        </div>
     </div>
-</div>
 @endsection
-
