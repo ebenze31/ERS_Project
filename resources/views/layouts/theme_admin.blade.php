@@ -297,7 +297,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="#" class="">
+							<a href="{{ url('/candidates') }}" class="">
 								<div class="parent-icon">
 									<i class="fa-solid fa-user-tie"></i>
 								</div>

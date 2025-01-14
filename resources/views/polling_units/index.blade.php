@@ -75,7 +75,7 @@
             <h4>
                 หน่วยเลือกตั้ง <span style="font-size: 14px;">(ทั้งหมด {{ $count_units }} หน่วย)</span>
                 @if( Auth::user()->role == "dev-admin" )
-                <button class="btn btn-info float-end" onclick="create_user_units();">
+                <button id="btn_create_user_units" class="btn btn-info float-end" onclick="create_user_units();">
                     สร้างรหัสผู้ใช้
                 </button>
                 @endif
@@ -114,6 +114,8 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             
@@ -121,14 +123,45 @@
 
         function create_user_units(){
             let province = "{{ Auth::user()->province }}";
+            document.querySelector('#btn_create_user_units').innerHTML = 
+                `
+                    <div class="spinner-border text-light" role="status" style="scale: 0.7;"></div>
+                    กำลังดำเนินการ
+                `;
 
             fetch("{{ url('/') }}/api/create_user_units/" + province)
-            .then(response => response.text())
-            .then(result => {
-                if(result){
-                    console.log(result);
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                if (data) {
+                    // console.log("Data received:", data.users);
+                    createExcelFile(data,province); // ส่งข้อมูลไปสร้างไฟล์ Excel
+                } else {
+                    alert("ไม่มีข้อมูลสำหรับสร้างผู้ใช้");
                 }
             });
+        }
+
+        function createExcelFile(usersData,province) {
+            // แปลงข้อมูลที่ได้เป็นรูปแบบที่ต้องการ
+            const excelData = usersData.map(user => ({
+                "อำเภอ": user.district,
+                "เขต": user.electorate,
+                "หน่วยเลือกตั้ง": user.polling_unit,
+                "username": user.username,
+                "password": user.password,
+            }));
+
+            // สร้างเวิร์กบุ๊กและเวิร์กชีต
+            const worksheet = XLSX.utils.json_to_sheet(excelData); // สร้าง Sheet จาก JSON
+            const workbook = XLSX.utils.book_new(); // สร้าง Workbook ใหม่
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Users Data"); // เพิ่ม Sheet เข้า Workbook
+
+            // สร้างไฟล์ Excel และดาวน์โหลด
+            const fileName = "รหัสผู้ใช้งาน_"+province+".xlsx";
+            XLSX.writeFile(workbook, fileName);
+
+            document.querySelector('#btn_create_user_units').innerHTML = `สร้างรหัสผู้ใช้เรียบร้อย`;
         }
 
     </script>

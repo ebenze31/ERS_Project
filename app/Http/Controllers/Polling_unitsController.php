@@ -227,12 +227,18 @@ class Polling_unitsController extends Controller
 
     function create_user_units($province){
 
-
         $polling_units = DB::table('polling_units')
             ->leftjoin('provinces', 'polling_units.province_id', '=', 'provinces.id')
+            ->leftjoin('districts', 'polling_units.district_id', '=', 'districts.id')
+            ->leftjoin('electorates', 'polling_units.electorate_id', '=', 'electorates.id')
+            ->leftjoin('sub_districts', 'polling_units.sub_district_id', '=', 'sub_districts.id')
             ->where('provinces.name_province' ,$province)
             ->where('polling_units.user_id' , null)
-            ->select('polling_units.*')
+            ->select(
+                'polling_units.*',
+                'districts.name_district',
+                'electorates.name_electorate',
+            )
             ->get();
 
         if ($polling_units->isEmpty()) {
@@ -241,7 +247,7 @@ class Polling_unitsController extends Controller
         }
 
         $usedPasswords = [];
-        $count_create = 0 ;
+        $usersData = [];
 
         foreach ($polling_units as $item) {
 
@@ -276,10 +282,17 @@ class Polling_unitsController extends Controller
                     ['user_id' => $user->id]
                 );
 
-            $count_create = $count_create + 1 ;
+            $usersData[] = [
+                'district' => $item->name_district,
+                'electorate' => $item->name_electorate,
+                'polling_unit' => $item->name_polling_unit,
+                'username' => $username,
+                'password' => $password,
+            ];
+
         }
 
-        return $count_create ;
+        return $usersData ;
     }
 
 }
