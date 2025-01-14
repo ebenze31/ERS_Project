@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\Type_candidate;
 use App\Models\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class YearsController extends Controller
 {
@@ -52,21 +53,21 @@ class YearsController extends Controller
     public function store(Request $request)
     {
         // การตรวจสอบข้อมูลที่ผู้ใช้ส่งมา
-        $request->validate([
-            'round' => 'required|integer|min:1',
-            'year' => 'required|integer|min:' . date('Y'), // ตรวจสอบว่า year เป็นปีปัจจุบันหรือมากกว่า
-            'active' => 'required|string|max:255' ,
-        ], [
-            'round.required' => 'กรุณากรอกข้อมูลรอบการเลือกตั้ง',
-            'round.integer' => 'รอบการเลือกตั้งต้องเป็นตัวเลข',
-            'round.min' => 'รอบการเลือกตั้งต้องมีค่ามากกว่า 0',
+        // $request->validate([
+        //     'round' => 'required|integer|min:1',
+        //     'year' => 'required|integer|min:' . date('Y'), // ตรวจสอบว่า year เป็นปีปัจจุบันหรือมากกว่า
+        //     'active' => 'required|string|max:255' ,
+        // ], [
+        //     'round.required' => 'กรุณากรอกข้อมูลรอบการเลือกตั้ง',
+        //     'round.integer' => 'รอบการเลือกตั้งต้องเป็นตัวเลข',
+        //     'round.min' => 'รอบการเลือกตั้งต้องมีค่ามากกว่า 0',
 
-            'year.required' => 'กรุณากรอกปีการเลือกตั้ง',
-            'year.integer' => 'ปีการเลือกตั้งต้องเป็นตัวเลข',
-            'year.min' => 'ปีการเลือกตั้งต้องเป็นปีปัจจุบันหรืออนาคต',
+        //     'year.required' => 'กรุณากรอกปีการเลือกตั้ง',
+        //     'year.integer' => 'ปีการเลือกตั้งต้องเป็นตัวเลข',
+        //     'year.min' => 'ปีการเลือกตั้งต้องเป็นปีปัจจุบันหรืออนาคต',
 
-            'active.required' => 'กรุณาเลือกประเภทผู้สมัครอย่างน้อย 1 อย่าง',
-        ]);
+        //     'active.required' => 'กรุณาเลือกประเภทผู้สมัครอย่างน้อย 1 อย่าง',
+        // ]);
 
         // รับข้อมูลที่ผ่านการตรวจสอบแล้ว
         $requestData = $request->all();
@@ -135,8 +136,10 @@ class YearsController extends Controller
 
     public function election_setting()
     {
-        $years = Year::get();
-        return view('years.election_setting',compact('years'));
+        $userProvince = Auth::user()->province;
+        $years = Year::where('province',$userProvince)->get();
+        $type_candidates = Type_candidate::get();
+        return view('years.election_setting',compact('years','type_candidates','userProvince'));
     }
 
     /// API ////
@@ -184,6 +187,84 @@ class YearsController extends Controller
             'data' => $year
         ]);
 
+    }
+
+    public function create_new_yearAPI(Request $request)
+    {
+        // ตรวจสอบข้อมูลซ้ำ
+        $existingYear = Year::where('year', $request->year)
+            ->where('round', $request->round)
+            ->where('province', $request->province)
+            ->first();
+
+        if ($existingYear) {
+            return response()->json([
+                'error' => 'ข้อมูลนี้มีอยู่แล้วในระบบ'
+            ], 400); // ส่งกลับ error message
+        }
+
+        // ถ้าไม่พบข้อมูลซ้ำ, ให้ทำการบันทึกข้อมูล
+        $yearData = new Year();
+        $yearData->year = $request->year;
+        $yearData->round = $request->round;
+        $yearData->province = $request->province;
+        $yearData->save();
+
+        // ดึงข้อมูลปีที่อัพเดต
+        $year_after_update = Year::where('province',$request->userProvince)->get();
+
+        return response()->json([
+            'success' => 'บันทึกข้อมูลสำเร็จ!',
+            'data' => $year_after_update
+        ], 200);
+    }
+
+    public function update_new_yearAPI(Request $request)
+    {
+        $year = Year::find($request->year_id);
+        if (!$year) {
+            return response()->json(['success' => false, 'message' => 'ไม่พบไอดีของข้อมูลใน years']);
+        }
+
+        // ถ้าต้องการเปลี่ยน status
+        if ($request->has('status')) {
+            $province = $year->province; // province ของ ID ที่ถูกเลือก
+            $status = $request->status;
+
+            // ถ้า status เป็น 'Yes', จะตั้งค่าของปีที่เหลือเป็น null
+            if ($status === 'Yes') {
+                // หาปีอื่นๆ ที่มี province ตรงกัน
+                $otherYearsWithSameProvince = Year::where('province', $province)
+                    ->where('id', '!=', $year->id) // ยกเว้นปีที่ถูกเลือก
+                    ->get();
+
+                // เปลี่ยน status ของปีที่มี province ตรงกันเป็น null
+                foreach ($otherYearsWithSameProvince as $otherYear) {
+                    $otherYear->status = null;
+                    $otherYear->save();
+                }
+            }
+
+            // ตั้งค่า status ของปีที่เลือก
+            $year->status = $status;
+        }
+
+        // ตรวจสอบว่า request มีค่าที่จะอัพเดตหรือไม่
+        if ($request->has('active')) {
+            $year->active = $request->active;
+        }
+        if ($request->has('show_parties')) {
+            $year->show_parties = $request->show_parties;
+        }
+
+
+        // บันทึกการเปลี่ยนแปลง
+        $year->save();
+
+        // ดึงข้อมูลปีที่อัพเดต
+        $year_after_update = Year::where('province',$request->userProvince)->get();
+
+        return response()->json(['success' => true, 'data' => $year_after_update]);
     }
 
 

@@ -60,7 +60,6 @@ Route::middleware(['auth', 'role:admin,dev-admin,officer'])->group(function () {
 
 // -------------------------------------------------------------------------
 
-
 Route::resource('political_parties', 'Political_partiesController');
 Route::resource('type_candidates', 'Type_candidatesController');
 Route::resource('years', 'YearsController');

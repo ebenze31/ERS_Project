@@ -36,5 +36,8 @@ Route::get('/getData_Type_Candidate', 'YearsController@getDataTypeCandidateAPI')
 Route::get('/getData_Election_Setting', 'YearsController@getData_Election_Setting_API');
 Route::get('/activeStatusYear', 'YearsController@activeStatusYearAPI');
 
+Route::post('/create_new_year', 'YearsController@create_new_yearAPI');
+Route::post('/update_new_year', 'YearsController@update_new_yearAPI');
+
 
 
