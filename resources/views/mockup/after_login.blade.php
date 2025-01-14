@@ -112,7 +112,7 @@
                             </div>
                             <div class="carousel-nav flex justify-end gap-2 pt-5">
                                 <a a href="#slide-1" data-slide-key="1" class="max-sm:w-1/3 text-center md:px-6 carousel-nav-next rounded-full  p-1.5 text-dark focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300">
-                                    <i class="fa-solid fa-arrow-left"></i> ย้อนกลับ
+                                    <i class="fa-solid fa-arrow-left"></i> กลับ
                                 </a>
 
                                 <button type="button" class="btn-color max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-gray-200 p-1.5 text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300">

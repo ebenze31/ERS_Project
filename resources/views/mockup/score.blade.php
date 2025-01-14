@@ -36,21 +36,21 @@
                 <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 ">
                     <p class="text-[33px] font-extrabold header-text">ตรวจสอบข้อมูลหน่วย</p>
 
-                    <div class="mt-5">
-                        <p class="text-[14.5px] text-[#939393]">หน่วยเลือกตั้ง</p>
-                        <p class="text-[19px] text-[#000] font-bold">เทศบาลเมืองปากแพรก (ยกเว้นหมู่ที่ 1) หน่วยที่ 1</p>
+                    <div class="mt-5 max-sm:block flex items-center justify-between">
+                        <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">หน่วยเลือกตั้ง</p>
+                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px] ">เทศบาลเมืองปากแพรก (ยกเว้นหมู่ที่ 1) หน่วยที่ 1</p>
                     </div>
-                    <hr class="mt-2 mb-3">
+                    <hr class="mt-2 mb-3 ">
 
-                    <div class="mt-5">
-                        <p class="text-[14.5px] text-[#939393]">เขต</p>
-                        <p class="text-[19px] text-[#000] font-bold">เมืองกาญจนบุรี เขตเลือกตั้งที่ 1 </p>
+                    <div class="mt-5 max-sm:block flex items-center justify-between">
+                        <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">เขต</p>
+                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">เมืองกาญจนบุรี เขตเลือกตั้งที่ 1 </p>
                     </div>
-                    <hr class="mt-2 mb-3">
+                    <hr class="mt-2 mb-3 ">
 
-                    <div class="mt-5">
-                        <p class="text-[14.5px] text-[#939393]">อำเภอ</p>
-                        <p class="text-[19px] text-[#000] font-bold">เมืองกาญจนบุรี</p>
+                    <div class="mt-5 max-sm:block flex items-center justify-between">
+                        <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">อำเภอ</p>
+                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">เมืองกาญจนบุรี</p>
                     </div>
 
                     <hr>
@@ -64,6 +64,7 @@
                             <input type="radio" name="radio" />
                             <span class="name max-sm:px-0 px-6 py-2">ส.อบจ.</span>
                         </label>
+                        
                         <!-- <label class="radio">
                                 <input type="radio" name="radio" />
                                 <span class="name max-sm:px-0 px-6 py-2">Third</span>
@@ -84,12 +85,11 @@
                         </div>
                     </div>
                     <div class="carousel-nav flex justify-end gap-2 pt-2">
-                        <a href="#slide-2" data-slide-key="2" class="btn-color max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-dark p-1.5 text-white shadow-sm hover:bg-gray-950 text-center mt-5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300">
+                        <a href="#"class="btn-color max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-dark p-1.5 text-white shadow-sm hover:bg-gray-950 text-center mt-5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300">
                             ยืนยัน
                         </a>
                     </div>
                 </div>
-                <!-- <a data-slide-key="2" class="h-2 indicator flex-auto text-center text-gray-700 bg-gray-400" href="#slide-2"></a> -->
 
             </div>
 

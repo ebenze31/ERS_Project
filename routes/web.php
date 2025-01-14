@@ -37,6 +37,9 @@ Route::get('/mockup/after_login', function () {
 Route::get('/mockup/score', function () {
     return view('mockup/score');
 });
+Route::get('/mockup/show_score', function () {
+    return view('mockup/show_score');
+});
 // ----- End DEV ----- //
 
 // -------------------------------------------------------------------------
