@@ -321,12 +321,12 @@
 							</a>
                             <ul>
 								<li>
-									<a href="{{ url('/admin_report_score') }}" target="_blank">
+									<a href="{{ url('/admin_report_score') }}">
 										<i class="bx bx-right-arrow-alt"></i>ผลคะแนนเลือกตั้ง
 									</a>
 								</li>
 								<li>
-									<a href="authentication-signin.html" target="_blank">
+									<a href="authentication-signin.html">
 										<i class="bx bx-right-arrow-alt"></i>การลงคะแนน
 									</a>
 								</li>
@@ -341,20 +341,27 @@
 							</a>
 							<ul>
 								<li>
-									<a href="{{ url('/political_parties') }}" target="_blank">
+									<a href="{{ url('/political_parties') }}">
 										<i class="bx bx-right-arrow-alt"></i>เพิ่มพรรคการเมือง
 									</a>
 								</li>
 								<li>
-									<a href="authentication-signin.html" target="_blank">
+									<a href="authentication-signin.html">
 										<i class="bx bx-right-arrow-alt"></i>จัดการผู้ใช้
 									</a>
 								</li>
                                 <li>
-									<a href="{{ url('/election_setting') }}" target="_blank">
+									<a href="{{ url('/election_setting') }}">
 										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าการเลือกตั้ง
 									</a>
 								</li>
+								@if(Auth::user()->role == "dev-admin")
+								<li>
+									<a href="{{ url('/add_districts') }}" target="_blank">
+										<i class="bx bx-right-arrow-alt"></i>Add Districts (For DEV)
+									</a>
+								</li>
+								@endif
 							</ul>
 						</li>
 					</ul>

@@ -74,11 +74,9 @@
         <div class="card-header">
             <h4>
                 หน่วยเลือกตั้ง <span style="font-size: 14px;">(ทั้งหมด {{ $count_units }} หน่วย)</span>
-                @if( Auth::user()->role == "dev-admin" )
                 <button id="btn_create_user_units" class="btn btn-info float-end" onclick="create_user_units();">
                     สร้างรหัสผู้ใช้
                 </button>
-                @endif
             </h4>
         </div>
         <div class="card-body">
@@ -133,11 +131,12 @@
             .then(response => response.json())
             .then(data => {
                 // console.log(data);
-                if (data) {
+                if ( data && data['status'] != "Empty polling units" ) {
                     // console.log("Data received:", data.users);
                     createExcelFile(data,province); // ส่งข้อมูลไปสร้างไฟล์ Excel
                 } else {
                     alert("ไม่มีข้อมูลสำหรับสร้างผู้ใช้");
+                    document.querySelector('#btn_create_user_units').innerHTML = `สร้างรหัสผู้ใช้`;
                 }
             });
         }

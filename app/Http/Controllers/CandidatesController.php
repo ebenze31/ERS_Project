@@ -15,6 +15,8 @@ use App\Models\Type_candidate;
 use App\Models\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class CandidatesController extends Controller
 {
@@ -40,7 +42,9 @@ class CandidatesController extends Controller
             $candidates = Candidate::latest()->paginate($perPage);
         }
 
-        return view('candidates.index', compact('candidates'));
+        $type_candidates = Type_candidate::get();
+
+        return view('candidates.index', compact('candidates','type_candidates'));
     }
 
     public function create()
@@ -184,6 +188,95 @@ class CandidatesController extends Controller
         $data['electorates'] = Electorate::get();
         $data['type_candidates'] = Type_candidate::get();
 
+        return $data;
+    }
+
+    public function excel_add_candidates(Request $request)
+    {
+        // ตรวจสอบว่ามีการอัปโหลดไฟล์หรือไม่
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+            'year_id' => 'required',
+            'type_candidates' => 'required',
+        ]);
+
+        // รับค่า year_id และ type_candidates
+        $year_id = $request->input('year_id');
+        $type_candidates = $request->input('type_candidates');
+
+        // รับไฟล์และเก็บใน storage
+        $file = $request->file('file');
+        $path = $file->store('uploads');  // หรือกำหนดตำแหน่งการเก็บตามต้องการ
+
+        // อ่านข้อมูลจากไฟล์ Excel
+        $data = Excel::toArray([], $file);
+
+        // ข้ามแถวแรก (header) โดยใช้ array_slice()
+        $rows = array_slice($data[0], 1);
+
+        $old_P = "" ;
+        $old_A = "" ;
+
+        foreach ($rows as &$row) {
+
+            // จังหวัด
+            $province = $row[0] ;
+            // อำเภอ
+            $district = $row[1];
+            // เขตเลือกตั้งที่
+            $name_electorate = $row[2];
+            // หมายเลข
+            $number_candidates = $row[3];
+            // ชื่อ-สกุลผู้สมัคร
+            $name_candidates = $row[4];
+            // ลิงก์รูปภาพผู้สมัคร
+            $img_url = $row[5];
+            // พรรคการเมือง
+            $political_partie = $row[6];
+
+            if($old_P != $province){
+                $data_P = Province::where('name_province',$province)->first();
+                $old_P = $province ;
+            }
+
+            if($old_A != $district){
+                $data_A = District::where('name_district',$district)
+                    ->where('province_id' , $data_P->id)
+                    ->first();
+                $old_A = $district ;
+            }
+
+            $data_Electorate = Electorate::where('name_electorate' , $name_electorate)
+                ->where('province_id' , $data_P->id)
+                ->where('district_id' , $data_A->id)
+                ->first();
+
+            $data_Political_party = Political_party::where('name' , $political_partie)->first();
+
+            $political_partie_id = "";
+            if( !empty($data_Political_party->id) ){
+                $political_partie_id = $data_Political_party->id;
+            }
+
+            $data_add = [];
+            $data_add['name'] = $name_candidates ;
+            $data_add['img_url'] = $img_url ;
+            $data_add['number'] = $number_candidates ;
+            $data_add['province_id'] = $data_P->id ;
+            $data_add['district_id'] = $data_A->id ;
+            $data_add['electorate_id'] = $data_Electorate->id ;
+            $data_add['political_partie_id'] = $political_partie_id ;
+            $data_add['year_id'] = $year_id ;
+            $data_add['type'] = $type_candidates ;
+            Candidate::create($data_add);
+        }
+
+        return "SUCCESS" ;
+
+    }
+
+    function get_data_years(){
+        $data['years'] = Year::get();
         return $data;
     }
 }

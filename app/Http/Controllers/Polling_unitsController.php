@@ -243,7 +243,8 @@ class Polling_unitsController extends Controller
 
         if ($polling_units->isEmpty()) {
             // หากไม่มีข้อมูล polling_units ให้หยุดการทำงาน
-            return "Empty polling units";
+            $data_return['status'] = "Empty polling units" ;
+            return $data_return;
         }
 
         $usedPasswords = [];

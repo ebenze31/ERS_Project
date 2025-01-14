@@ -28,6 +28,8 @@ Route::get('/install_provinces/', 'For_DevController@install_provinces');
 Route::get('/install_districts/', 'For_DevController@install_districts');
 Route::get('/install_sub_districts/', 'For_DevController@install_sub_districts');
 
+Route::post('/excel_add_candidates/', 'CandidatesController@excel_add_candidates');
+Route::get('/get_data_years', 'CandidatesController@get_data_years');
 Route::get('/getData_Candidate', 'CandidatesController@getDataCandidateAPI');
 Route::get('/getData_Type_Candidate', 'YearsController@getDataTypeCandidateAPI');
 
