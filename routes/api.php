@@ -31,3 +31,8 @@ Route::get('/install_sub_districts/', 'For_DevController@install_sub_districts')
 Route::get('/getData_Candidate', 'CandidatesController@getDataCandidateAPI');
 Route::get('/getData_Type_Candidate', 'YearsController@getDataTypeCandidateAPI');
 
+Route::get('/getData_Election_Setting', 'YearsController@getData_Election_Setting_API');
+Route::get('/activeStatusYear', 'YearsController@activeStatusYearAPI');
+
+
+

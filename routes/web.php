@@ -64,6 +64,7 @@ Route::middleware(['auth', 'role:admin,dev-admin,officer'])->group(function () {
 Route::resource('political_parties', 'Political_partiesController');
 Route::resource('type_candidates', 'Type_candidatesController');
 Route::resource('years', 'YearsController');
+Route::get('election_setting', 'YearsController@election_setting');
 Route::resource('scores', 'ScoresController');
 Route::get('admin_report_score', 'ScoresController@admin_report_score');
 Route::resource('provinces', 'ProvincesController');

@@ -25,7 +25,7 @@ class Year extends Model
      *
      * @var array
      */
-    protected $fillable = ['year', 'round', 'active', 'show_parties'];
+    protected $fillable = ['year', 'round', 'active', 'show_parties','province','status'];
 
 
 }

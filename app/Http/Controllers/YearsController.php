@@ -133,6 +133,12 @@ class YearsController extends Controller
         return redirect('years')->with('flash_message', 'Year deleted!');
     }
 
+    public function election_setting()
+    {
+        $years = Year::get();
+        return view('years.election_setting',compact('years'));
+    }
+
     /// API ////
     public function getDataTypeCandidateAPI()
     {
@@ -141,4 +147,44 @@ class YearsController extends Controller
 
         return $data;
     }
+
+    public function getData_Election_Setting_API(Request $request)
+    {
+        // รับข้อมูลทั้งหมดจาก request
+        $requestData = $request->all();
+
+        $data = Year::where('id',$requestData['selected_year'])->first();
+        $data['type_candidates'] = Type_candidate::get();
+
+        return $data;
+    }
+
+    public function activeStatusYearAPI(Request $request)
+    {
+        // รับข้อมูลทั้งหมดจาก request
+        $requestData = $request->all();
+        if ($requestData['status'] == "Yes") {
+            $status = "Yes";
+        }else{
+            $status = null;
+        }
+
+        // ค้นหา record ด้วย ID
+        $year = Year::findOrFail($requestData['year_id']);
+        // อัปเดตข้อมูลในฐานข้อมูล
+         // อัปเดตเฉพาะคอลัมน์ active
+        $year->update([
+                'status' => $status,
+            ]);
+
+        // ส่งผลลัพธ์กลับ
+        return response()->json([
+            'success' => true,
+            'message' => 'อัปเดตสถานะสำเร็จ',
+            'data' => $year
+        ]);
+
+    }
+
+
 }

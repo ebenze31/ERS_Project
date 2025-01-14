@@ -71,7 +71,7 @@
                                             @if(!empty($item->img))
                                                 <img src="{{ url('/storage'."/" . $item->img) }}" class="logo-img">
                                             @else
-                                                <img src="{{ url('img/stickerline/PNG/10.png') }}" class="logo-img">
+                                                <img src="{{ url('img/stickerline/PNG/1.png') }}" class="logo-img">
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle;">{{ $item->number }}</td>
