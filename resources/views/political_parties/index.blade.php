@@ -58,7 +58,7 @@
                                         <td style="vertical-align: middle;">{{ $item->name }}</td>
                                         <td style="vertical-align: middle;" class="col-4 col-md-2">
                                                 @if(!empty($item->logo))
-                                                    <img src="{{ url('/storage'."/" . $item->logo) }}" class="logo-img">
+                                                    <img src="{{ url('storage')}}/{{ $item->logo }}" class="logo-img">
                                                 @else
                                                     <img src="{{ url('img/stickerline/PNG/10.png') }}" class="logo-img">
                                                 @endif
