@@ -24,8 +24,8 @@
                                 <th>หน่วยเลือกตั้งที่</th>
                                 <th>เจ้าหน้าที่</th>
                                 <th>จำนวนผู้มีสิทธิ</th>
-                                <th>คะแนนที่ลงไปแล้ว</th>
-                                <th>action</th>
+                                <th>จำนวนผู้มาใช้สิทธิ</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="polling_units_body">

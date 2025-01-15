@@ -1,7 +1,7 @@
 @extends('layouts.theme_admin')
 @section('content')
     <style>
-        /* From Uiverse.io by ErzenXz */
+
         .toggle-switch {
             position: relative;
             display: inline-block;
@@ -69,6 +69,7 @@
         .toggle-switch input[type="checkbox"]:checked+.toggle-switch-background .toggle-switch-handle {
             transform: translateX(40px);
         }
+
     </style>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -182,12 +183,7 @@
             <div class="row align-items-center justify-content-between p-3 bg-white">
                 <!-- Dropdown Wrapper -->
                 <div class="col-12 col-md-3" id="select-wrapper">
-                    {{-- <select class="form-control dropdown" id="years_select" onchange="getData();">
-                        <option value="">เลือกปีการเลือกตั้ง</option>
-                        @foreach($years as $item)
-                            <option value="{{ $item->id }}">ปี {{$item->year + 543}} : รอบ {{$item->round}}</option>
-                        @endforeach
-                    </select> --}}
+
                 </div>
 
                 <!-- Add Button -->
@@ -444,7 +440,7 @@
                     card_html = `
                     <div class="card  p-3 rounded">
                         <div class="row">
-                            <div class="col-10 mb-3">
+                            <div class="col-12 col-md-10 mb-3">
                                 <div class="row">
                                     <span class="mb-2">ประเภทผู้สมัครที่เปิดใช้</span>
                                     <div class="d-flex flex-wrap gap-3 " id="candidateTypeCheckboxes">
@@ -459,7 +455,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2 mt-3 text-center">
+                            <div class="col-12 col-md-2 mt-3 text-center">
                                 <p id="toggle_status">${result['status'] === 'Yes' ? 'เปิดใช้งาน' : 'ปิดใช้งาน'}</p>
                                 <label class="toggle-switch">
                                     <input id="toggle_checkbox" type="checkbox" onchange="setToggle()" ${result['status'] === 'Yes' ? 'checked' : ''}>
