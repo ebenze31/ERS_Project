@@ -296,4 +296,51 @@ class Polling_unitsController extends Controller
         return $usersData ;
     }
 
+    function after_login(){
+
+        $data_user = Auth::user();
+        $user_id = $data_user->id ;
+        $province = $data_user->province ;
+
+        $data_polling_units = DB::table('polling_units')
+            ->leftjoin('provinces', 'polling_units.province_id', '=', 'provinces.id')
+            ->leftjoin('districts', 'polling_units.district_id', '=', 'districts.id')
+            ->leftjoin('electorates', 'polling_units.electorate_id', '=', 'electorates.id')
+            ->leftjoin('sub_districts', 'polling_units.sub_district_id', '=', 'sub_districts.id')
+            ->leftjoin('users', 'polling_units.user_id', '=', 'users.id')
+            ->where('polling_units.user_id', '=' ,$user_id)
+            ->select(
+                    'polling_units.*',
+                    'provinces.*',
+                    'districts.*',
+                    'electorates.*',
+                    'sub_districts.*'
+                )
+            ->first();
+
+        // echo "<pre>";
+        // print_r($data_polling_units);
+        // echo "<pre>";
+        // exit();
+
+        return view('after_login', compact('data_polling_units'));
+    }
+
+    function save_user_polling_units(Request $request)
+    {
+        $requestData = $request->all();
+
+        DB::table('users')
+            ->where([
+                    ['id', $requestData['user_id']],
+                ])
+            ->update([
+                'name' => $requestData['name_officer'],
+                'phone_1' => $requestData['phone_1'],
+                'phone_2' => $requestData['phone_2']
+            ]);
+
+        return "SUCCESS" ;
+    }
+
 }

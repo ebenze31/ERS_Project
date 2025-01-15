@@ -1,12 +1,29 @@
 <!doctype html>
 <html lang="en">
+@php
+	$theme_user_province = Auth::user()->province ;
+	$theme_data_provinces = App\Models\Province::where('name_province' , $theme_user_province)->first();
 
+	$theme_province_id = "" ;
+	if( !empty($theme_data_provinces->id) ){
+		$theme_province_id = $theme_data_provinces->id ;
+	}
+
+	$theme_logo = "" ;
+	if( !empty($theme_data_provinces->logo) ){
+		$theme_logo = $theme_data_provinces->logo ;
+	}
+@endphp
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
-	<link rel="icon" href="{{ asset('assets/images/favicon-32x32.png')}}" type="image/png" />
+	@if( !empty($theme_logo) )
+		<link rel="icon" href="{{ url('storage')}}/{{ $theme_logo }}" type="image/png" />
+	@else
+		<link rel="icon" href="{{ url('/images/logos/default_logo.png') }}" type="image/png" />
+	@endif
 	<!--plugins-->
 	<link href="{{ asset('assets/plugins/simplebar/css/simplebar.css')}}" rel="stylesheet" />
 	<link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css')}}" rel="stylesheet" />
@@ -44,7 +61,11 @@
 					<nav class="navbar navbar-expand">
 						<div class="topbar-logo-header">
 							<div class="">
-								<img src="{{ asset('assets/images/logo-icon.png')}}" class="logo-icon" alt="logo icon">
+								@if( !empty($theme_logo) )
+									<img src="{{ url('storage')}}/{{ $theme_logo }}" class="logo-icon" alt="logo icon">
+								@else
+									<img src="{{ url('/images/logos/default_logo.png') }}" class="logo-icon" alt="logo icon">
+								@endif
 							</div>
 							<div class="">
 								<h4 class="logo-text" style="color: #383333;">ERS - Management</h4>

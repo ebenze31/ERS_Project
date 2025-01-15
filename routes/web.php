@@ -22,6 +22,14 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+// ----- Guest ----- //
+    Route::get('/show_score/{id}', 'ScoresController@show_score');
+// ----- End Guest ----- //
+
+
+
+
 // ----- DEV ----- //
 Route::middleware(['auth', 'role:dev-admin'])->group(function () {
     Route::get('/add_districts', 'For_DevController@add_districts');
@@ -43,7 +51,8 @@ Route::get('/mockup/sub_show_score', function () {
 });
 // ----- End DEV ----- //
 
-// -------------------------------------------------------------------------
+
+
 
 // ----- Admin ----- //
 Route::middleware(['auth', 'role:admin,dev-admin'])->group(function () {
@@ -59,16 +68,19 @@ Route::middleware(['auth', 'role:admin,dev-admin'])->group(function () {
 });
 // ----- End Admin ----- //
 
+
+
+
 // ----- Officer ----- //
 Route::middleware(['auth', 'role:admin,dev-admin,officer'])->group(function () {
-    Route::get('/after_login', function () {
-        return view('after_login');
-    });
+    Route::get('after_login', 'Polling_unitsController@after_login');
     Route::get('add_score', 'ScoresController@add_score');
 });
 // ----- End Officer ----- //
 
-// -------------------------------------------------------------------------
+
+
+
 
 Route::resource('political_parties', 'Political_partiesController');
 Route::resource('type_candidates', 'Type_candidatesController');

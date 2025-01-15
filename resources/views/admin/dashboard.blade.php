@@ -52,7 +52,7 @@
             <div class="content" style="font-family: 'Prompt', sans-serif;border-radius: 25px;">
                 <div class="row">
                     <div class="card-body col-md-6" style="hight: 500px">
-                        <img src="images/stickerline/PNG/1.png" width="100%" alt="viicheck">
+                        <img src="{{ url('/images/stickerline/PNG/1.png') }}" width="100%" alt="viicheck">
                     </div>
                     <div class="card-body col-md-6 d-flex align-items-center ">
                         <div class="col-md-12">
@@ -77,7 +77,7 @@
         </div>
         </div>
         <div class="w-100 d-flex justify-content-center mt-4">
-            <a href="{{ url('/show_score') }}" class="btn btn-danger" target="bank">
+            <a href="{{ url('/show_score') }}/{{ $province_id }}" class="btn btn-danger" target="bank">
                 ดูผลคะแนนการเลือกตั้ง
             </a>
         </div>

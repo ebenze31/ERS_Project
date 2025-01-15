@@ -9,6 +9,7 @@ use App\Models\Score;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Province;
 
 class ScoresController extends Controller
 {
@@ -34,6 +35,12 @@ class ScoresController extends Controller
         }
 
         return view('scores.index', compact('scores'));
+    }
+
+    public function show_score($id){
+
+        $data_provinces = Province::where('id' , $id)->first();
+        return view('scores.show_score', compact('data_provinces'));
     }
 
 

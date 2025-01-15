@@ -288,7 +288,7 @@
                 const result = await response.text();
                 console.log("API Response:", result);
                 if(result == "SUCCESS"){
-                    window.location.reload();
+                    window.location.href = "{{ url('/') }}" + "/candidates";
                 }
             } catch (error) {
                 console.error("Error:", error);

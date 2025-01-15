@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
+    @php
+        $theme_province_id = "" ;
 
+        if (isset($_GET['province'])) {
+            $theme_province_id = $_GET['province'];
+            $theme_data_provinces = App\Models\Province::where('id' , $theme_province_id)->first();
+        }else if( !empty(Auth::user()->province) ){
+            $theme_user_province = Auth::user()->province ;
+            $theme_data_provinces = App\Models\Province::where('name_province' , $theme_user_province)->first();
+
+            if( !empty($theme_data_provinces->id) ){
+                $theme_province_id = $theme_data_provinces->id ;
+            }
+        }
+
+        $theme_logo = "" ;
+        if( !empty($theme_data_provinces->logo) ){
+            $theme_logo = $theme_data_provinces->logo ;
+        }
+    @endphp
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--favicon-->
+        @if( !empty($theme_logo) )
+            <link rel="icon" href="{{ url('storage')}}/{{ $theme_logo }}" type="image/png" />
+        @else
+            <link rel="icon" href="{{ url('/images/logos/default_logo.png') }}" type="image/png" />
+        @endif
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>ระบบรายงานผลการเลือกตั้ง</title>
 
         <!-- Styles -->
         <script src="https://cdn.tailwindcss.com"></script>
@@ -153,7 +178,11 @@
         <div class="container mx-auto flex items-center justify-between px-4 py-1">
             <!-- Logo -->
             <div class="flex items-center">
-                <img src="https://www.viicheck.com/img/logo-partner/command-center/กาญจนบุรี.png" alt="Logo" class="h-[32px] my-1 me-2" > 
+                @if( !empty($theme_logo) )
+                    <img src="{{ url('storage')}}/{{ $theme_logo }}" alt="Logo" class="h-[32px] my-1 me-2" >
+                @else
+                    <img src="{{ url('/images/logos/default_logo.png') }}" alt="Logo" class="h-[32px] my-1 me-2" >
+                @endif
                 <span class="">ระบบรายงานผลการเลือกตั้ง</span>
             </div>
             <!-- Logout -->
@@ -171,7 +200,7 @@
     </nav>
 
     <!-- Content -->
-    <main class=" bg-gray-300">
+    <main class="bg-gray-300">
         @yield('content')
     </main>
 

@@ -1,13 +1,39 @@
 @extends('layouts.theme')
 
 @section('content')
+
+@php
+    $login_province_id = "" ;
+
+    if (isset($_GET['province'])) {
+        $login_province_id = $_GET['province'];
+        $login_data_provinces = App\Models\Province::where('id' , $login_province_id)->first();
+    }else if( !empty(Auth::user()->province) ){
+        $login_user_province = Auth::user()->province ;
+        $login_data_provinces = App\Models\Province::where('name_province' , $login_user_province)->first();
+
+        if( !empty($login_data_provinces->id) ){
+            $login_province_id = $login_data_provinces->id ;
+        }
+    }
+
+    $login_logo = "" ;
+    if( !empty($login_data_provinces->logo) ){
+        $login_logo = $login_data_provinces->logo ;
+    }
+@endphp
+
 <div class="container mx-auto">
 
     <div class="w-100 h-[calc(100dvh-96px)] mt-[48px] flex justify-center items-center h-100">
 
         <div class="block max-w-[528px] shadow-lg w-full p-6 bg-white border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3">
             <center>
-                <img src="https://www.viicheck.com/img/logo-partner/command-center/กาญจนบุรี.png" class="h-[150px] my-1 me-2" >
+                @if( !empty($login_logo) )
+                    <img src="{{ url('storage')}}/{{ $login_logo }}" class="h-[150px] my-1 me-2" >
+                @else
+                    <img src="{{ url('/images/logos/default_logo.png') }}" class="h-[150px] my-1 me-2" >
+                @endif
             </center>
             <p class="text-[35px] font-extrabold header-text mt-4">เข้าสู่ระบบ</p>
             <form method="POST" action="{{ route('login') }}" class="mt-4">

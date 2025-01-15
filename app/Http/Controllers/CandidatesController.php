@@ -41,7 +41,6 @@ class CandidatesController extends Controller
                     'districts.name_district',
                     'electorates.name_electorate',
                     'sub_districts.name_sub_districts',
-                    'years.year'
                 )
             ->get();
                 
@@ -80,11 +79,9 @@ class CandidatesController extends Controller
             'name' => 'required|string|max:255',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'number' => 'required|numeric|min:1',
-            'political_partie_id' => 'required|exists:political_parties,id',
             'province_id' => 'required|exists:provinces,id',
             'district_id' => 'nullable|exists:districts,id',
             'electorate_id' => 'nullable|exists:electorates,id',
-            'sub_district_id' => 'nullable|exists:sub_districts,id',
             'year_id' => 'required|exists:years,id',
             'type' => 'required|string|max:255',
         ], [
@@ -101,17 +98,12 @@ class CandidatesController extends Controller
             'number.numeric' => 'หมายเลขผู้สมัครต้องเป็นตัวเลข',
             'number.min' => 'หมายเลขผู้สมัครต้องไม่น้อยกว่า 1',
 
-            'political_partie_id.required' => 'กรุณาเลือกพรรคการเมือง',
-            'political_partie_id.exists' => 'พรรคการเมืองที่เลือกไม่ถูกต้อง',
-
             'province_id.required' => 'กรุณาเลือกจังหวัด',
             'province_id.exists' => 'จังหวัดที่เลือกไม่ถูกต้อง',
 
             'district_id.exists' => 'เขตเลือกตั้งที่เลือกไม่ถูกต้อง',
 
             'electorate_id.exists' => 'เขตเลือกตั้งที่เลือกไม่ถูกต้อง',
-
-            'sub_district_id.exists' => 'ตำบลที่เลือกไม่ถูกต้อง',
 
             'year_id.required' => 'กรุณาเลือกปีการเลือกตั้ง',
             'year_id.exists' => 'ปีการเลือกตั้งที่เลือกไม่ถูกต้อง',
