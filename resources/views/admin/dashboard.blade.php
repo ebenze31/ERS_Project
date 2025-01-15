@@ -76,8 +76,8 @@
             </div>
         </div>
         </div>
-        <div class="w-100 d-flex justify-content-center mt-3">
-            <a href="{{ url('/') }}" class="btn btn-danger">
+        <div class="w-100 d-flex justify-content-center mt-4">
+            <a href="{{ url('/show_score') }}" class="btn btn-danger" target="bank">
                 ดูผลคะแนนการเลือกตั้ง
             </a>
         </div>
