@@ -62,6 +62,7 @@ Route::middleware(['auth', 'role:admin,dev-admin'])->group(function () {
     Route::get('/add_candidates', 'CandidatesController@add_candidates');
     // Route::get('for_admin', 'ScoresController@admin_report_score');
     Route::get('set_system', 'AdminController@set_system');
+    Route::post('set_system_data', 'AdminController@set_system_data');
     Route::get('election_setting', 'YearsController@election_setting');
     Route::get('admin_vote_score', 'ScoresController@admin_vote_score');
     Route::get('admin_vote_score_view/{id}', 'ScoresController@admin_vote_score_view');
