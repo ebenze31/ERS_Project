@@ -62,44 +62,23 @@
                     <hr class="mt-2 mb-3 ">
 
 
-                    <div class="radio-inputs  w-full grid grid-flow-col max-sm:justify-stretch justify-start mt-10">
-                        <label class="radio">
-                            <input type="radio" name="radio" checked="" />
-                            <span class="name max-sm:px-0 px-6 py-2">นายก อบจ.</span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name="radio" />
-                            <span class="name max-sm:px-0 px-6 py-2">ส.อบจ.</span>
-                        </label>
-                        
-                        <!-- <label class="radio">
-                                <input type="radio" name="radio" />
-                                <span class="name max-sm:px-0 px-6 py-2">Third</span>
-                            </label> -->
+                    <div id="div_radio_select" class="radio-inputs  w-full grid grid-flow-col max-sm:justify-stretch justify-start mt-10">
+                        <!-- radio -->
                     </div>
 
-                    <div class="max-sm:block flex">
-                        <div class="form-group row mt-4 w-1/2 max-sm:w-full me-2 ">
-                            <label class="col-md-4 col-form-label text-md-right text-[#939393] text-[14.5px]">
-                                คะแนนเบอร์ 1 ชื่อผู้สมัคร
-                            </label>
-                            <input type="number" id="" name="" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                        </div>
-                        <div class="form-group row mt-4 w-1/2 max-sm:w-full me-2 ">
-                            <label class="col-md-4 col-form-label text-md-right text-[#939393] text-[14.5px]">
-                                คะแนนเบอร์ 2 ชื่อผู้สมัคร
-                            </label>
-                            <input type="number" id="" name="" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                        </div>
-                        
+                    <div id="div_show_candidates">
+                        <!--  -->
                     </div>
+
+
+
                     <p class=" max-sm:px-0 max-sm:text-center text-end p-0 mt-5"> เจ้าหน้าที่ผู้กรอกคะแนน</p>
-                    <p class=" max-sm:px-0 max-sm:text-center text-end p-0 text-[#db2d2e]"> <u>หทัยทิพย์ คงควร</u></p>
+                    <p class=" max-sm:px-0 max-sm:text-center text-end p-0 text-[#db2d2e]"> <u>{{ Auth::user()->name }}</u></p>
 
                     <div class="carousel-nav flex justify-end gap-2 pt-2">
-                        <a href="#"class="btn-color max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-dark p-1.5 text-white shadow-sm hover:bg-gray-950 text-center mt-0 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300">
+                        <button id="btn_send_score" class="btn-color max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-dark p-1.5 text-white shadow-sm hover:bg-gray-950 text-center mt-0 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300" onclick="send_score();" disabled>
                             ยืนยัน
-                        </a>
+                        </button>
                     </div>
 
                     <div class="flex max-sm:justify-center justify-end items-center">
@@ -175,5 +154,153 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        get_active_years();
+    });
+
+    function get_active_years(){
+        fetch("{{ url('/') }}/api/get_active_years/"+ "{{ $data_user->province }}")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network ตอบสนองไม่ OK " + response.statusText);
+            }
+            return response.json();
+        })
+        .then(result => {
+            // console.log(result);
+
+            if(result){
+                let type_active = result['active'];
+                let type_active_sp = type_active.split(',');
+                    // console.log(type_active_sp);
+
+                for (let i = 0; i < type_active_sp.length; i++) {
+                    let html = `
+                        <label class="radio">
+                            <input type="radio" name="radio" >
+                            <span class="name max-sm:px-0 px-6 py-2" onclick="open_div_candidates('`+type_active_sp[i]+`');">
+                                `+type_active_sp[i]+`
+                            </span>
+                        </label>
+                    `;
+                    document.querySelector('#div_radio_select').insertAdjacentHTML('beforeend', html); // แทรกล่างสุด
+
+                    let html_div_input = `
+                        <div class="max-sm:block flex for_data_candidates" name="`+type_active_sp[i]+`" style="display: none;">
+                            
+                        </div>
+                    `;
+
+                    let div_show_candidates = document.querySelector('#div_show_candidates');
+                        div_show_candidates.insertAdjacentHTML('beforeend', html_div_input); // แทรกล่างสุด
+
+                    // รับข้อมูลผู้สมัคร
+                    let data_arr = [] ;
+                        data_arr = {
+                            "year_id" : result['id'],
+                            "type" : type_active_sp[i],
+                            "electorate_id" : "{{ $data_polling_units->electorate_id }}",
+                        };
+
+                    fetch("{{ url('/') }}/api/get_candidates_of_electorate_id", {
+                        method: 'post',
+                        body: JSON.stringify(data_arr),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(function (response){
+                        return response.json();
+                    }).then(function(data){
+                        // console.log(data);
+                        if (data) {
+
+                            let div_data_candidates = document.querySelector('div[name="'+type_active_sp[i]+'"]');
+
+                            for (let xi = 0; xi < data.length; xi++) {
+                                let html_candidates = `
+                                    <div class="form-group row mt-4 w-1/2 max-sm:w-full me-2 ">
+                                        <label class="col-md-4 col-form-label text-md-right text-[#939393] text-[14.5px]">
+                                            คะแนนเบอร์ `+data[xi]['number']+` `+data[xi]['name']+`
+                                        </label>
+                                        <input type="number" id="candidate_id_`+data[xi]['id']+`" scores_for="`+type_active_sp[i]+`" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 " required />
+                                    </div>
+                                `;
+                                div_data_candidates.insertAdjacentHTML('beforeend', html_candidates); // แทรกล่างสุด
+                            } 
+                        }
+                    }).catch(function(error){
+                        // console.error(error);
+                    });
+
+                }
+            }
+
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    var current_select_type ;
+    function open_div_candidates(type) {
+        // console.log(type);
+        current_select_type = type ;
+
+        // ซ่อน element ทั้งหมดที่มี class for_data_candidates
+        let elements = document.querySelectorAll('.for_data_candidates');
+        elements.forEach(element => {
+            element.style.display = 'none';
+        });
+
+        // แสดง div ที่มี attribute name ตรงกับ type
+        let div_data_candidates = document.querySelector('div[name="' + type + '"]');
+        if (div_data_candidates) {
+            div_data_candidates.style.display = ''; // แก้ไขจาก div_data_candidates.display เป็น div_data_candidates.style.display
+        } else {
+            console.log('No div found with name:', type);
+        }
+
+        document.querySelector('#btn_send_score').removeAttribute('disabled');
+    }
+
+    function send_score(){
+        // console.log(current_select_type);
+
+        // ดึง input ทั้งหมดที่ตรงกับเงื่อนไข scores_for
+        let div_data_candidates = document.querySelectorAll('input[scores_for="' + current_select_type + '"]');
+
+        // สร้าง Array เพื่อเก็บผลลัพธ์
+        let candidatesData = [];
+
+        // วนลูปดึงข้อมูล id, value และ scores_for
+        div_data_candidates.forEach(input => {
+            candidatesData.push({
+                id: input.id,
+                value: input.value,
+                user_id: "{{ Auth::user()->id }}",
+            });
+        });
+
+        // แสดงผลลัพธ์
+        // console.log(candidatesData);
+
+        fetch("{{ url('/') }}/api/send_score", {
+            method: 'post',
+            body: JSON.stringify(candidatesData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response){
+            return response.text();
+        }).then(function(data){
+            console.log(data);
+        }).catch(function(error){
+            // console.error(error);
+        });
+
+    }
+
+</script>
 
 @endsection

@@ -286,4 +286,27 @@ class CandidatesController extends Controller
         $data['years'] = Year::get();
         return $data;
     }
+
+    function get_candidates_of_electorate_id(Request $request)
+    {
+        $requestData = $request->all();
+
+        $candidates = DB::table('candidates')
+            ->leftjoin('provinces', 'candidates.province_id', '=', 'provinces.id')
+            ->leftjoin('districts', 'candidates.district_id', '=', 'districts.id')
+            ->leftjoin('electorates', 'candidates.electorate_id', '=', 'electorates.id')
+            ->leftjoin('sub_districts', 'candidates.sub_district_id', '=', 'sub_districts.id')
+            ->leftjoin('political_parties', 'candidates.political_partie_id', '=', 'political_parties.id')
+            ->leftjoin('years', 'candidates.year_id', '=', 'years.id')
+            ->where('candidates.year_id', '=' , $requestData['year_id'])
+            ->where('candidates.type', '=' , $requestData['type'])
+            ->where('candidates.electorate_id', '=' , $requestData['electorate_id'])
+            ->select(
+                    'candidates.*',
+                )
+            ->get();
+
+        return $candidates;
+    }
+
 }

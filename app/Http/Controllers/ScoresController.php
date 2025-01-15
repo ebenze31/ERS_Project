@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Province;
+use App\Models\Polling_unit;
+use App\Models\Year;
+use App\User;
 
 class ScoresController extends Controller
 {
@@ -185,5 +188,53 @@ class ScoresController extends Controller
             ->first();
 
         return view('scores.add_score', compact('data_user','data_polling_units'));
+    }
+
+    function send_score(Request $request)
+    {
+        $requestData = $request->all();
+        // return $requestData;
+
+        $user_id = $requestData[0]['user_id'] ;
+        $data_user = User::where('id' , $user_id)->first();
+        $user_province = $data_user->province;
+
+        $data_Polling_unit = Polling_unit::where('user_id' , $user_id)->first();
+        $data_Year = Year::where('status', "Yes")->where('province',$user_province)->first();
+        // ดึงค่า round ที่มากที่สุดสำหรับ polling_unit_id
+        $max_round = Score::where('polling_unit_id', $data_Polling_unit->id)->max('round');
+
+        // ถ้าไม่มีข้อมูลใน Score ให้กำหนดค่าเริ่มต้นเป็น 0
+        $update_round_score = $max_round ? $max_round + 1 : 1;
+
+
+        // สร้าง Array เพื่อเก็บผลลัพธ์
+        $results = [];
+        // วนลูปผ่านข้อมูลที่ได้รับ
+        foreach ($requestData as $data) {
+
+            $candidate_id = explode("_id_",$data['id'])[1];
+
+            $results[] = [
+                'candidate_id' => $candidate_id,
+                'score' => $data['value'],
+                'polling_unit_id' => $data_Polling_unit->id,
+                'sub_district_id' => $data_Polling_unit->sub_district_id,
+                'electorate_id' => $data_Polling_unit->electorate_id,
+                'district_id' => $data_Polling_unit->district_id,
+                'province_id' => $data_Polling_unit->province_id,
+                'round' => $update_round_score,
+                'year_id' => $data_Year->id,
+            ];
+
+        }
+
+        // บันทึกข้อมูลลงใน Score
+        foreach ($results as $result) {
+            Score::create($result);
+        }
+
+        return "SUCCESS" ;
+
     }
 }

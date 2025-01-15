@@ -297,4 +297,14 @@ class YearsController extends Controller
     }
 
 
+    function get_active_years($province){
+
+        $data = Year::where('province' , $province)
+            ->where('status' , "Yes")
+            ->first();
+
+        return $data ;
+
+    }
+
 }
