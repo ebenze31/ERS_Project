@@ -17,31 +17,37 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class CandidatesController extends Controller
 {
 
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
+        $province = Auth::user()->province;
 
-        if (!empty($keyword)) {
-            $candidates = Candidate::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('img', 'LIKE', "%$keyword%")
-                ->orWhere('number', 'LIKE', "%$keyword%")
-                ->orWhere('province_id', 'LIKE', "%$keyword%")
-                ->orWhere('district_id', 'LIKE', "%$keyword%")
-                ->orWhere('electorate_id', 'LIKE', "%$keyword%")
-                ->orWhere('sub_district_id', 'LIKE', "%$keyword%")
-                ->orWhere('political_partie_id', 'LIKE', "%$keyword%")
-                ->orWhere('year_id', 'LIKE', "%$keyword%")
-                ->orWhere('type', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $candidates = Candidate::latest()->paginate($perPage);
-        }
-        // $candidates = Candidate::latest()->paginate($perPage);
+        $candidates = DB::table('candidates')
+            ->leftjoin('provinces', 'candidates.province_id', '=', 'provinces.id')
+            ->leftjoin('districts', 'candidates.district_id', '=', 'districts.id')
+            ->leftjoin('electorates', 'candidates.electorate_id', '=', 'electorates.id')
+            ->leftjoin('sub_districts', 'candidates.sub_district_id', '=', 'sub_districts.id')
+            ->leftjoin('political_parties', 'candidates.political_partie_id', '=', 'political_parties.id')
+            ->leftjoin('years', 'candidates.year_id', '=', 'years.id')
+            ->where('provinces.name_province', '=' ,$province)
+            ->where('years.status', '=' , "Yes")
+            ->select(
+                    'candidates.*',
+                    'provinces.name_province',
+                    'districts.name_district',
+                    'electorates.name_electorate',
+                    'sub_districts.name_sub_districts'
+                )
+            ->get();
+
+        // echo "<pre>";
+        // print_r($candidates);
+        // echo "<pre>";
+        // exit();
 
         $type_candidates = Type_candidate::get();
 
