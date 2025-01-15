@@ -40,6 +40,10 @@ Route::get('/mockup/score', function () {
 Route::get('/mockup/show_score', function () {
     return view('mockup/show_score');
 });
+
+Route::get('/mockup/sub_show_score', function () {
+    return view('mockup/sub_show_score');
+});
 // ----- End DEV ----- //
 
 // -------------------------------------------------------------------------
