@@ -159,15 +159,13 @@
         </div>
     </nav>
 
-
-    </div>
     <!-- Content -->
     <main class=" bg-gray-300">
         @yield('content')
     </main>
 
     <!-- Bottom Bar -->
-    <div class="bg-white fixed bottom-0 left-0 right-0 flex justify-center   items-center py-2 drop-shadow-[10px_5px_4px_0px_rgba(0,0,0,0.25)] ">
+    <div class="bg-white fixed bottom-0 left-0 right-0 flex justify-center z-[9]  items-center py-2 drop-shadow-[10px_5px_4px_0px_rgba(0,0,0,0.25)] ">
         <span class="text-[#434040]">Power By •</span>
         <img src="https://www.viicheck.com/img/logo/VII-check-LOGO-W-v1.png" alt="Logo" class="ms-2" width="77" height="">
 
