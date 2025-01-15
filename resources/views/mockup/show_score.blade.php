@@ -45,12 +45,30 @@
     main {
         min-height: calc(100dvh - 47.5px);
     }
+    @media screen and (max-width: 439px) {
+    .banner {
+        display: none;
+    }
+    .banner-mobile {
+        display: block;
+    }
+}
+@media screen and (min-width: 439px) {
+    .banner {
+        display: block;
+    }
+    .banner-mobile {
+        display: none;
+    }
+}
+
 </style>
 
 <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<img src="https://www.viicheck.com/img/vote_kan/banner.png" alt="Logo" class="mb-1 shadow-xl">
+<img src="https://www.viicheck.com/img/vote_kan/banner.png"   alt="Logo" class="mb-1 shadow-xl banner">
+<img src="https://www.viicheck.com/img/vote_kan/banner_mobile.png"  alt="Logo" class="mb-1 shadow-xl banner-mobile">
 <!-- <img src="{{url('/images/2.png')}}" alt="Logo" class="w-full my-1 mt-[48px] shadow-xl"> -->
 
 <div class="max-sm:mx-2 mx-10 max-h-fit">
