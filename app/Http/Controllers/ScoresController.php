@@ -116,6 +116,13 @@ class ScoresController extends Controller
 
     }
 
+    public function admin_vote_score_view($id)
+    {
+
+        return view('scores.admin_vote_score_view');
+
+    }
+
     public function admin_vote_scoreAPI(Request $request)
     {
         $requestData = $request->all();

@@ -75,6 +75,22 @@
 
                 // Generate rows dynamically
                 result['polling_units'].forEach(item => {
+                    let html_view;
+                    if (item['user_id']) {
+                    html_view = `
+                            <a href="/admin_vote_score_view/${item['user_id']}" title="View Score">
+                                <button class="btn btn-info btn-sm">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </button>
+                            </a>`;
+                    } else {
+                        html_view = `
+                            <a href="#" title="View Score">
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </button>
+                            </a>`;
+                    }
                     const row = document.createElement("tr");
 
                     row.innerHTML = `
@@ -85,8 +101,7 @@
                         <td>${item.name_user ? item.name_user : ''}</td>
                         <td>${item.eligible_voters}</td>
                         <td></td>
-                        <td></td>
-
+                        ${html_view}
                     `;
 
                     tbody.appendChild(row);

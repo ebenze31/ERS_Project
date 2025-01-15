@@ -53,6 +53,9 @@ Route::middleware(['auth', 'role:admin,dev-admin'])->group(function () {
     Route::get('/add_candidates', 'CandidatesController@add_candidates');
     // Route::get('for_admin', 'ScoresController@admin_report_score');
     Route::get('set_system', 'AdminController@set_system');
+    Route::get('election_setting', 'YearsController@election_setting');
+    Route::get('admin_vote_score', 'ScoresController@admin_vote_score');
+    Route::get('admin_vote_score_view/{id}', 'ScoresController@admin_vote_score_view');
 });
 // ----- End Admin ----- //
 
@@ -70,9 +73,7 @@ Route::middleware(['auth', 'role:admin,dev-admin,officer'])->group(function () {
 Route::resource('political_parties', 'Political_partiesController');
 Route::resource('type_candidates', 'Type_candidatesController');
 Route::resource('years', 'YearsController');
-Route::get('election_setting', 'YearsController@election_setting');
 Route::resource('scores', 'ScoresController');
-Route::get('admin_vote_score', 'ScoresController@admin_vote_score');
 Route::resource('provinces', 'ProvincesController');
 Route::resource('districts', 'DistrictsController');
 Route::resource('electorates', 'ElectoratesController');
