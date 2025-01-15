@@ -8,6 +8,7 @@ use App\Models\Type_candidate;
 use App\Models\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class YearsController extends Controller
 {
@@ -138,15 +139,16 @@ class YearsController extends Controller
     {
         $userProvince = Auth::user()->province;
         $years = Year::where('province',$userProvince)->get();
-        $type_candidates = Type_candidate::get();
+        $type_candidates = Type_candidate::where('province',$userProvince)->get();
+
         return view('years.election_setting',compact('years','type_candidates','userProvince'));
     }
 
     /// API ////
-    public function getDataTypeCandidateAPI()
+    public function getDataTypeCandidateAPI() // ใช้จาหน้า year/form
     {
         $data = [];
-        $data['type_candidates'] = Type_candidate::get();
+        $data['type_candidates'] = Type_candidate::get(); //ยังไม่ได้ where จังหวัด
 
         return $data;
     }
@@ -157,7 +159,7 @@ class YearsController extends Controller
         $requestData = $request->all();
 
         $data = Year::where('id',$requestData['selected_year'])->first();
-        $data['type_candidates'] = Type_candidate::get();
+        $data['type_candidates'] = Type_candidate::where('province',$requestData['userProvince'])->get();
 
         return $data;
     }
@@ -208,10 +210,12 @@ class YearsController extends Controller
         $yearData->year = $request->year;
         $yearData->round = $request->round;
         $yearData->province = $request->province;
+        $yearData->active = $request->active; // บันทึก active
+        $yearData->show_parties = $request->show_parties; // บันทึก show_parties
         $yearData->save();
 
         // ดึงข้อมูลปีที่อัพเดต
-        $year_after_update = Year::where('province',$request->userProvince)->get();
+        $year_after_update = Year::where('province',$request->province)->get();
 
         return response()->json([
             'success' => 'บันทึกข้อมูลสำเร็จ!',
@@ -265,6 +269,31 @@ class YearsController extends Controller
         $year_after_update = Year::where('province',$request->userProvince)->get();
 
         return response()->json(['success' => true, 'data' => $year_after_update]);
+    }
+
+    public function add_type_candidateAPI(Request $request)
+    {
+        // Validate input
+        // $validator = Validator::make($request->all(), [
+        //     'nameCandidate' => 'required|string|max:255', // ชื่อจำเป็น เป็นข้อความ และไม่เกิน 255 ตัวอักษร
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'errors' => $validator->errors(),
+        //     ], 400); // ส่งสถานะ 400 (Bad Request) ถ้าการตรวจสอบล้มเหลว
+        // }
+
+        // บันทึกข้อมูลลงฐานข้อมูล
+        Type_candidate::firstOrCreate([
+            'name' => $request->nameCandidate,
+            'province' => $request->userProvince,
+        ]);
+
+        $type_candidate = Type_candidate::where('province',$request->userProvince)->get();
+
+        return response()->json(['success' => true, 'data' => $type_candidate]);
     }
 
 

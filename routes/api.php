@@ -38,6 +38,7 @@ Route::get('/activeStatusYear', 'YearsController@activeStatusYearAPI');
 
 Route::post('/create_new_year', 'YearsController@create_new_yearAPI');
 Route::post('/update_new_year', 'YearsController@update_new_yearAPI');
+Route::post('/add_type_candidate', 'YearsController@add_type_candidateAPI');
 
 Route::get('/admin_vote_score', 'scoresController@admin_vote_scoreAPI');
 

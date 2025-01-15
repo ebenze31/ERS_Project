@@ -7,6 +7,7 @@ use App\Http\Requests;
 
 use App\Models\Type_candidate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class Type_candidatesController extends Controller
 {
@@ -49,9 +50,9 @@ class Type_candidatesController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         Type_candidate::create($requestData);
 
         return redirect('type_candidates')->with('flash_message', 'Type_candidate added!');
@@ -95,9 +96,9 @@ class Type_candidatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $type_candidate = Type_candidate::findOrFail($id);
         $type_candidate->update($requestData);
 
@@ -117,4 +118,5 @@ class Type_candidatesController extends Controller
 
         return redirect('type_candidates')->with('flash_message', 'Type_candidate deleted!');
     }
+
 }
