@@ -41,10 +41,18 @@ class CandidatesController extends Controller
         } else {
             $candidates = Candidate::latest()->paginate($perPage);
         }
+        // $candidates = Candidate::latest()->paginate($perPage);
 
         $type_candidates = Type_candidate::get();
 
         return view('candidates.index', compact('candidates','type_candidates'));
+    }
+
+    public function add_candidates(Request $request)
+    {
+        $type_candidates = Type_candidate::get();
+
+        return view('candidates.add_candidates', compact('type_candidates'));
     }
 
     public function create()

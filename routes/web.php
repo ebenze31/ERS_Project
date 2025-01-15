@@ -13,21 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
+Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 // ----- DEV ----- //
 Route::middleware(['auth', 'role:dev-admin'])->group(function () {
     Route::get('/add_districts', 'For_DevController@add_districts');
-});
-
-Route::get('/after_login', function () {
-    return view('after_login');
 });
 
 Route::get('/mockup/after_login', function () {
@@ -50,15 +47,21 @@ Route::get('/mockup/sub_show_score', function () {
 
 // ----- Admin ----- //
 Route::middleware(['auth', 'role:admin,dev-admin'])->group(function () {
-    Route::get('/for_admin', 'AdminController@index');
+    // Route::get('/for_admin', 'AdminController@index');
     Route::resource('polling_units', 'Polling_unitsController');
     Route::resource('candidates', 'CandidatesController');
+    Route::get('/add_candidates', 'CandidatesController@add_candidates');
+    Route::get('for_admin', 'ScoresController@admin_report_score');
+    Route::get('set_system', 'AdminController@set_system');
 });
 // ----- End Admin ----- //
 
 // ----- Officer ----- //
 Route::middleware(['auth', 'role:admin,dev-admin,officer'])->group(function () {
-
+    Route::get('/after_login', function () {
+        return view('after_login');
+    });
+    Route::get('add_score', 'ScoresController@add_score');
 });
 // ----- End Officer ----- //
 
@@ -69,7 +72,6 @@ Route::resource('type_candidates', 'Type_candidatesController');
 Route::resource('years', 'YearsController');
 Route::get('election_setting', 'YearsController@election_setting');
 Route::resource('scores', 'ScoresController');
-Route::get('admin_report_score', 'ScoresController@admin_report_score');
 Route::get('admin_vote_score', 'ScoresController@admin_vote_score');
 Route::resource('provinces', 'ProvincesController');
 Route::resource('districts', 'DistrictsController');

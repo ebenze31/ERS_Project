@@ -12,4 +12,8 @@ class AdminController extends Controller
         $data_admin = Auth::user();
         return view('admin.dashboard', compact('data_admin'));
     }
+
+    function set_system(){
+        return view('admin.set_system');
+    }
 }

@@ -89,8 +89,8 @@ class ScoresController extends Controller
     public function admin_report_score()
     {
         $scores = DB::table('scores')
-        ->join('candidates', 'scores.candidate_id', '=', 'candidates.id')
-        ->join('political_parties', 'candidates.political_partie_id', '=', 'political_parties.id')
+        ->leftjoin('candidates', 'scores.candidate_id', '=', 'candidates.id')
+        ->leftjoin('political_parties', 'candidates.political_partie_id', '=', 'political_parties.id')
         ->select(
             'scores.score',
             'candidates.*',
@@ -98,7 +98,6 @@ class ScoresController extends Controller
             'political_parties.logo as political_party_logo',
         )
         ->get();
-
 
         return view('scores.admin_report_score',compact('scores'));
     }
@@ -147,5 +146,12 @@ class ScoresController extends Controller
 
         return $data;
 
+    }
+
+    function add_score(){
+
+        $data_user = Auth::user();
+
+        return view('scores.add_score', compact('data_user'));
     }
 }

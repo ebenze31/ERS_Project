@@ -297,12 +297,24 @@
 							</a>
 						</li>
 						<li>
-							<a href="{{ url('/candidates') }}" class="">
+							<a class="has-arrow" href="javascript:;">
 								<div class="parent-icon">
 									<i class="fa-solid fa-user-tie"></i>
 								</div>
 								<div class="menu-title">ผู้สมัคร</div>
 							</a>
+							<ul>
+								<li>
+									<a href="{{ url('/candidates') }}">
+										<i class="bx bx-right-arrow-alt"></i>รายชื่อผู้สมัคร
+									</a>
+								</li>
+								<li>
+									<a href="{{ url('/add_candidates') }}">
+										<i class="bx bx-right-arrow-alt"></i>เพิ่มผู้สมัคร
+									</a>
+								</li>
+							</ul>
 						</li>
 						<li>
 							<a href="{{ url('/polling_units') }}" class="">
@@ -313,24 +325,12 @@
 							</a>
 						</li>
 						<li>
-                            <a class="has-arrow" href="javascript:;">
+                            <a class="" href="{{ url('/admin_vote_score') }}">
 								<div class="parent-icon">
 									<i class="fa-solid fa-pen-field"></i>
 								</div>
-								<div class="menu-title">คะแนนเลือกตั้ง</div>
+								<div class="menu-title">การลงคะแนน</div>
 							</a>
-                            <ul>
-								<li>
-									<a href="{{ url('/admin_report_score') }}">
-										<i class="bx bx-right-arrow-alt"></i>ผลคะแนนเลือกตั้ง
-									</a>
-								</li>
-								<li>
-									<a href="{{ url('/admin_vote_score') }}">
-										<i class="bx bx-right-arrow-alt"></i>การลงคะแนน
-									</a>
-								</li>
-							</ul>
 						</li>
 						<li>
 							<a class="has-arrow" href="javascript:;">
@@ -353,6 +353,11 @@
                                 <li>
 									<a href="{{ url('/election_setting') }}">
 										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าการเลือกตั้ง
+									</a>
+								</li>
+								<li>
+									<a href="{{ url('/set_system') }}">
+										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าระบบ
 									</a>
 								</li>
 								@if(Auth::user()->role == "dev-admin")
