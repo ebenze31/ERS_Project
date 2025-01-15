@@ -66,6 +66,7 @@ Route::resource('years', 'YearsController');
 Route::get('election_setting', 'YearsController@election_setting');
 Route::resource('scores', 'ScoresController');
 Route::get('admin_report_score', 'ScoresController@admin_report_score');
+Route::get('admin_vote_score', 'ScoresController@admin_vote_score');
 Route::resource('provinces', 'ProvincesController');
 Route::resource('districts', 'DistrictsController');
 Route::resource('electorates', 'ElectoratesController');

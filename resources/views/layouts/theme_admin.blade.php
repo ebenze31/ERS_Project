@@ -326,7 +326,7 @@
 									</a>
 								</li>
 								<li>
-									<a href="authentication-signin.html">
+									<a href="{{ url('/admin_vote_score') }}">
 										<i class="bx bx-right-arrow-alt"></i>การลงคะแนน
 									</a>
 								</li>

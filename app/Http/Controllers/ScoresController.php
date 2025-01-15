@@ -7,6 +7,7 @@ use App\Http\Requests;
 
 use App\Models\Score;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ScoresController extends Controller
@@ -100,5 +101,51 @@ class ScoresController extends Controller
 
 
         return view('scores.admin_report_score',compact('scores'));
+    }
+
+    public function admin_vote_score()
+    {
+
+        $data_user = Auth::user();
+        $province = $data_user->province ;
+
+        // echo "<pre>";
+        // print_r($polling_units);
+        // echo "<pre>";
+
+        return view('scores.admin_vote_score', compact('province'));
+
+    }
+
+    public function admin_vote_scoreAPI(Request $request)
+    {
+        $requestData = $request->all();
+        // $polling_units = Polling_unit::get();
+        $data = [];
+        $data['polling_units'] = DB::table('polling_units')
+            ->leftjoin('provinces', 'polling_units.province_id', '=', 'provinces.id')
+            ->leftjoin('districts', 'polling_units.district_id', '=', 'districts.id')
+            ->leftjoin('electorates', 'polling_units.electorate_id', '=', 'electorates.id')
+            ->leftjoin('sub_districts', 'polling_units.sub_district_id', '=', 'sub_districts.id')
+            ->leftjoin('users', 'polling_units.user_id', '=', 'users.id')
+            ->where('provinces.name_province', '=' ,$requestData['userProvince'])
+            ->select(
+                    'polling_units.*',
+                    'provinces.*',
+                    'districts.*',
+                    'electorates.*',
+                    'sub_districts.*',
+                    'users.name as name_user'
+                )
+            ->get();
+
+        $data['count'] = count($data['polling_units']);
+
+        // echo "<pre>";
+        // print_r($polling_units);
+        // echo "<pre>";
+
+        return $data;
+
     }
 }

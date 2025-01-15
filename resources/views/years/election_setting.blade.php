@@ -79,7 +79,7 @@
             <div class="modal-content p-4">
                 <div class="modal-header">
                     <span class="h3" style="font-weight: bold;">เพิ่มปี/รอบการเลือกตั้ง</span>
-                    <button id="close_modal_create_year" type="button" class="close " data-dismiss="modal" aria-label="Close" onclick="clearFormFields()">
+                    <button class="btn btn-secondary " id="close_modal_create_year" type="button" class="close " data-dismiss="modal" aria-label="Close" onclick="clearFormFields()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -157,7 +157,7 @@
                         </div>
 
                         <div class="form-group mt-4 " >
-                            <button class="btn btn-primary" onclick="submitForm()">ยืนยัน</button>
+                            <button class="btn btn-primary w-25" onclick="submitForm()">บันทึก</button>
                         </div>
                     </div>
                 </div>
