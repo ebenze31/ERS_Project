@@ -6,9 +6,6 @@
     <div class="card-header">
         <h4>
             หน่วยเลือกตั้ง <span id="span_count_polling_units" style="font-size: 14px;"></span>
-            <button id="btn_create_user_units" class="btn btn-info float-end" onclick="create_user_units();">
-                สร้างรหัสผู้ใช้
-            </button>
         </h4>
     </div>
     <div class="card-body">
@@ -46,6 +43,14 @@
         </div>
     </div>
 </div>
+
+<style>
+    .disabled {
+        pointer-events: none;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+</style>
 
 <script>
     let userProvince = '{{ $province }}';
@@ -85,9 +90,9 @@
                             </a>`;
                     } else {
                         html_view = `
-                            <a href="" title="View Score">
+                            <a class="disabled" href="" title="View Score">
                                 <button class="btn btn-secondary btn-sm">
-                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                    <i class="fa-solid fa-eye-slash" aria-hidden="true"></i> View
                                 </button>
                             </a>`;
                     }
