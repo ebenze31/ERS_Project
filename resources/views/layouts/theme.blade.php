@@ -156,6 +156,17 @@
                 <img src="https://www.viicheck.com/img/logo/VII-check-LOGO-W-v1.png" alt="Logo" class="h-[32px] my-1 me-2" > 
                 <span class="">ระบบรายงานผลการเลือกตั้ง</span>
             </div>
+            <!-- Logout -->
+            @guest
+            <!--  -->
+            @else
+            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                <i class='bx bx-log-out-circle'></i><span>Logout</span>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </a>
+            @endguest
         </div>
     </nav>
 
