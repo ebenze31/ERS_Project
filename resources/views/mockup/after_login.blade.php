@@ -61,9 +61,9 @@
                         <p class="text-[33px] font-extrabold header-text">ตรวจสอบข้อมูลหน่วย</p>
 
                         <div class="mt-5">
-                            <p class="text-[14.5px] text-[#939393]">หน่วยเลือกตั้ง</p>
-                            <p class="text-[19px] text-[#000] font-bold">เทศบาลเมืองปากแพรก (ยกเว้นหมู่ที่ 1) หน่วยที่ 1</p>
-                        </div>
+                            <p class="text-[14.5px] text-[#939393]">อำเภอ</p>
+                            <p class="text-[19px] text-[#000] font-bold">เมืองกาญจนบุรี</p>
+                        </div>   
                         <hr class="mt-2 mb-3">
 
                         <div class="mt-5">
@@ -73,9 +73,19 @@
                         <hr class="mt-2 mb-3">
 
                         <div class="mt-5">
-                            <p class="text-[14.5px] text-[#939393]">อำเภอ</p>
-                            <p class="text-[19px] text-[#000] font-bold">เมืองกาญจนบุรี</p>
+                            <p class="text-[14.5px] text-[#939393]">ตำบล</p>
+                            <p class="text-[19px] text-[#000] font-bold">แก่งเสี้ยน</p>
                         </div>
+                        <hr class="mt-2 mb-3">
+
+                        <div class="mt-5">
+                            <p class="text-[14.5px] text-[#939393]">หน่วยเลือกตั้ง</p>
+                            <p class="text-[19px] text-[#000] font-bold">1</p>
+                        </div>
+                     
+                        <hr class="mt-2 mb-3">
+
+                      
 
                         <div class="carousel-nav flex justify-end gap-2 pt-2">
                             <a href="#slide-2" data-slide-key="2" class="btn-color max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-dark p-1.5 text-white shadow-sm hover:bg-gray-950 text-center mt-5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300">
@@ -88,7 +98,7 @@
                 </div>
                 <div class="snap-start w-full h-full flex items-center justify-center flex-shrink-0 " id="slide-2">
                     <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 ">
-                        <p class="text-[47px] font-extrabold header-text">Login</p>
+                        <p class="text-[47px] font-extrabold header-text">กรอกข้อมูลของคุณ</p>
                         <form method="POST" action="{{ route('login') }}" class="mt-2">
                             @csrf
 
@@ -157,36 +167,7 @@
                                 </div>
 
                             </div>
-                            <div class="snap-always snap-center shrink-0 relative overflow-hidden w-full rounded-lg">
-
-                                <p class="text-[47px] font-extrabold header-text">Login</p>
-                                <form method="POST" action="{{ route('login') }}" class="mt-2">
-                                    @csrf
-
-                                    <div class="form-group row">
-
-                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('ชื่อ-นามสกุล') }} <span class="text-rose-600">*</span></label>
-                                        <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" required autocomplete="email" />
-                                    </div>
-                                    <div class="form-group row mt-4">
-
-                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('เบอร์โทร') }} <span class="text-rose-600">*</span></label>
-                                        <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" required autocomplete="email" />
-                                    </div>
-                                    <div class="form-group row mt-4">
-                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('เบอร์โทร 2 (หากมี)') }}</label>
-                                        <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" autocomplete="email" />
-                                    </div>
-
-                                    <div class="carousel-nav flex justify-end gap-2 pt-5 h-fit">
-
-                                        <!-- <button type="submit" class="btn rounded-full bg-slate-950 w-full text-white p-2 ">Login</button> -->
-                                        <button type="button" class="max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-gray-200 p-1.5 text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300">
-                                            ยืนยัน
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                            
                         </div>
                     </div>
 
