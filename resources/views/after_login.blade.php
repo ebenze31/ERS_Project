@@ -58,7 +58,7 @@
             <div class="w-full rounded overflow-x-hidden flex snap-x slider-parent">
                 <div class="snap-start w-full flex items-center justify-center flex-shrink-0 " id="slide-1">
                     <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 ">
-                        <p class="text-[33px] font-extrabold header-text">ตรวจสอบข้อมูลหน่วย</p>
+                        <p class="text-[30px] font-extrabold header-text">ตรวจสอบข้อมูลหน่วย</p>
 
                         <div class="mt-5">
                             <p class="text-[14.5px] text-[#939393]">อำเภอ</p>
@@ -67,7 +67,7 @@
                         <hr class="mt-2 mb-3">
 
                         <div class="mt-5">
-                            <p class="text-[14.5px] text-[#939393]">เขต</p>
+                            <p class="text-[14.5px] text-[#939393]">เขตเลือกตั้งที่</p>
                             <p class="text-[19px] text-[#000] font-bold">เมืองกาญจนบุรี เขตเลือกตั้งที่ 1 </p>
                         </div>
                         <hr class="mt-2 mb-3">
@@ -79,7 +79,7 @@
                         <hr class="mt-2 mb-3">
 
                         <div class="mt-5">
-                            <p class="text-[14.5px] text-[#939393]">หน่วยเลือกตั้ง</p>
+                            <p class="text-[14.5px] text-[#939393]">หน่วยเลือกตั้งที่</p>
                             <p class="text-[19px] text-[#000] font-bold">1</p>
                         </div>
                      
@@ -98,13 +98,15 @@
                 </div>
                 <div class="snap-start w-full h-full flex items-center justify-center flex-shrink-0 " id="slide-2">
                     <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 ">
-                        <p class="text-[47px] font-extrabold header-text">กรอกข้อมูลของคุณ</p>
+                        <p class="text-[30px] font-extrabold header-text">กรอกข้อมูลของคุณ</p>
                         <form method="POST" action="{{ route('login') }}" class="mt-2">
                             @csrf
 
                             <div class="form-group row">
 
-                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('ชื่อ-นามสกุล') }} <span class="text-rose-600">*</span></label>
+                                <label for="email" class="col-md-4 col-form-label text-md-right">
+                                    {{ __('ชื่อ-นามสกุล') }} <span class="text-rose-600 text-[12px]">*จำเป็นต้องใส่</span>
+                                </label>
                                 <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" required autocomplete="email" />
                             </div>
                             <div class="max-sm:block flex">
@@ -112,11 +114,13 @@
 
                                 <div class="form-group row mt-4 w-1/2 max-sm:w-full me-2 ">
 
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('เบอร์โทร') }} <span class="text-rose-600">*</span></label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">
+                                        {{ __('เบอร์โทร') }} <span class="text-rose-600 text-[12px]">*จำเป็นต้องใส่</span>
+                                    </label>
                                     <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" required autocomplete="email" />
                                 </div>
                                 <div class="form-group row mt-4 w-1/2 max-sm:w-full ">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('เบอร์โทร 2 (หากมี)') }}</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('เบอร์โทร 2') }}</label>
                                     <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" autocomplete="email" />
                                 </div>
                             </div>

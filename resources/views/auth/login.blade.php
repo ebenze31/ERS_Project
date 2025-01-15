@@ -6,8 +6,11 @@
     <div class="w-100 h-[calc(100dvh-96px)] mt-[48px] flex justify-center items-center h-100">
 
         <div class="block max-w-[528px] shadow-lg w-full p-6 bg-white border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3">
-            <p class="text-[47px] font-extrabold header-text">เข้าสู่ระบบ</p>
-            <form method="POST" action="{{ route('login') }}" class="mt-2">
+            <center>
+                <img src="https://www.viicheck.com/img/logo-partner/command-center/กาญจนบุรี.png" class="h-[150px] my-1 me-2" >
+            </center>
+            <p class="text-[35px] font-extrabold header-text mt-4">เข้าสู่ระบบ</p>
+            <form method="POST" action="{{ route('login') }}" class="mt-4">
                 @csrf
 
                 <div class="form-group row">

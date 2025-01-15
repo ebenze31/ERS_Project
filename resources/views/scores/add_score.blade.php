@@ -35,7 +35,7 @@
         <div class="block max-w-[800px]  w-full  mt-5">
             <div class="w-full flex items-center justify-center flex-shrink-0 ">
                 <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 ">
-                    <p class="text-[33px] font-extrabold header-text">ตรวจสอบข้อมูลหน่วย</p>
+                    <p class="text-[33px] font-extrabold header-text">กรอกคะแนน</p>
 
                     <div class="mt-5 max-sm:block flex items-center justify-between">
                         <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">อำเภอ</p>
@@ -44,7 +44,7 @@
                     <hr class="mt-2 mb-3 ">
 
                     <div class="mt-5 max-sm:block flex items-center justify-between">
-                        <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">เขต</p>
+                        <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">เขตเลือกตั้งที่</p>
                         <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">1</p>
                     </div>
                     <hr class="mt-2 mb-3 ">
@@ -56,7 +56,7 @@
                     <hr class="mt-2 mb-3 ">
 
                     <div class="mt-5 max-sm:block flex items-center justify-between">
-                        <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">หน่วยเลือกตั้ง</p>
+                        <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">หน่วยเลือกตั้งที่</p>
                         <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px] ">1</p>
                     </div>
                     <hr class="mt-2 mb-3 ">
@@ -79,17 +79,19 @@
                     </div>
 
                     <div class="max-sm:block flex">
-
-
                         <div class="form-group row mt-4 w-1/2 max-sm:w-full me-2 ">
-
-                            <label for="email" class="col-md-4 col-form-label text-md-right text-[#939393] text-[14.5px]">{{ __('ชื่อผู้สมัคร') }} <span class="text-rose-600">*</span></label>
-                            <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" required autocomplete="email" />
+                            <label class="col-md-4 col-form-label text-md-right text-[#939393] text-[14.5px]">
+                                คะแนนเบอร์ 1 ชื่อผู้สมัคร
+                            </label>
+                            <input type="number" id="" name="" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                         </div>
-                        <div class="form-group row mt-4 w-1/2 max-sm:w-full ">
-                            <label for="email" class="col-md-4 col-form-label text-md-right text-[#939393] text-[14.5px]">{{ __('ชื่อผู้สมัคร') }}</label>
-                            <input type="email" id="email" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" autocomplete="email" />
+                        <div class="form-group row mt-4 w-1/2 max-sm:w-full me-2 ">
+                            <label class="col-md-4 col-form-label text-md-right text-[#939393] text-[14.5px]">
+                                คะแนนเบอร์ 2 ชื่อผู้สมัคร
+                            </label>
+                            <input type="number" id="" name="" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                         </div>
+                        
                     </div>
                     <p class=" max-sm:px-0 max-sm:text-center text-end p-0 mt-5"> เจ้าหน้าที่ผู้กรอกคะแนน</p>
                     <p class=" max-sm:px-0 max-sm:text-center text-end p-0 text-[#db2d2e]"> <u>หทัยทิพย์ คงควร</u></p>
@@ -131,22 +133,22 @@
             <div class="w-full flex items-center justify-center flex-shrink-0 ">
 
                 <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 mt-8 mb-10">
-                    <p class="text-[33px] font-extrabold header-text mb-5">คะแนนที่ลงไว้ล่าสุด</p>
+                    <p class="text-[30px] font-extrabold header-text mb-5">คะแนนลงไว้ล่าสุด</p>
 
                     <div>
                         <p class="text-center text-[19px] text-[#000] font-bold">ครั้งที่ 2</p>
                         <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 1</p>
-                            <p class="text-[16px] text-[#939393]">50</p>
+                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 1 ชื่อผู้สมัคร</p>
+                            <p class="text-[16px] text-[#939393]">50 คะแนน</p>
                         </div>
                         <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 2</p>
-                            <p class="text-[16px] text-[#939393]">120</p>
+                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 2 ชื่อผู้สมัคร</p>
+                            <p class="text-[16px] text-[#939393]">120 คะแนน</p>
                         </div>
 
                         <div class="flex justify-between items-center mb-3">
                             <p class="text-[16px] text-[#000] font-bold">โดย ธีรศักดิ์</p>
-                            <p class="text-[16px] text-[#939393]">12.30 น.</p>
+                            <p class="text-[16px] text-[#939393]">เวลา 12.30 น.</p>
                         </div>
                         <hr class="mt-2 mb-3">
                     </div>
@@ -154,17 +156,17 @@
                     <div>
                         <p class="text-center text-[19px] text-[#000] font-bold">ครั้งที่ 1</p>
                         <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 1</p>
-                            <p class="text-[16px] text-[#939393]">50</p>
+                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 1 ชื่อผู้สมัคร</p>
+                            <p class="text-[16px] text-[#939393]">50 คะแนน</p>
                         </div>
                         <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 2</p>
-                            <p class="text-[16px] text-[#939393]">120</p>
+                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 2 ชื่อผู้สมัคร</p>
+                            <p class="text-[16px] text-[#939393]">120 คะแนน</p>
                         </div>
 
                         <div class="flex justify-between items-center mb-3">
                             <p class="text-[16px] text-[#000] font-bold">โดย ธีรศักดิ์</p>
-                            <p class="text-[16px] text-[#939393]">12.30 น.</p>
+                            <p class="text-[16px] text-[#939393]">เวลา 12.30 น.</p>
                         </div>
                         <hr class="mt-2 mb-3">
                     </div>

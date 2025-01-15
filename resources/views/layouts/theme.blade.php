@@ -153,7 +153,7 @@
         <div class="container mx-auto flex items-center justify-between px-4 py-1">
             <!-- Logo -->
             <div class="flex items-center">
-                <img src="https://www.viicheck.com/img/logo/VII-check-LOGO-W-v1.png" alt="Logo" class="h-[32px] my-1 me-2" > 
+                <img src="https://www.viicheck.com/img/logo-partner/command-center/กาญจนบุรี.png" alt="Logo" class="h-[32px] my-1 me-2" > 
                 <span class="">ระบบรายงานผลการเลือกตั้ง</span>
             </div>
             <!-- Logout -->
@@ -161,7 +161,7 @@
             <!--  -->
             @else
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                <i class='bx bx-log-out-circle'></i><span>Logout</span>
+                <i class='bx bx-log-out-circle'></i><span class="text-[12px] text-[#939393]">Logout</span>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
