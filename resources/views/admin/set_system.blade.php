@@ -35,17 +35,17 @@
             <input id="province" name="province" type="text" value="{{ $province ? $province : '' }}" class="form-control d-none" />
             <div class="row g-3 mb-4">
                 <div class="col-12 col-md-4 form-group">
-                    <label class="form-label" style="font-weight: bold; font-size: 1.2rem;">โลโก้</label>
+                    <label class="form-label" style="font-weight: bold; font-size: 1.2rem;">โลโก้<span class="text-danger" style="font-size: 1rem;">(1000 * 1000 px)</span></label>
                     <input id="logo" name="logo" type="file" class="form-control" />
                 </div>
 
                 <div class="col-11 col-md-4 form-group">
-                    <label class="form-label" style="font-weight: bold; font-size: 1.2rem;">แบนเนอร์</label>
+                    <label class="form-label" style="font-weight: bold; font-size: 1.2rem;">แบนเนอร์<span class="text-danger" style="font-size: 1rem;">(4000 * 300 px)</span></label>
                     <input id="banner" name="banner" type="file" class="form-control" />
                 </div>
 
                 <div class="col-11 col-md-4 form-group">
-                    <label class="form-label" style="font-weight: bold; font-size: 1.2rem;">แบนเนอร์(มือถือ)</label>
+                    <label class="form-label" style="font-weight: bold; font-size: 1.2rem;">แบนเนอร์มือถือ<span class="text-danger" style="font-size: 1rem;">(4000 * 750 px)</span></label>
                     <input id="banner_mobile" name="banner_mobile" type="file" class="form-control" />
                 </div>
             </div>
