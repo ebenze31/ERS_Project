@@ -76,5 +76,10 @@
             </div>
         </div>
         </div>
+        <div class="w-100 d-flex justify-content-center mt-3">
+            <a href="{{ url('/') }}" class="btn btn-danger">
+                ดูผลคะแนนการเลือกตั้ง
+            </a>
+        </div>
     </center>
 @endsection

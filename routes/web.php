@@ -47,11 +47,11 @@ Route::get('/mockup/sub_show_score', function () {
 
 // ----- Admin ----- //
 Route::middleware(['auth', 'role:admin,dev-admin'])->group(function () {
-    // Route::get('/for_admin', 'AdminController@index');
+    Route::get('/for_admin', 'AdminController@index');
     Route::resource('polling_units', 'Polling_unitsController');
     Route::resource('candidates', 'CandidatesController');
     Route::get('/add_candidates', 'CandidatesController@add_candidates');
-    Route::get('for_admin', 'ScoresController@admin_report_score');
+    // Route::get('for_admin', 'ScoresController@admin_report_score');
     Route::get('set_system', 'AdminController@set_system');
 });
 // ----- End Admin ----- //
