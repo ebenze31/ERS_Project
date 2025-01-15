@@ -78,14 +78,14 @@
                     let html_view;
                     if (item['user_id']) {
                     html_view = `
-                            <a href="/admin_vote_score_view/${item['user_id']}" title="View Score">
+                            <a href="{{ url('/') }}/admin_vote_score_view/${item['user_id']}" title="View Score">
                                 <button class="btn btn-info btn-sm">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </button>
                             </a>`;
                     } else {
                         html_view = `
-                            <a href="#" title="View Score">
+                            <a href="" title="View Score">
                                 <button class="btn btn-secondary btn-sm">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </button>
