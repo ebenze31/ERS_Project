@@ -11,7 +11,11 @@ class AdminController extends Controller
     public function index()
     {
         $data_admin = Auth::user();
-        return view('admin.dashboard', compact('data_admin'));
+        $user_province = Auth::user()->province ;
+        $data_provinces = Province::where('name_province' , $user_province)->first();
+        $province_id = $data_provinces->id ;
+        
+        return view('admin.dashboard', compact('data_admin','province_id'));
     }
 
     function set_system(){

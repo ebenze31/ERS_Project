@@ -165,7 +165,25 @@ class ScoresController extends Controller
     function add_score(){
 
         $data_user = Auth::user();
+        $user_id = $data_user->id ;
+        $province = $data_user->province ;
 
-        return view('scores.add_score', compact('data_user'));
+        $data_polling_units = DB::table('polling_units')
+            ->leftjoin('provinces', 'polling_units.province_id', '=', 'provinces.id')
+            ->leftjoin('districts', 'polling_units.district_id', '=', 'districts.id')
+            ->leftjoin('electorates', 'polling_units.electorate_id', '=', 'electorates.id')
+            ->leftjoin('sub_districts', 'polling_units.sub_district_id', '=', 'sub_districts.id')
+            ->leftjoin('users', 'polling_units.user_id', '=', 'users.id')
+            ->where('polling_units.user_id', '=' ,$user_id)
+            ->select(
+                    'polling_units.*',
+                    'provinces.*',
+                    'districts.*',
+                    'electorates.*',
+                    'sub_districts.*'
+                )
+            ->first();
+
+        return view('scores.add_score', compact('data_user','data_polling_units'));
     }
 }

@@ -39,25 +39,25 @@
 
                     <div class="mt-5 max-sm:block flex items-center justify-between">
                         <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">อำเภอ</p>
-                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">เมืองกาญจนบุรี</p>
+                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">{{ $data_polling_units->name_district }}</p>
                     </div>
                     <hr class="mt-2 mb-3 ">
 
                     <div class="mt-5 max-sm:block flex items-center justify-between">
                         <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">เขตเลือกตั้งที่</p>
-                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">1</p>
+                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">{{ $data_polling_units->name_electorate }}</p>
                     </div>
                     <hr class="mt-2 mb-3 ">
 
                     <div class="mt-5 max-sm:block flex items-center justify-between">
                         <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">ตำบล</p>
-                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">แก่งเสี้ยน</p>
+                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px]">{{ explode(" ",$data_polling_units->name_polling_unit)[0] }}</p>
                     </div>
                     <hr class="mt-2 mb-3 ">
 
                     <div class="mt-5 max-sm:block flex items-center justify-between">
                         <p class="max-sm:text-[14.5px] max-sm:text-[#939393] max-sm:font-medium text-[19px] font-bold">หน่วยเลือกตั้งที่</p>
-                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px] ">1</p>
+                        <p class="max-sm:text-[19px] max-sm:text-[#000] max-sm:font-bold text-[16px] ">{{ explode(" ",$data_polling_units->name_polling_unit)[2] }}</p>
                     </div>
                     <hr class="mt-2 mb-3 ">
 
