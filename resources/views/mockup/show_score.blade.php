@@ -46,16 +46,18 @@
 <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<img src="https://www.viicheck.com/img/vote_kan/banner.png" alt="Logo" class="my-1 mt-[48px] shadow-xl">
+<!-- <img src="{{url('/images/2.png')}}" alt="Logo" class="w-full my-1 mt-[48px] shadow-xl"> -->
+
 <div class="max-sm:mx-2 mx-10 h-[calc(100dvh-96px)]">
-    <img src="https://www.viicheck.com/img/vote_kan/banner.png" alt="Logo" class="my-1 mt-[48px] shadow-xl">
-    <div class="w-100  mt-[48px] flex justify-center  h-100 overflow-auto  ">
+    <div class="w-100  mt-[10px] flex justify-center  h-100 overflow-auto  ">
 
         <div class="block  w-full  mt-5">
             <div class="w-full flex items-center justify-center flex-shrink-0 ">
 
-                <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 mt-8 mb-10">
+                <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 mt-0 mb-10">
                     <div class="w-full flex items-center justify-between mb-5">
-                        <p class="text-[30px] font-extrabold header-text">อำเภอเมืองกาญ</p>
+                        <!-- <p class="text-[30px] font-extrabold header-text">อำเภอเมืองกาญ</p> -->
 
                         <!--HTML CODE-->
                         <!-- <button>aasd</button> -->
@@ -72,7 +74,7 @@
                                     </span>
                                     <div class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
 
-                                        <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
+                                        <div class="z-[99999999] absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
                                             <div class="p-3">
                                                 <input type="text" id="filterInput" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 " name="sort" placeholder="ค้นหา..." />
                                             </div>
@@ -209,6 +211,8 @@
                         <div class="swiper multiple-slide-carousel swiper-container relative">
                             <div class="swiper-wrapper mb-5">
                                 <div class="swiper-slide">
+                                         <p class="text-[30px] font-extrabold header-text mb-3 ms-3">อำเภอเมืองกาญ</p>
+
                                     <div class="max-sm:block max-md:block max-lg:grid-cols-2  grid grid-cols-3">
 
 
