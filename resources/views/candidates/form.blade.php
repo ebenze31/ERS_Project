@@ -64,7 +64,7 @@
 </div> --}}
 <div class="form-group {{ $errors->has('year_id') ? 'has-error' : ''}}">
     <label for="year_id" class="control-label">{{ 'ปี/รอบการเลือกตั้ง' }}</label>
-    <select class="form-control" name="year_id" id="year_id">
+    <select class="form-control" name="year_id" id="year_ids">
 
     </select>
     {!! $errors->first('year_id', '<p class="help-block">:message</p>') !!}
@@ -75,9 +75,9 @@
     <label for="type" class="control-label">{{ 'ประเภทผู้สมัคร' }}</label>
     <div class="row">
         <div class="col-10">
-            <div id="select-wrapper">
+            <div id="select-wrappers">
                 <!-- Select Dropdown -->
-                <select class="form-control" id="type-select">
+                <select class="form-control" id="type-selects">
                     <option value="">เลือกประเภทผู้สมัคร</option>
                     @foreach($type_candidates as $item_2)
                         <option value="{{ $item_2->name }}">{{ $item_2->name }}</option>
@@ -86,19 +86,19 @@
             </div>
             <div id="input-wrapper" class="d-none">
                 <!-- Input Field -->
-                <input type="text" class="form-control" id="type-input" placeholder="กรอกประเภทผู้สมัคร">
+                <input type="text" class="form-control" id="type-inputs" placeholder="กรอกประเภทผู้สมัคร">
             </div>
         </div>
         <div class="col-2">
             <!-- Toggle Button -->
-            <button type="button" class="btn btn-secondary btn-block w-100" id="toggle-input">
+            <button type="button" class="btn btn-secondary btn-block w-100" id="toggle-inputss">
                 เพิ่มข้อมูลใหม่
             </button>
         </div>
     </div>
 
     <!-- Hidden Input -->
-    <input type="hidden" name="type" id="type-hidden">
+    <input type="hidden" name="type" id="type-hiddens">
 </div>
 
 
@@ -108,10 +108,10 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-       getData();
+       getDatas();
     });
 
-    function getData () {
+    function getDatas () {
         fetch("{{ url('/') }}/api/getData_Candidate")
         .then(response => {
             if (!response.ok) {
@@ -124,17 +124,17 @@
             console.log(result);
 
             selectElectionArea(result) // ฟังก์ชันเพิ่มข้อมูลใน select จังหวัด อำเภอ ตำบล และเขตการเลือกตั้ง
-            selectElectionVote(result) // ฟังก์ชันเพิ่มข้อมูลใน select พรรคการเมือง กับ select ปี/รอบการเลือกตั้ง
+            selectElectionVotes(result) // ฟังก์ชันเพิ่มข้อมูลใน select พรรคการเมือง กับ select ปี/รอบการเลือกตั้ง
         }).catch(error => {
             console.error('Error:', error);
         });
     }
 
     function selectElectionArea(result) {
-        console.log(result.provinces);
-        console.log(result.districts);
-        console.log(result.sub_districts);
-        console.log(result.electorates);
+        // console.log(result.provinces);
+        // console.log(result.districts);
+        // console.log(result.sub_districts);
+        // console.log(result.electorates);
 
         // ดึงข้อมูลจาก API
         const provinces = result.provinces;
@@ -149,13 +149,13 @@
         const electorateSelect = document.getElementById('electorate_id');
 
         // ฟังก์ชันสร้าง options
-        function createOptions(data, selectElement, valueField, textField, placeholder) {
-            selectElement.innerHTML = `<option value="">${placeholder}</option>`;
+        function createOptions(data, selectElements, valueField, textField, placeholder) {
+            selectElements.innerHTML = `<option value="">${placeholder}</option>`;
             data.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item[valueField];
                 option.textContent = item[textField];
-                selectElement.appendChild(option);
+                selectElements.appendChild(option);
             });
         }
 
@@ -193,7 +193,7 @@
 
     }
 
-    function selectElectionVote(result) {
+    function selectElectionVotes(result) {
         //================== select พรรคการเมือง ========================
 
         const selectedPartyId = '{{ isset($candidate->political_partie_id) ? $candidate->political_partie_id : ''}}';
@@ -220,16 +220,16 @@
 
         //============================== select ปีและรอบการเลือกตั้ง  ======================================
 
-        const selectedYearId = '{{ isset($candidate->year_id) ? $candidate->year_id : ''}}';
-        console.log("selectedYearId :"+selectedYearId);
+        const selectedYearIds = '{{ isset($candidate->year_id) ? $candidate->year_id : ''}}';
+        console.log("selectedYearIds :"+selectedYearIds);
 
-        const yearSelect = document.querySelector("#year_id");
-        yearSelect.innerHTML = ""; // ล้างตัวเลือกเดิม
+        const yearSelects = document.querySelector("#year_ids");
+        yearSelects.innerHTML = ""; // ล้างตัวเลือกเดิม
 
-        const defaultOption_Year = document.createElement("option");
-        defaultOption_Year.value = "";
-        defaultOption_Year.textContent = "เลือกปี";
-        yearSelect.appendChild(defaultOption_Year);
+        const defaultOption_Years = document.createElement("option");
+        defaultOption_Years.value = "";
+        defaultOption_Years.textContent = "เลือกปี";
+        yearSelects.appendChild(defaultOption_Years);
 
         for (let year of result['years']) {
             const option = document.createElement("option");
@@ -237,56 +237,56 @@
             option.textContent = `ปี ${parseInt(year.year) + 543} : รอบ ${year.round}`;
 
             // เช็คว่าปีนี้เป็นค่า selected หรือไม่
-            if (selectedYearId && selectedYearId == year.id) {
+            if (selectedYearIds && selectedYearIds == year.id) {
                 option.selected = true;
             }
 
-            yearSelect.appendChild(option);
+            yearSelects.appendChild(option);
         }
 
     }
 
     // ==================================== สลับ input ประเภทผู้สมัคร ========================================================
-    const selectWrapper = document.getElementById('select-wrapper');
-    const inputWrapper = document.getElementById('input-wrapper');
-    const selectElement = document.getElementById('type-select');
-    const inputElement = document.getElementById('type-input');
-    const hiddenInput = document.getElementById('type-hidden');
-    const toggleButton = document.getElementById('toggle-input');
+    const selectWrappers = document.getElementById('select-wrappers');
+    const inputWrappers = document.getElementById('input-wrappers');
+    const selectElements = document.getElementById('type-selects');
+    const inputElements = document.getElementById('type-inputs');
+    const hiddenInputs = document.getElementById('type-hiddens');
+    const toggleButtons = document.getElementById('toggle-inputs');
 
     // กำหนดค่าจาก Select ไปยัง Hidden Input
-    selectElement.addEventListener('change', function () {
-        hiddenInput.value = this.value; // เมื่อเลือกจาก Select จะเก็บค่าใน Hidden Input
+    selectElements.addEventListener('change', function () {
+        hiddenInputs.value = this.value; // เมื่อเลือกจาก Select จะเก็บค่าใน Hidden Input
     });
 
     // กำหนดค่าจาก Input ไปยัง Hidden Input
-    inputElement.addEventListener('input', function () {
-        hiddenInput.value = this.value; // เมื่อพิมพ์ใน Input จะเก็บค่าใน Hidden Input
+    inputElements.addEventListener('input', function () {
+        hiddenInputs.value = this.value; // เมื่อพิมพ์ใน Input จะเก็บค่าใน Hidden Input
     });
 
     // ฟังก์ชันสลับระหว่าง Select และ Input
-    toggleButton.addEventListener('click', function () {
-        if (selectWrapper.classList.contains('d-none')) {
+    toggleButtons.addEventListener('click', function () {
+        if (selectWrappers.classList.contains('d-none')) {
             // แสดง Select และซ่อน Input
-            selectWrapper.classList.remove('d-none');
-            inputWrapper.classList.add('d-none');
-            toggleButton.textContent = 'เพิ่มข้อมูลใหม่';
+            selectWrappers.classList.remove('d-none');
+            inputWrappers.classList.add('d-none');
+            toggleButtons.textContent = 'เพิ่มข้อมูลใหม่';
 
             // อัปเดต Hidden Input จาก Select
-            hiddenInput.value = selectElement.value;
+            hiddenInputs.value = selectElements.value;
         } else {
             // แสดง Input และซ่อน Select
-            selectWrapper.classList.add('d-none');
-            inputWrapper.classList.remove('d-none');
-            toggleButton.textContent = 'ตัวเลือก';
+            selectWrappers.classList.add('d-none');
+            inputWrappers.classList.remove('d-none');
+            toggleButtons.textContent = 'ตัวเลือก';
 
             // อัปเดต Hidden Input จาก Input
-            hiddenInput.value = inputElement.value;
+            hiddenInputs.value = inputElements.value;
         }
     });
 
     // ตั้งค่าเริ่มต้นให้ Hidden Input
-    hiddenInput.value = selectElement.value; // ค่าเริ่มต้นมาจาก Select
+    hiddenInputs.value = selectElements.value; // ค่าเริ่มต้นมาจาก Select
 
     // =====================================  ตรวจสอบข้อมูลก่อน submit =======================================================
 
@@ -305,7 +305,7 @@
             { id: 'province_id', message: 'กรุณาเลือกจังหวัด' },
             { id: 'district_id', message: 'กรุณาเลือกอำเภอ' },
             { id: 'electorate_id', message: 'กรุณาเลือกเขตเลือกตั้ง' },
-            { id: 'year_id', message: 'กรุณาเลือกปีการเลือกตั้ง' },
+            { id: 'year_ids', message: 'กรุณาเลือกปีการเลือกตั้ง' },
         ];
 
         fields.forEach(field => {
@@ -333,9 +333,9 @@
         });
 
         // ตรวจสอบประเภทผู้สมัคร (hidden input)
-        const typeHiddenInput = document.getElementById('type-hidden');
-        if (!typeHiddenInput.value.trim()) {
-            const typeWrapper = document.getElementById('select-wrapper');
+        const typehiddenInputs = document.getElementById('type-hiddens');
+        if (!typehiddenInputs.value.trim()) {
+            const typeWrapper = document.getElementById('select-wrappers');
             showError(typeWrapper, 'กรุณาเลือกหรือกรอกประเภทผู้สมัคร');
             isValid = false;
         }

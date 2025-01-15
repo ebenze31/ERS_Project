@@ -1,4 +1,7 @@
+
 @extends('layouts.theme_admin')
+@section('content')
+
 <style>
     .logo-img {
         width: 30%;
@@ -11,82 +14,134 @@
     @media (max-width: 768px) {
         .logo-img {
             width: 100%;
-            max-width: 500px;  /* Increase size in mobile */
-            max-height: 500px; /* Increase size in mobile */
+            max-width: 500px;
+            /* Increase size in mobile */
+            max-height: 500px;
+            /* Increase size in mobile */
         }
     }
-</style>
-@section('content')
-<div class="card">
-    <div class="row justify-content-center p-4">
-        <div class="col-7">
-            <form id="uploadForm" class="row">
-                <div class="col-12 mb-3">
-                    <label for="year_id" class="control-label">เลือกรอบการเลือกตั้ง</label>
-                    <select class="form-control" name="year_id" id="year_id" onchange="check_disabled_btn();">
 
-                    </select>
-                </div>
-                <div class="col-12 mb-3">
-                    <!-- ประเภทผู้สมัคร -->
-                    <div class="form-group">
-                        <label for="type" class="control-label">{{ 'ประเภทผู้สมัคร' }}</label>
-                        <div class="row">
-                            <div class="col-8">
-                                <div id="select-wrapper">
-                                    <!-- Select Dropdown -->
-                                    <select class="form-control" id="type-select">
-                                        <option value="">เลือกประเภทผู้สมัคร</option>
-                                        @foreach($type_candidates as $item_2)
-                                            <option value="{{ $item_2->name }}">{{ $item_2->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div id="input-wrapper" class="d-none">
-                                    <!-- Input Field -->
-                                    <input type="text" class="form-control" id="type-input" placeholder="กรอกประเภทผู้สมัคร">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <!-- Toggle Button -->
-                                <button type="button" class="btn btn-secondary btn-block w-100" id="toggle-input">
-                                    เพิ่มข้อมูลใหม่
+    .btn-test {
+        border-radius: 50px !important;
+        color: #000;
+        border: 1px solid #000 !important;
+    }
+
+    .btn-test:hover {
+        background-color: #000;
+        color: #fff !important;
+    }
+
+    .btn-test:not(.collapsed) {
+        background-color: #000;
+        color: #fff;
+    }
+</style>
+<button class="  btn btn-test @if ($errors->any()) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+    เพิ่มจากไฟล์ Excel
+</button>
+<button class=" btn btn-test @if (!$errors->any()) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+    เพิ่มรายบุคคล
+</button>
+
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item">
+        <div id="flush-collapseOne" class="accordion-collapse collapse @if (!$errors->any()) show @endif" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                <div class="card">
+
+                    <div class="d-flex justify-content-between px-4">
+                        <h1 class=" mt-3">
+                            เพิ่มจากไฟล์ Excel
+                        </h1>
+
+                        <div>
+                            <a href="{{ url('/Excel/Template_candidates.xlsx') }}" download>
+                                <button class="btn btn-info float-end mt-3" type="submit">
+                                    Template Excel
                                 </button>
+
+                            </a>
+                        </div>
+                    </div>
+                    <form id="uploadForm" class="row  p-4">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <label for="year_id" class="control-label">เลือกรอบการเลือกตั้ง</label>
+                            <select class="form-control" name="year_id" id="year_id" onchange="check_disabled_btn();">
+
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="type" class="control-label">{{ 'ประเภทผู้สมัคร' }}</label>
+                                <div class="row">
+                                    <div id="select-wrapper">
+                                        <!-- Select Dropdown -->
+                                        <select class="form-control" id="type-select">
+                                            <option value="">เลือกประเภทผู้สมัคร</option>
+                                            @foreach($type_candidates as $item_2)
+                                            <option value="{{ $item_2->name }}">{{ $item_2->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div id="input-wrapper" class="d-none">
+                                        <!-- Input Field -->
+                                        <input type="text" class="form-control" id="type-input" placeholder="กรอกประเภทผู้สมัคร">
+                                    </div>
+                                </div>
+
+                                <!-- Hidden Input -->
+                                <input class="d-none" name="type" id="type_hidden">
                             </div>
                         </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <label>เพิ่มไฟล์ Excel เพื่อเพิ่มรายชื่อผู้สมัคร</label>
+                            <input class="form-control" type="file" id="excelFile" accept=".xlsx, .xls" />
+                        </div>
+                        <div class="mt-3">
 
-                        <!-- Hidden Input -->
-                        <input class="d-none" name="type" id="type_hidden">
-                    </div>
+                            <button id="btn_submit_candidates" class="btn btn-success float-end" disabled type="submit">เพิ่มรายชื่อผู้สมัคร</button>
+                        </div>
+
+                    </form>
                 </div>
-                <div class="col-12">
-                    <label>เพิ่มไฟล์ Excel เพื่อเพิ่มรายชื่อผู้สมัคร</label>
-                </div>
-                <div class="col-9">
-                    <input class="form-control" type="file" id="excelFile" accept=".xlsx, .xls" />
-                </div>
-                <div class="col-3">
-                    <button id="btn_submit_candidates" class="btn btn-success float-end" disabled type="submit">เพิ่มรายชื่อผู้สมัคร</button>
-                </div>
-                <hr class="mt-3 mb-3">
-                <div class="col-12">
-                    <a href="{{ url('/candidates/create') }}" class="btn btn-secondary btn-sm" title="Add New Candidate">
-                        <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มรายชื่อผู้สมัครแบบรายบุคคล
-                    </a>
-                </div>
-            </form>
+            </div>
         </div>
-        <div class="col-5">
-            <a href="{{ url('/Excel/Template_candidates.xlsx') }}" download>
-                <button class="btn btn-info float-end mt-3" type="submit">
-                    Download Template Excel
-                </button>
-            </a>
+    </div>
+
+    <div class="accordion-item">
+
+        <div id="flush-collapseTwo" class="accordion-collapse collapse @if ($errors->any()) show @endif" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                <div class="card p-3">
+                    <h1 class=" mt-3">
+                        เพิ่มรายบุคคล
+                    </h1>
+
+                    @if ($errors->any())
+                    <ul class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    @endif
+
+                    <form method="POST" action="{{ url('/candidates') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+
+                        @include ('candidates.form', ['formMode' => 'create'])
+
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<button type="button" class="btn btn-secondary btn-block w-100 d-none" id="toggle-input">
+                                    เพิ่มข้อมูลใหม่
+                                </button>
 <script>
-
+    
     document.addEventListener('DOMContentLoaded', (event) => {
        getData();
     });

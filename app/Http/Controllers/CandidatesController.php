@@ -40,10 +40,11 @@ class CandidatesController extends Controller
                     'provinces.name_province',
                     'districts.name_district',
                     'electorates.name_electorate',
-                    'sub_districts.name_sub_districts'
+                    'sub_districts.name_sub_districts',
+                    'years.year'
                 )
             ->get();
-
+                
         // echo "<pre>";
         // print_r($candidates);
         // echo "<pre>";
