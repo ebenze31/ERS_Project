@@ -31,7 +31,7 @@
 <div class="container mx-auto">
 
     <div class="w-100 h-[calc(100dvh-96px)] mt-[48px] flex justify-center  h-100 overflow-auto  ">
-        <div class="block max-w-[800px]  w-full  mt-5">
+        <div class="block max-w-[1200px]  w-full  mt-5">
             <div class="w-full flex items-center justify-center flex-shrink-0 ">
 
                 <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 mt-8 mb-10">
