@@ -25,7 +25,7 @@ class Candidate extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'img', 'number', 'province_id', 'district_id', 'electorate_id', 'sub_district_id', 'political_partie_id', 'year_id', 'type','img_url'];
+    protected $fillable = ['name', 'img', 'number', 'province_id', 'district_id', 'electorate_id', 'sub_district_id', 'political_partie_id', 'year_id', 'type','img_url','sum_score'];
 
     
 }

@@ -13,6 +13,8 @@ use App\Models\Province;
 use App\Models\Polling_unit;
 use App\Models\Year;
 use App\User;
+use App\Models\Candidate;
+use App\Models\District;
 
 class ScoresController extends Controller
 {
@@ -234,6 +236,11 @@ class ScoresController extends Controller
         // บันทึกข้อมูลลงใน Score
         foreach ($results as $result) {
             Score::create($result);
+
+            // อัปเดตคะแนนของ Candidate
+            Candidate::where('id', $result['candidate_id'])->update([
+                'sum_score' => $result['score'],
+            ]);
         }
 
         return "SUCCESS" ;
@@ -264,5 +271,49 @@ class ScoresController extends Controller
             ->get();
 
         return $data_Score ;
+    }
+
+    function get_data_scores($district_id){
+
+        $data_Score = DB::table('candidates')
+            ->leftjoin('years', 'candidates.year_id', '=', 'years.id')
+            ->leftjoin('provinces', 'candidates.province_id', '=', 'provinces.id')
+            ->leftjoin('districts', 'candidates.district_id', '=', 'districts.id')
+            ->leftjoin('electorates', 'candidates.electorate_id', '=', 'electorates.id')
+            ->leftjoin('political_parties', 'candidates.political_partie_id', '=', 'political_parties.id')
+            ->where('candidates.district_id', $district_id)
+            ->where('years.status', "Yes")
+            ->select(
+                    'candidates.name as name_candidate',
+                    'candidates.img as img_candidate',
+                    'candidates.img_url as img_url_candidate',
+                    'candidates.number as number_candidate',
+                    'candidates.sum_score as sum_score',
+                    'districts.name_district',
+                    'electorates.name_electorate',
+                    'years.show_parties',
+                    'political_parties.name as name_political_partie',
+                )
+            ->get();
+
+        return $data_Score ;
+
+    }
+
+    function get_data_districts($provinces_id){
+
+        $data = DB::table('districts')
+            ->leftJoin('candidates', 'districts.id', '=', 'candidates.district_id')
+            ->where('districts.province_id', $provinces_id)
+            ->groupBy('districts.name_district', 'districts.id') 
+            ->orderBy('candidates.id', 'asc') 
+            ->select(
+                'districts.name_district',
+                'districts.id as district_id'
+            )
+            ->get();
+
+
+        return $data ;
     }
 }

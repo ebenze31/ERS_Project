@@ -44,6 +44,8 @@ Route::post('/add_type_candidate', 'YearsController@add_type_candidateAPI');
 Route::get('/admin_vote_score', 'scoresController@admin_vote_scoreAPI');
 Route::post('/send_score', 'scoresController@send_score');
 Route::get('/get_record_score/{user_id}', 'scoresController@get_record_score');
+Route::get('/get_data_scores/{district_id}', 'scoresController@get_data_scores');
+Route::get('/get_data_districts/{provinces_id}', 'scoresController@get_data_districts');
 
 Route::get('/get_active_years/{province}', 'YearsController@get_active_years');
 Route::post('/get_candidates_of_electorate_id', 'CandidatesController@get_candidates_of_electorate_id');

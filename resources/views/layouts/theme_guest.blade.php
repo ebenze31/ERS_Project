@@ -9,8 +9,14 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>รายงานผลการเลือกตั้ง (อย่างไม่เป็นทางการ)</title>
 
+        <!--favicon-->
+        @if( !empty($data_provinces->logo) )
+            <link rel="icon" href="{{ url('storage')}}/{{ $data_provinces->logo }}" type="image/png" />
+        @else
+            <link rel="icon" href="{{ url('/images/logos/default_logo.png') }}" type="image/png" />
+        @endif
         <!-- Styles -->
         <script src="https://cdn.tailwindcss.com"></script>
         <!-- fontawesome icon -->
@@ -154,7 +160,7 @@
     </main>
 
     <!-- Bottom Bar -->
-    <div class="bg-white fixed bottom-0 left-0 right-0 flex justify-center   items-center py-2 drop-shadow-[10px_5px_4px_0px_rgba(0,0,0,0.25)] ">
+    <div class="bg-white fixed bottom-0 left-0 right-0 flex justify-center z-[9]  items-center py-2 drop-shadow-[10px_5px_4px_0px_rgba(0,0,0,0.25)] ">
         <span class="text-[#434040]">Power By •</span>
         <img src="https://www.viicheck.com/img/logo/VII-check-LOGO-W-v1.png" alt="Logo" class="ms-2" width="77" height="">
 

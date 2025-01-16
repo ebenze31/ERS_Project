@@ -1,6 +1,7 @@
 @extends('layouts.theme_guest')
 
 @section('content')
+
 <style>
     .bg-dark {
         background-color: #000;
@@ -67,8 +68,8 @@
 <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<img src="https://www.viicheck.com/img/vote_kan/banner.png"   alt="Logo" class="mb-1 shadow-xl banner">
-<img src="https://www.viicheck.com/img/vote_kan/banner_mobile.png"  alt="Logo" class="mb-1 shadow-xl banner-mobile">
+<img src="{{ url('storage')}}/{{ $data_provinces->banner }}"   alt="Logo" class="mb-1 shadow-xl banner">
+<img src="{{ url('storage')}}/{{ $data_provinces->banner_mobile }}"  alt="Logo" class="mb-1 shadow-xl banner-mobile">
 <!-- <img src="{{url('/images/2.png')}}" alt="Logo" class="w-full my-1 mt-[48px] shadow-xl"> -->
 
 <div class="max-sm:mx-2 mx-10 max-h-fit">
@@ -91,590 +92,8 @@
                     </div>
                     <div class="w-full relative">
                         <div class="swiper multiple-slide-carousel swiper-container relative">
-                            <div class="swiper-wrapper mb-0">
-
+                            <div id="div_item_carousel" class="swiper-wrapper mb-0">
                                 <!-- ITEM -->
-                                <div class="swiper-slide">
-                                    <p class="text-[30px] font-extrabold header-text mb-3 ms-3 text-center">อำเภอเมืองกาญ</p>
-
-                                    <div class="max-sm:block max-md:block max-lg:grid-cols-2  grid grid-cols-3">
-
-
-
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <p class="text-[30px] font-extrabold header-text mb-3 ms-3 text-center">อำเภอท่ามะกา</p>
-
-                                    <div class="max-sm:block max-md:block max-lg:grid-cols-2  grid grid-cols-3">
-
-
-
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
-                                            <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
-                                                <span class="font-bold text-[16px]">อำเภอเมือง เขต 1</span>
-                                                <a href="#" class="text-[14px] font-bold">เพิ่มเติม</a>
-                                            </div>
-                                            <div class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
-                                                <div class="flex justify-between items-center my-2">
-                                                    <div>
-
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="Logo" class="h-[42px] w-[42px] my-1 me-2 rounded-full shadow-xl object-cover">
-                                                            <div>
-                                                                <span>นายสมชาย</span>
-
-                                                                <div class="flex items-center">
-                                                                    <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                                    <p class="text-[14px]">พรรควีเช็ค</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#27B004] text-[24px]">
-                                                        904
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                                <hr class="my-3">
-
-                                                <div class="flex justify-between items-center">
-                                                    <div>
-                                                        <p>นายสมชาย</p>
-                                                        <div class="flex items-center">
-                                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png" alt="Logo" class="h-[20px] my-1 me-2">
-
-                                                            <p class="text-[14px]">พรรควีเช็ค</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-[#4B4B4B] text-[16px]">
-                                                        685
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                             </div>
                             <style>
                                 .swiper-button-prev:after,
@@ -729,5 +148,187 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            get_data_scores();
+        });
+
+        function get_data_scores(){
+
+            fetch("{{ url('/') }}/api/get_data_districts/"+ "{{ $data_provinces->id }}")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network ตอบสนองไม่ OK " + response.statusText);
+                }
+                return response.json();
+            })
+            .then(result => {
+                // console.log(result);
+
+                if(result){
+
+                    let div_item_carousel = document.querySelector('#div_item_carousel');
+                        div_item_carousel.innerHTML = "";
+                    
+                    let check_name_district = "" ;
+                    for (let i = 0; i < result.length; i++) {
+
+                        if(check_name_district != result[i].name_district){
+                            check_name_district = result[i].name_district
+                            let html_head = `
+                                <div class="swiper-slide">
+                                    <p class="text-[30px] font-extrabold header-text mb-3 ms-3 text-center">
+                                        `+result[i].name_district+`
+                                    </p>
+                                    <div name_district="`+result[i].name_district+`" class="max-sm:block max-md:block max-lg:grid-cols-2  grid grid-cols-3">
+                                    </div>
+                                </div>
+                            `;
+                            div_item_carousel.insertAdjacentHTML('beforeend', html_head); // แทรกล่างสุด
+                        }
+
+                        fetch("{{ url('/') }}/api/get_data_scores/"+ result[i].district_id)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Network ตอบสนองไม่ OK " + response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data_scores => {
+                            // จัดเรียงข้อมูลโดย name_electorate ก่อน และตามด้วย sum_score
+                            data_scores.sort((a, b) => {
+                                // เรียงตาม name_electorate (จากน้อยไปมาก)
+                                const electorateComparison = a.name_electorate.localeCompare(b.name_electorate, 'th', { numeric: true });
+                                if (electorateComparison !== 0) {
+                                    return electorateComparison;
+                                }
+
+                                // หาก name_electorate เท่ากัน เรียงตาม sum_score (จากมากไปน้อย)
+                                const scoreA = a.sum_score === null ? 0 : a.sum_score;
+                                const scoreB = b.sum_score === null ? 0 : b.sum_score;
+
+                                return scoreB - scoreA;
+                            });
+
+                            // console.log(data_scores);
+
+                            let check_name_district = "" ;
+                            let check_name_electorate = "" ;
+                            let old_electorate = "" ;
+
+                            if(data_scores){
+                                for (let xi = 0; xi < data_scores.length; xi++) {
+                                    // console.log(data_scores[xi].name_district);
+                                    // console.log(data_scores[xi].name_electorate);
+
+                                    let div_name_district = document.querySelector('div[name_district="' + data_scores[xi].name_district + '"]');
+
+                                    let text_check_div = data_scores[xi].name_district + '_' + data_scores[xi].name_electorate ;
+                                    let check_div = document.querySelector('div[div_district="'+text_check_div+'"]');
+
+                                    if(check_div){
+                                        // ไม่ทำอะไร
+                                    }
+                                    else{
+
+                                        check_name_district = data_scores[xi].name_district;
+                                        check_name_electorate = data_scores[xi].name_electorate;
+
+                                        let html_district = `
+                                            <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
+                                                <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
+                                                    <span class="font-bold text-[16px]">
+                                                        อำเภอ`+data_scores[xi].name_district+` เขต `+data_scores[xi].name_electorate+`
+                                                    </span>
+                                                </div>
+                                                <div div_district="`+data_scores[xi].name_district+`_`+data_scores[xi].name_electorate+`" class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
+
+                                                </div>
+                                            </div>
+                                        `;
+                                        div_name_district.insertAdjacentHTML('beforeend', html_district); // แทรกล่างสุด
+                                    }
+
+                                    let div_district = document.querySelector('div[div_district="'+text_check_div+'"]');
+
+                                    let photo = "";
+                                    if(data_scores[xi].img_candidate){
+                                        photo = "{{ url('storage')}}/" + data_scores[xi].img_candidate;
+                                    }else{
+                                        photo = data_scores[xi].img_url_candidate;
+                                    }
+
+                                    let name_candidate = "";
+                                    if(data_scores[xi].show_parties == "Yes"){
+                                        name_candidate = `
+                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png"  class="h-[20px] my-1 me-2">
+                                            <span>`+data_scores[xi].name_candidate+`</span>
+                                        `;
+                                    }else{
+                                         name_candidate = `
+                                            <span>`+data_scores[xi].name_candidate+`</span>
+                                        `;
+                                    }
+
+                                    if(!data_scores[xi].sum_score){
+                                        data_scores[xi].sum_score = 0 ;
+                                    }
+
+                                    if( data_scores[xi].sum_score && old_electorate != data_scores[xi].name_electorate){
+                                        old_electorate = data_scores[xi].name_electorate;
+                                        let html_candidate_leader = `
+                                            <div class="flex justify-between items-center my-2">
+                                                <div>
+                                                    <div class="flex items-center">
+                                                        <img src="`+photo+`" class="h-[60px] max-w-[60px] my-1 me-2 shadow-xl object-contain">
+                                                        <div>
+                                                        <div class="flex items-center">
+                                                            `+name_candidate+`
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-[#27B004] text-[24px]">
+                                                    `+data_scores[xi].sum_score+`
+                                                </div>
+                                            </div>
+                                            <hr class="my-3">
+                                        `;
+
+                                        div_district.insertAdjacentHTML('beforeend', html_candidate_leader); // แทรกล่างสุด
+                                    }
+                                    else{
+                                        let html_candidate = `
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    `+name_candidate+`
+                                                </div>
+                                                <div class="text-[#4B4B4B] text-[16px]">
+                                                    `+data_scores[xi].sum_score+`
+                                                </div>
+                                            </div>
+                                            <hr class="my-3">
+                                        `;
+
+                                        div_district.insertAdjacentHTML('beforeend', html_candidate); // แทรกล่างสุด
+                                        
+                                    }
+
+                                }
+                            }
+
+                        }).catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+
+                }
+
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 
     @endsection
