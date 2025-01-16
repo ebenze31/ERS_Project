@@ -202,7 +202,9 @@ class ScoresController extends Controller
         $data_Polling_unit = Polling_unit::where('user_id' , $user_id)->first();
         $data_Year = Year::where('status', "Yes")->where('province',$user_province)->first();
         // ดึงค่า round ที่มากที่สุดสำหรับ polling_unit_id
-        $max_round = Score::where('polling_unit_id', $data_Polling_unit->id)->max('round');
+        $max_round = Score::where('polling_unit_id', $data_Polling_unit->id)
+            ->where('year_id', $data_Year->id)
+            ->max('round');
 
         // ถ้าไม่มีข้อมูลใน Score ให้กำหนดค่าเริ่มต้นเป็น 0
         $update_round_score = $max_round ? $max_round + 1 : 1;
@@ -236,5 +238,31 @@ class ScoresController extends Controller
 
         return "SUCCESS" ;
 
+    }
+
+    function get_record_score($user_id){
+
+        $data_user = User::where('id' , $user_id)->first();
+        $user_province = $data_user->province;
+
+        $data_Polling_unit = Polling_unit::where('user_id' , $user_id)->first();
+        $data_Year = Year::where('status', "Yes")->where('province',$user_province)->first();
+
+        // $data_Score = Score::where('polling_unit_id', $data_Polling_unit->id)
+        //     ->where('year_id', $data_Year->id)
+        //     ->get();
+
+        $data_Score = DB::table('scores')
+            ->leftjoin('candidates', 'scores.candidate_id', '=', 'candidates.id')
+            ->where('scores.polling_unit_id', $data_Polling_unit->id)
+            ->where('scores.year_id', $data_Year->id)
+            ->select(
+                    'scores.*',
+                    'candidates.name as name_candidate',
+                    'candidates.number as number_candidate',
+                )
+            ->get();
+
+        return $data_Score ;
     }
 }

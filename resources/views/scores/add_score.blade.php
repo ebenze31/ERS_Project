@@ -113,41 +113,8 @@
 
                 <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 mt-8 mb-10">
                     <p class="text-[30px] font-extrabold header-text mb-5">คะแนนลงไว้ล่าสุด</p>
-
-                    <div>
-                        <p class="text-center text-[19px] text-[#000] font-bold">ครั้งที่ 2</p>
-                        <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 1 ชื่อผู้สมัคร</p>
-                            <p class="text-[16px] text-[#939393]">50 คะแนน</p>
-                        </div>
-                        <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 2 ชื่อผู้สมัคร</p>
-                            <p class="text-[16px] text-[#939393]">120 คะแนน</p>
-                        </div>
-
-                        <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">โดย ธีรศักดิ์</p>
-                            <p class="text-[16px] text-[#939393]">เวลา 12.30 น.</p>
-                        </div>
-                        <hr class="mt-2 mb-3">
-                    </div>
-
-                    <div>
-                        <p class="text-center text-[19px] text-[#000] font-bold">ครั้งที่ 1</p>
-                        <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 1 ชื่อผู้สมัคร</p>
-                            <p class="text-[16px] text-[#939393]">50 คะแนน</p>
-                        </div>
-                        <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">เบอร์ 2 ชื่อผู้สมัคร</p>
-                            <p class="text-[16px] text-[#939393]">120 คะแนน</p>
-                        </div>
-
-                        <div class="flex justify-between items-center mb-3">
-                            <p class="text-[16px] text-[#000] font-bold">โดย ธีรศักดิ์</p>
-                            <p class="text-[16px] text-[#939393]">เวลา 12.30 น.</p>
-                        </div>
-                        <hr class="mt-2 mb-3">
+                    <div id="div_record_score">
+                        <!-- record_score -->
                     </div>
                 </div>
             </div>
@@ -158,6 +125,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         get_active_years();
+        get_record_score();
     });
 
     function get_active_years(){
@@ -294,11 +262,78 @@
         }).then(function (response){
             return response.text();
         }).then(function(data){
-            console.log(data);
+            // console.log(data);
+            if(data == "SUCCESS"){
+                show_popup_success();
+            }
         }).catch(function(error){
             // console.error(error);
         });
 
+    }
+
+    function get_record_score(){
+        fetch("{{ url('/') }}/api/get_record_score/"+ "{{ Auth::user()->id }}")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network ตอบสนองไม่ OK " + response.statusText);
+            }
+            return response.json();
+        })
+        .then(result => {
+            // console.log(result);
+            if (result) {
+
+                let check_round = "" ;
+                for (let i = 0; i < result.length; i++) {
+                    let div_record_score = document.querySelector('#div_record_score');
+
+                    // console.log(result[i].round);
+                    if(check_round != result[i].round){
+
+                        check_round = result[i].round ;
+                        let datetime = result[i].created_at;
+                        let time = datetime.split(" ")[1].slice(0, 5); 
+
+                        let html_round = `
+                            <div>
+                                <p class="text-center text-[19px] text-[#000] font-bold">ครั้งที่ `+result[i].round+`</p>
+                                <div id="div_of_round">
+
+                                </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <p class="text-[16px] text-[#000] font-bold">โดย {{ Auth::user()->name }}</p>
+                                    <p class="text-[16px] text-[#939393]">เวลา `+time+` น.</p>
+                                </div>
+                                <hr class="mt-2 mb-3">
+                            </div>
+                        `;
+                        div_record_score.insertAdjacentHTML('afterbegin', html_round); // แทรกบนสุด
+                    }
+
+                    let div_of_round = document.querySelector('#div_of_round');
+                    let html = `
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <p class="text-[16px] text-[#000] font-bold">
+                                    เบอร์ `+result[i].number_candidate+` `+result[i].name_candidate+`
+                                </p>
+                                <p class="text-[16px] text-[#939393]">`+result[i].score+` คะแนน</p>
+                            </div>
+                        </div>
+                    `;
+                    div_of_round.insertAdjacentHTML('beforeend', html); // แทรกบนสุด
+
+                }
+
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function show_popup_success(){
+        
     }
 
 </script>
