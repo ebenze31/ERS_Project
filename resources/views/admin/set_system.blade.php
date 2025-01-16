@@ -1,13 +1,13 @@
 @extends('layouts.theme_admin')
 <style>
     .color_input {
-        width: 60%;
+        width: 60% !important;
     }
 
     /* สำหรับหน้าจอมือถือ */
     @media (max-width: 768px) {
         .color_input {
-            width: 40%;
+            width: 40% !important;
         }
     }
 </style>

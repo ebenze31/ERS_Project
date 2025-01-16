@@ -605,10 +605,10 @@
         }
 
         // ลบฟอร์มเก่าที่มีอยู่ (หากมี)
-        formTypeCandidate_select.innerHTML = "";
+        form.innerHTML = "";
 
         // สร้าง HTML ใหม่
-        const formHTML = `
+        let formHTML = `
             <input style="width: 70%;" placeholder="กรอกประเภทผู้สมัคร"
                 class="form-control mr-2" name="nameCandidate" type="text" id="nameCandidate" value="">
             <button onclick="submitCandidate('modal')" style="width: 25%;" class="btn btn-success">ยืนยัน</button>
@@ -632,7 +632,7 @@
         formTypeCandidate_select.innerHTML = "";
 
         // สร้าง HTML ใหม่
-        const formHTML = `
+        let formHTML = `
             <input style="width: 70%;" placeholder="กรอกประเภทผู้สมัคร"
                 class="form-control mr-2" name="nameCandidate" type="text" id="nameCandidate" value="">
             <button onclick="submitCandidate('form')" style="width: 25%;" class="btn btn-success">ยืนยัน</button>
@@ -699,7 +699,7 @@
 
     function updateCheckboxGroup(types , from) {
         let checkboxGroup;
-
+        // console.log("from : "+from);
         if (from == "modal") {
             checkboxGroup = document.getElementById('checkbox-group');
             checkboxGroup.innerHTML = ''; // ล้างเนื้อหาเก่า
@@ -760,6 +760,19 @@
                 div.appendChild(input);
                 div.appendChild(label);
                 checkboxGroup.appendChild(div);
+
+               // เก็บฟังก์ชันไว้ในตัวแปร เพื่อให้สามารถอ้างอิงได้ทั้งตอนลบและเพิ่ม
+                const updateYearSettingsHandler = updateYearSettings;
+
+                // ลบ Event Listener ทั้งหมดก่อน
+                document.querySelectorAll('#candidateTypeCheckboxes .form-check-input').forEach(checkbox => {
+                    checkbox.removeEventListener('change', updateYearSettingsHandler);
+                });
+                // เพิ่ม Event Listener ใหม่
+                document.querySelectorAll('#candidateTypeCheckboxes .form-check-input').forEach(checkbox => {
+                    checkbox.addEventListener('change', updateYearSettingsHandler);
+                });
+
             });
         }
     }
