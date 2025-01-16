@@ -21,7 +21,7 @@
                                 <th>หน่วยเลือกตั้งที่</th>
                                 <th>เจ้าหน้าที่</th>
                                 <th>จำนวนผู้มีสิทธิ</th>
-                                <th>จำนวนผู้มาใช้สิทธิ</th>
+                                {{-- <th>จำนวนผู้มาใช้สิทธิ</th> --}}
                                 <th></th>
                             </tr>
                         </thead>
@@ -105,7 +105,6 @@
                         <td>${item.name_polling_unit.split(" ")[2]}</td>
                         <td>${item.name_user ? item.name_user : ''}</td>
                         <td>${item.eligible_voters}</td>
-                        <td></td>
                         ${html_view}
                     `;
 
