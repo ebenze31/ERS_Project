@@ -126,7 +126,7 @@
                     </ul>
                     @endif
 
-                    <form method="POST" action="{{ url('/candidates') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                    <form id="myForm_CreateCandidate" method="POST" action="{{ url('/candidates') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         @include ('candidates.form', ['formMode' => 'create'])
@@ -141,7 +141,7 @@
                                     เพิ่มข้อมูลใหม่
                                 </button>
 <script>
-    
+
     document.addEventListener('DOMContentLoaded', (event) => {
        getData();
     });

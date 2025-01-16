@@ -19,7 +19,7 @@
     {!! $errors->first('number', '<p class="help-block">:message</p>') !!}
 </div>
 <div  class="form-group {{ $errors->has('political_partie_id') ? 'has-error' : ''}}">
-    <label for="political_partie_id" class="control-label">{{ 'พรรคการเมือง' }}</label>
+    <label for="political_partie_id" class="control-label">{{ 'พรรคการเมือง (optional)' }}</label>
     <select class="form-control" name="political_partie_id" id="political_partie_id">
 
     </select>
@@ -74,7 +74,7 @@
 <div class="form-group">
     <label for="type" class="control-label">{{ 'ประเภทผู้สมัคร' }}</label>
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <div id="select-wrappers">
                 <!-- Select Dropdown -->
                 <select class="form-control" id="type-selects">
@@ -89,9 +89,9 @@
                 <input type="text" class="form-control" id="type-inputs" placeholder="กรอกประเภทผู้สมัคร">
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-2 d-none">
             <!-- Toggle Button -->
-            <button type="button" class="btn btn-secondary btn-block w-100" id="toggle-inputss">
+            <button type="button" class="btn btn-secondary btn-block w-100" id="toggle-inputs">
                 เพิ่มข้อมูลใหม่
             </button>
         </div>
@@ -290,7 +290,7 @@
 
     // =====================================  ตรวจสอบข้อมูลก่อน submit =======================================================
 
-    document.querySelector('form').addEventListener('submit', function (event) {
+    document.querySelector('#myForm_CreateCandidate').addEventListener('submit', function (event) {
         let isValid = true;
 
         // ลบข้อความ error เก่าก่อน
@@ -301,7 +301,7 @@
             { id: 'name', message: 'กรุณากรอกชื่อ-สกุล' },
             { id: 'img', message: 'กรุณาอัปโหลดรูปผู้สมัคร', type: 'file' },
             { id: 'number', message: 'กรุณากรอกเบอร์ผู้สมัครให้ถูกต้อง', type: 'number', min: 1 },
-            { id: 'political_partie_id', message: 'กรุณาเลือกพรรคการเมือง' },
+            // { id: 'political_partie_id', message: 'กรุณาเลือกพรรคการเมือง' },
             { id: 'province_id', message: 'กรุณาเลือกจังหวัด' },
             { id: 'district_id', message: 'กรุณาเลือกอำเภอ' },
             { id: 'electorate_id', message: 'กรุณาเลือกเขตเลือกตั้ง' },
