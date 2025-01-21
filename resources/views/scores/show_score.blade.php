@@ -309,8 +309,8 @@
                                         let html_candidate = `
                                             <div class="flex justify-between items-center">
                                                 <div class="flex items-center">
-                                                    <div class="w-[80px]">
-                                                        <p class="text-[35px] ">No.${data_scores[xi].number_candidate}</p>
+                                                    <div class="w-[50px]">
+                                                        <p class="text-[22px] ">No.${data_scores[xi].number_candidate}</p>
                                                     </div>
                                                     <div class="ms-3">
                                                         `+name_candidate+`
