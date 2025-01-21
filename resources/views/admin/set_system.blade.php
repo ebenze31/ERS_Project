@@ -43,7 +43,7 @@
                     </div>
                 </div>
 
-                <div class="col-11 col-md-4 form-group">
+                <div class="col-12 col-md-4 form-group">
                     <label class="form-label" style="font-weight: bold; font-size: 1.2rem;">แบนเนอร์<span class="text-danger" style="font-size: 1rem;">(4000 * 300 px)</span></label>
                     <input id="banner" name="banner" type="file" class="form-control" />
                     <!-- แสดงแบนเนอร์เก่าถ้ามี -->
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="col-11 col-md-4 form-group">
+                <div class="col-12 col-md-4 form-group">
                     <label class="form-label" style="font-weight: bold; font-size: 1.2rem;">แบนเนอร์มือถือ<span class="text-danger" style="font-size: 1rem;">(4000 * 750 px)</span></label>
                     <input id="banner_mobile" name="banner_mobile" type="file" class="form-control" />
                     <!-- แสดงแบนเนอร์มือถือเก่าถ้ามี -->
