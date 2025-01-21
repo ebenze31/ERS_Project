@@ -307,12 +307,15 @@
                                     }
                                     else{
                                         let html_candidate = `
-                                            <div class="flex justify-left items-center">
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex items-center">
                                                     <div class="w-[80px]">
-                                                            <p class="text-[35px] ">No.${data_scores[xi].number_candidate}</p>
-                                                        </div>
-                                                <div class="ms-3">
-                                                    `+name_candidate+`
+                                                        <p class="text-[35px] ">No.${data_scores[xi].number_candidate}</p>
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        `+name_candidate+`
+                                                    </div>
+                                                    
                                                 </div>
                                                 <div class="text-[#4B4B4B] text-[16px]">
                                                     `+formattedScore+`
