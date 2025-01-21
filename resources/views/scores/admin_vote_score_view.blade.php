@@ -34,7 +34,7 @@
                     $index2 = $pollingUnitParts[2] ?? '';
                 @endphp
 
-                <p class="card-text h4 text-center">
+                <p class="card-text h4 text-center" style="font-weight: bold;">
                     อำเภอ {{ $data_polling_units->name_district ? $data_polling_units->name_district : ''}}&nbsp;&nbsp;
                     เขตเลือกตั้งที่ {{ $data_polling_units->name_electorate ? $data_polling_units->name_electorate : ''}}&nbsp;&nbsp;
                     {{-- @if($data_polling_units->name_sub_districts)
@@ -43,7 +43,7 @@
                     ตำบล {{ $index0 }}&nbsp;&nbsp;
                     เขตเลือกตั้งที่ {{ $index2 }}&nbsp;&nbsp;
                 </p>
-                <p class="card-text h4 text-center">
+                <p class="card-text h4 text-center" style="font-weight: bold;">
                     {{-- เจ้าหน้าที่ {{ $data_polling_units->name_user ? $data_polling_units->name_user : ''}}&nbsp;&nbsp; --}}
                     จำนวนผู้มีสิทธิ {{ $data_polling_units->eligible_voters ? $data_polling_units->eligible_voters : ''}}&nbsp;&nbsp;
                 </p>

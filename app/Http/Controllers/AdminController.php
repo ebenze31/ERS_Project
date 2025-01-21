@@ -14,7 +14,7 @@ class AdminController extends Controller
         $user_province = Auth::user()->province ;
         $data_provinces = Province::where('name_province' , $user_province)->first();
         $province_id = $data_provinces->id ;
-        
+
         return view('admin.dashboard', compact('data_admin','province_id'));
     }
 
@@ -22,7 +22,9 @@ class AdminController extends Controller
         $data_user = Auth::user();
         $province = $data_user->province ;
 
-        return view('admin.set_system', compact('province'));
+        $data_province = Province::where('name_province' , $province)->first();
+
+        return view('admin.set_system', compact('province','data_province'));
     }
 
     public function set_system_data(Request $request)
@@ -53,23 +55,23 @@ class AdminController extends Controller
         $province = Province::where('name_province', $provinceName)->first();
 
         if ($province) {
-            // ถ้ามีข้อมูลแล้ว ให้ทำการอัปเดตคอลัมน์ที่เลือก
-            if ($requestData['color_1']) {
+            // ตรวจสอบและอัปเดตเฉพาะค่าที่ไม่ว่าง
+            if (!empty($requestData['color_1'])) {
                 $province->color_1 = $requestData['color_1'];
             }
-            if ($requestData['color_2']) {
+            if (!empty($requestData['color_2'])) {
                 $province->color_2 = $requestData['color_2'];
             }
-            if ($requestData['color_3']) {
+            if (!empty($requestData['color_3'])) {
                 $province->color_3 = $requestData['color_3'];
             }
-            if ($requestData['banner_mobile']) {
+            if (!empty($requestData['banner_mobile'])) {
                 $province->banner_mobile = $requestData['banner_mobile'];
             }
-            if ($requestData['banner']) {
+            if (!empty($requestData['banner'])) {
                 $province->banner = $requestData['banner'];
             }
-            if ($requestData['logo']) {
+            if (!empty($requestData['logo'])) {
                 $province->logo = $requestData['logo'];
             }
             // บันทึกการอัปเดต
