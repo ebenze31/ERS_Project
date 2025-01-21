@@ -38,6 +38,7 @@ class Polling_unitsController extends Controller
             ->where('provinces.name_province', '=' ,$province)
             ->select(
                     'polling_units.*',
+                    'polling_units.id as unit_id',
                     'provinces.*',
                     'districts.*',
                     'electorates.*',
@@ -341,6 +342,42 @@ class Polling_unitsController extends Controller
             ]);
 
         return "SUCCESS" ;
+    }
+
+    function clear_name_user($id , $user_id){
+
+        $data_user = User::where('id' , $user_id)->first();
+        $province_id = $data_user->province_id ;
+
+        if($id == "all"){
+            DB::table('users')
+                ->where([
+                        ['role', "officer"],
+                        ['province_id', $province_id],
+                    ])
+                ->update([
+                    'name' => 'กรุณาเพิ่มชื่อของคุณ',
+                    'phone_1' => null,
+                    'phone_2' => null
+                ]);
+
+        }
+        else{
+            DB::table('users')
+                ->where([
+                        ['polling_unit_id', $id],
+                        ['role', "officer"],
+                        ['province_id', $province_id],
+                    ])
+                ->update([
+                    'name' => 'กรุณาเพิ่มชื่อของคุณ',
+                    'phone_1' => null,
+                    'phone_2' => null
+                ]);
+        }
+
+        return "SUCCESS" ;
+
     }
 
 }

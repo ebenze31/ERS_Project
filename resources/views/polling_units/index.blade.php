@@ -74,8 +74,11 @@
         <div class="card-header">
             <h4>
                 หน่วยเลือกตั้ง <span style="font-size: 14px;">(ทั้งหมด {{ $count_units }} หน่วย)</span>
-                <button id="btn_create_user_units" class="btn btn-info float-end" onclick="create_user_units();">
+                <button id="btn_create_user_units" class="btn btn-info float-end mx-2" onclick="create_user_units();">
                     สร้างรหัสผู้ใช้
+                </button>
+                <button class="btn btn-warning float-end mx-2" onclick="clear_name_user('all');">
+                    ล้างข้อมูลทั้งหมด
                 </button>
             </h4>
         </div>
@@ -92,6 +95,7 @@
                                     <th>หน่วยเลือกตั้งที่</th>
                                     <th>เจ้าหน้าที่</th>
                                     <th>จำนวนผู้มีสิทธิ</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,6 +107,13 @@
                                     <td>{{ explode(" ",$item->name_polling_unit)[2] }}</td>
                                     <td>{{ $item->name_user }}</td>
                                     <td>{{ $item->eligible_voters }}</td>
+                                    <td>
+                                        <center>
+                                            <button class="btn btn-warning btn-sm" onclick="clear_name_user('{{ $item->unit_id }}');">
+                                                ล้างข้อมูลหน่วยนี้
+                                            </button>
+                                        </center>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -161,6 +172,17 @@
             XLSX.writeFile(workbook, fileName);
 
             document.querySelector('#btn_create_user_units').innerHTML = `สร้างรหัสผู้ใช้เรียบร้อย`;
+        }
+
+        function clear_name_user(id){
+            fetch("{{ url('/') }}/api/clear_name_user/" + id + "/" + "{{ Auth::user()->id }}")
+                .then(response => response.text())
+                .then(data => {
+                    // console.log(data);
+                    if ( data == "SUCCESS" ) {
+                        console.log(data);
+                    } 
+                });
         }
 
     </script>

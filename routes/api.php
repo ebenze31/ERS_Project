@@ -24,6 +24,7 @@ Route::post('/excel_add_polling_units/', 'Polling_unitsController@excel_add_poll
 
 Route::get('/create_user_units/{province}', 'Polling_unitsController@create_user_units');
 Route::post('/save_user_polling_units', 'Polling_unitsController@save_user_polling_units');
+Route::get('/clear_name_user/{id}/{user_id}', 'Polling_unitsController@clear_name_user');
 
 Route::get('/install_provinces/', 'For_DevController@install_provinces');
 Route::get('/install_districts/', 'For_DevController@install_districts');
