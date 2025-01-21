@@ -296,7 +296,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-[#27B004] text-[24px]">
+                                                <div class="text-[24px]">
                                                     `+formattedScore+`
                                                 </div>
                                             </div>
