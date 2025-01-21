@@ -204,9 +204,9 @@ class ScoresController extends Controller
         $data_Polling_unit = Polling_unit::where('user_id' , $user_id)->first();
         $data_Year = Year::where('status', "Yes")->where('province',$user_province)->first();
         // ดึงค่า round ที่มากที่สุดสำหรับ polling_unit_id
-        $max_round = Score::where('polling_unit_id', $data_Polling_unit->id)
+        $max_round = intval(Score::where('polling_unit_id', $data_Polling_unit->id)
             ->where('year_id', $data_Year->id)
-            ->max('round');
+            ->max('round'));
 
         // ถ้าไม่มีข้อมูลใน Score ให้กำหนดค่าเริ่มต้นเป็น 0
         $update_round_score = $max_round ? $max_round + 1 : 1;

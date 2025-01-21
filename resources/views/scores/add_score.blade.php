@@ -76,7 +76,7 @@
                     <p class=" max-sm:px-0 max-sm:text-center text-end p-0 text-[#db2d2e]"> <u>{{ Auth::user()->name }}</u></p>
 
                     <div class="carousel-nav flex justify-end gap-2 pt-2">
-                        <button id="btn_send_score" class="btn-color max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-dark p-1.5 text-white shadow-sm hover:bg-gray-950 text-center mt-0 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300" onclick="send_score();" disabled>
+                        <button id="btn_send_score" class="btn-color max-sm:w-full md:px-6 carousel-nav-next rounded-full bg-dark p-1.5 text-white shadow-sm hover:bg-gray-950 text-center mt-0 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-200 transition-all duration-300" onclick="confirm_score();" disabled>
                             ยืนยัน
                         </button>
                     </div>
@@ -122,6 +122,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    var data_candidate = data_candidate || [];
     document.addEventListener('DOMContentLoaded', (event) => {
         get_active_years();
         get_record_score();
@@ -139,8 +140,8 @@
                 // console.log(result);
 
                 if (result) {
-                    let type_active = result['active'];
-                    let type_active_sp = type_active.split(',');
+                    var type_active = result['active'];
+                    var type_active_sp = type_active.split(',');
                     // console.log(type_active_sp);
 
                     for (let i = 0; i < type_active_sp.length; i++) {
@@ -181,6 +182,10 @@
                             return response.json();
                         }).then(function(data) {
                             // console.log(data);
+
+                            data_candidate = data_candidate.concat(data);
+                            console.log(data_candidate);
+
                             if (data) {
 
                                 let div_data_candidates = document.querySelector('div[name="' + type_active_sp[i] + '"]');
@@ -232,6 +237,78 @@
         document.querySelector('#btn_send_score').removeAttribute('disabled');
     }
 
+    function confirm_score() {
+
+        let div_for_data_candidates = document.querySelectorAll('.for_data_candidates');
+        let data_for_div_candidates;
+        div_for_data_candidates.forEach(element => {
+            if (element.style.display !== 'none') {
+                data_for_div_candidates = element.getAttribute('name'); // แสดง div ที่ยังแสดงอยู่
+            }
+        });
+
+
+        // send_score()
+        // console.log(data_candidate);
+        // console.log(data_for_div_candidates);
+        let filtered_candidates = data_candidate.filter(candidate => candidate.type === data_for_div_candidates);
+        let html_confirm_candidates = ''; // Initialize an empty string for concatenating HTML
+        let div_data_candidates_for_confirm = document.createElement('div'); // Create a div element to hold the content
+
+        // Log the filtered candidates
+        console.log(filtered_candidates);
+
+        filtered_candidates.forEach(candidate => {
+            let photo = "";
+            let score_candidate_confirm = document.querySelector(`#candidate_id_${candidate.id}`).value
+            if (candidate.img) {
+                photo = "{{ url('storage')}}/" + candidate.img;
+            } else if (candidate.img_url) {
+                photo = candidate.img_url;
+            }
+
+            // Concatenate the HTML for each candidate
+            let html_candidate = `
+                <div class="d-block mb-3">
+                    <div class="border border-gray-300 center flex">
+                        <img src="` + photo + `" class="h-[150px] max-w-[150px] my-1 me-4 shadow-xl object-contain">
+                        <div class="flex items-center">
+                            <div class="w-full">
+                                <p class="text-left mb-3">ชื่อ : <b>${candidate.name}</b></p>
+                                <p class="text-left mb-3">เบอร์ : <b>${candidate.number}</b></p>
+                                <p class="text-left mb-3">คะแนน : <b>${score_candidate_confirm}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Append the HTML to the div container
+            div_data_candidates_for_confirm.insertAdjacentHTML('beforeend', html_candidate);
+
+            // Log the HTML for debugging
+            console.log(html_candidate);
+        });
+
+        // Use Swal.fire to show the candidates
+        Swal.fire({
+            title: "ตรวจสอบข้อมูล",
+            html: div_data_candidates_for_confirm.innerHTML, // Use the innerHTML of the div
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: "บันทึก",
+            cancelButtonText: "ปิด",
+            // denyButtonText: `Don't save`
+        }).then((result) => {
+            // Handle the confirmation result
+            if (result.isConfirmed) {
+                send_score(); // Call the function to save the score
+            }
+        });
+
+
+    }
+
     function send_score() {
         // console.log(current_select_type);
 
@@ -245,32 +322,54 @@
         div_data_candidates.forEach(input => {
             candidatesData.push({
                 id: input.id,
-                value: input.value,
+                value: parseInt(input.value) || 0, // Convert value to number, default to 0 if NaN
                 user_id: "{{ Auth::user()->id }}",
             });
         });
 
+
         // แสดงผลลัพธ์
-        // console.log(candidatesData);
+        if (candidatesData.length < 2) {
+            alert("Not enough data");
+            return;
+        }
 
-        fetch("{{ url('/') }}/api/send_score", {
-            method: 'post',
-            body: JSON.stringify(candidatesData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(function(response) {
-            return response.text();
-        }).then(function(data) {
-            // console.log(data);
-            if (data == "SUCCESS") {
-                show_popup_success();
-            }
-        }).catch(function(error) {
-            // console.error(error);
-        });
 
+        let sum_score = candidatesData[0].value + candidatesData[1].value;
+        let eligible_voters = parseInt("{{ $data_polling_units->eligible_voters }}") || 0;
+
+        // Compare sum of values with eligible_voters
+        if (sum_score <= eligible_voters) {
+            // alert("ผ่าน");
+
+            fetch("{{ url('/') }}/api/send_score", {
+                method: 'post',
+                body: JSON.stringify(candidatesData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function(response) {
+                return response.text();
+            }).then(function(data) {
+                // console.log(data);
+                if (data === "SUCCESS") {
+                    show_popup_success();
+                }
+            }).catch(function(error) {
+                // console.error(error);
+            });
+        } else {
+            Swal.fire({
+                title: "ไม่สามารถเพิ่มคะแนนได้",
+                html: `คะแนนมากกว่าจะนวนผู้มีสิทธิโหวต <br> จำนวนผู้มีสิทธิ : ${eligible_voters} <br> คะแนนทั้งหมด : ${sum_score}`,
+                icon: "error",
+                buttons: false,
+                timer: 5000,
+                showConfirmButton: false,
+            })
+        }
     }
+
 
     function get_record_score() {
         fetch("{{ url('/') }}/api/get_record_score/" + "{{ Auth::user()->id }}")
@@ -342,8 +441,6 @@
         }).then(() => {
             location.reload();
         });
-
-
     }
 </script>
 

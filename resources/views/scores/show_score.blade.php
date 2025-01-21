@@ -301,7 +301,7 @@
                                     else{
                                         let html_candidate = `
                                             <div class="flex justify-between items-center">
-                                                <div>
+                                                <div class="flex">
                                                     `+name_candidate+`
                                                 </div>
                                                 <div class="text-[#4B4B4B] text-[16px]">
