@@ -57,7 +57,7 @@
 
                     const result = await response.text();
                     console.log("API Response:", result);
-                    if(result == "SUCCESS"){
+                    if (result == "SUCCESS") {
                         window.location.reload();
                     }
                 } catch (error) {
@@ -77,7 +77,7 @@
                 <button id="btn_create_user_units" class="btn btn-info float-end mx-2" onclick="create_user_units();">
                     สร้างรหัสผู้ใช้
                 </button>
-                <button class="btn btn-warning float-end mx-2" onclick="clear_name_user('all');">
+                <button class="btn btn-warning float-end mx-2" onclick="confirm_clear_name_user('all');">
                     ล้างข้อมูลทั้งหมด
                 </button>
             </h4>
@@ -109,7 +109,7 @@
                                     <td>{{ $item->eligible_voters }}</td>
                                     <td>
                                         <center>
-                                            <button class="btn btn-warning btn-sm" onclick="clear_name_user('{{ $item->unit_id }}');">
+                                            <button class="btn btn-warning btn-sm" onclick="confirm_clear_name_user('{{ $item->unit_id }}');">
                                                 ล้างข้อมูลหน่วยนี้
                                             </button>
                                         </center>
@@ -125,34 +125,38 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
+        let div_data_user = document.createElement('div');
+
         document.addEventListener("DOMContentLoaded", function() {
-            
+
         });
 
-        function create_user_units(){
+        function create_user_units() {
             let province = "{{ Auth::user()->province }}";
-            document.querySelector('#btn_create_user_units').innerHTML = 
+            document.querySelector('#btn_create_user_units').innerHTML =
                 `
                     <div class="spinner-border text-light" role="status" style="scale: 0.7;"></div>
                     กำลังดำเนินการ
                 `;
 
             fetch("{{ url('/') }}/api/create_user_units/" + province)
-            .then(response => response.json())
-            .then(data => {
-                // console.log(data);
-                if ( data && data['status'] != "Empty polling units" ) {
-                    // console.log("Data received:", data.users);
-                    createExcelFile(data,province); // ส่งข้อมูลไปสร้างไฟล์ Excel
-                } else {
-                    alert("ไม่มีข้อมูลสำหรับสร้างผู้ใช้");
-                    document.querySelector('#btn_create_user_units').innerHTML = `สร้างรหัสผู้ใช้`;
-                }
-            });
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+                    if (data && data['status'] != "Empty polling units") {
+                        // console.log("Data received:", data.users);
+                        createExcelFile(data, province); // ส่งข้อมูลไปสร้างไฟล์ Excel
+                    } else {
+                        alert("ไม่มีข้อมูลสำหรับสร้างผู้ใช้");
+                        document.querySelector('#btn_create_user_units').innerHTML = `สร้างรหัสผู้ใช้`;
+                    }
+                });
         }
 
-        function createExcelFile(usersData,province) {
+        function createExcelFile(usersData, province) {
             // แปลงข้อมูลที่ได้เป็นรูปแบบที่ต้องการ
             const excelData = usersData.map(user => ({
                 "อำเภอ": user.district,
@@ -168,33 +172,100 @@
             XLSX.utils.book_append_sheet(workbook, worksheet, "Users Data"); // เพิ่ม Sheet เข้า Workbook
 
             // สร้างไฟล์ Excel และดาวน์โหลด
-            const fileName = "รหัสผู้ใช้งาน_"+province+".xlsx";
+            const fileName = "รหัสผู้ใช้งาน_" + province + ".xlsx";
             XLSX.writeFile(workbook, fileName);
 
             document.querySelector('#btn_create_user_units').innerHTML = `สร้างรหัสผู้ใช้เรียบร้อย`;
         }
 
-        function clear_name_user(id){
 
-            if(id != "all"){
-                let tr = document.querySelector('#tr_'+id);
-                console.log(tr);
+        function confirm_clear_name_user(id) {
+            if (id != "all") {
+                let tr = document.querySelector('#tr_' + id);
+                let tds = tr.querySelectorAll('td'); // Select all <td> elements inside the <tr>
+
+                // Loop through each <td> and log the text content
+
+                // console.log(tr);
+
+                div_data_user.innerHTML = '';
+                if (tds[4].textContent == 'กรุณาเพิ่มชื่อของคุณ') {
+                    Swal.fire({
+                        icon: "error",
+                        title: "เจ้าหน้าที่ยังไม่ได้กรอกข้อมูล",
+                        showConfirmButton: false,
+                        timer: 2000,
+
+                    });
+                } else {
+                    let html_user = `
+                            <div>
+                                <p class="text-center text-[19px] text-[#000] font-bold">อำเภอ : ` + tds[0].textContent + `</p>
+                                <p class="text-center text-[19px] text-[#000] font-bold">เขต : ` + tds[1].textContent + `</p>
+                                <p class="text-center text-[19px] text-[#000] font-bold">ตำบล : ` + tds[2].textContent + `</p>
+                                <p class="text-center text-[19px] text-[#000] font-bold">หน่วย : ` + tds[3].textContent + `</p>
+                                <p class="text-center text-[19px] text-[#000] font-bold">เจ้าหน้าที่ : <span class="text-danger">` + tds[4].textContent + `</span></p>
+                            </div>
+                        `;
+                    div_data_user.insertAdjacentHTML('afterbegin', html_user); // แทรกบนสุด 
+                    Swal.fire({
+                        title: "ต้องการลบข้อมูลเจ้าหน้าที่?",
+                        html: div_data_user.innerHTML, // Use the innerHTML of the div
+                        showDenyButton: false,
+                        showCancelButton: true,
+                        confirmButtonText: "ลบ",
+                        cancelButtonText: "ยกเลิก",
+                        // denyButtonText: `Don't save`
+                    }).then((result) => {
+                        // Handle the confirmation result
+                        if (result.isConfirmed) {
+                            clear_name_user(id)
+                        }
+                    });
+                }
+            }else{
+                Swal.fire({
+                        title: "ต้องการลบข้อมูลเจ้าหน้าที่ ทั้งหมด?",
+                        showDenyButton: false,
+                        showCancelButton: true,
+                        confirmButtonText: "ลบ",
+                        cancelButtonText: "ยกเลิก",
+                        icon: "question"
+                        // denyButtonText: `Don't save`
+                    }).then((result) => {
+                        // Handle the confirmation result
+                        if (result.isConfirmed) {
+                            clear_name_user(id)
+                        }
+                    });
             }
+
+        }
+
+        function clear_name_user(id) {
 
             fetch("{{ url('/') }}/api/clear_name_user/" + id + "/" + "{{ Auth::user()->id }}")
                 .then(response => response.text())
                 .then(data => {
                     // console.log(data);
-                    if ( data == "SUCCESS" ) {
-                        console.log(data);
-                    } 
+                    if (data == "SUCCESS") {
+                        // console.log(data);
+                        Swal.fire({
+                            title: "ลบข้อมูลเรียบร้อย",
+                            icon: "success",
+                            buttons: false,
+                            timer: 3000,
+                            showConfirmButton: false,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
                 });
         }
-
     </script>
     <!-- จบข้อมูลหน่วย -->
     @endif
 
 </div>
-    
+
 @endsection
