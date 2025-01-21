@@ -286,7 +286,7 @@
                                                 <div>
                                                     <div class="flex items-center">
                                                         <div class="w-[80px]">
-                                                            <p class="text-[35px] ">No.${data_scores[xi].number_candidate}</p>
+                                                            <p class="text-[35px] text-[#27B004]">No.${data_scores[xi].number_candidate}</p>
                                                         </div>
                                                         <img src="`+photo+`" class="h-[60px] max-w-[60px] my-1 me-2 shadow-xl object-contain">
                                                         <div>
