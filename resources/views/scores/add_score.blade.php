@@ -196,7 +196,7 @@
                                         <label class="col-md-4 col-form-label text-md-right text-[#939393] text-[14.5px]">
                                             คะแนนเบอร์ ` + data[xi]['number'] + ` ` + data[xi]['name'] + `
                                         </label>
-                                        <input type="number" id="candidate_id_` + data[xi]['id'] + `" scores_for="` + type_active_sp[i] + `" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 " required />
+                                        <input min="0" type="number" id="candidate_id_` + data[xi]['id'] + `" scores_for="` + type_active_sp[i] + `" class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 " required />
                                     </div>
                                 `;
                                     div_data_candidates.insertAdjacentHTML('beforeend', html_candidates); // แทรกล่างสุด
