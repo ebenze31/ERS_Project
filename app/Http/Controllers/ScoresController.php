@@ -120,11 +120,13 @@ class ScoresController extends Controller
         $data_user = Auth::user();
         $province = $data_user->province ;
 
+        $data_Year = Year::where('status' , "Yes")->where('province' , $province)->first();
+
         // echo "<pre>";
         // print_r($polling_units);
         // echo "<pre>";
 
-        return view('scores.admin_vote_score', compact('province'));
+        return view('scores.admin_vote_score', compact('province','data_Year'));
 
     }
 
@@ -225,10 +227,13 @@ class ScoresController extends Controller
 
         $data_Polling_unit = Polling_unit::where('user_id' , $user_id)->first();
         $data_Year = Year::where('status', "Yes")->where('province',$user_province)->first();
+
         // ดึงค่า round ที่มากที่สุดสำหรับ polling_unit_id
         $max_round = Score::where('polling_unit_id', $data_Polling_unit->id)
             ->where('year_id', $data_Year->id)
-            ->max('round');
+            ->selectRaw('MAX(CAST(round AS UNSIGNED)) as max_round')
+            ->value('max_round');
+
 
         // ถ้าไม่มีข้อมูลใน Score ให้กำหนดค่าเริ่มต้นเป็น 0
         $update_round_score = $max_round ? $max_round + 1 : 1;
@@ -255,16 +260,47 @@ class ScoresController extends Controller
 
         }
 
+        $check_data = [] ;
         // บันทึกข้อมูลลงใน Score
         foreach ($results as $result) {
+
             Score::create($result);
+
+            $subquery = Score::selectRaw('polling_unit_id, MAX(CAST(round AS UNSIGNED)) as max_round')
+                ->where('candidate_id', $result['candidate_id'])
+                ->where('polling_unit_id', '!=', $result['polling_unit_id'])
+                ->groupBy('polling_unit_id');
+
+            $data_score_candidate = Score::joinSub($subquery, 'max_scores', function ($join) {
+                $join->on('scores.polling_unit_id', '=', 'max_scores.polling_unit_id')
+                     ->whereRaw('CAST(scores.round AS UNSIGNED) = max_scores.max_round');
+            })
+            ->where('scores.candidate_id', $result['candidate_id'])
+            ->groupBy('scores.polling_unit_id', 'max_scores.max_round', 'scores.candidate_id') // เพิ่ม candidate_id ใน GROUP BY
+            ->selectRaw('scores.polling_unit_id, max_scores.max_round, MAX(scores.score) as score, scores.candidate_id') // เพิ่ม candidate_id
+            ->get();
+
+            // คำนวณผลรวมของ score
+            $total_score = $data_score_candidate->sum('score');
+
+            // เก็บผลลัพธ์ใน array ตาม candidate_id
+            $check_data[$result['candidate_id']] = $data_score_candidate;
+
+            $new_sum_score = 0 ;
+            if( !empty($total_score) ){
+                $new_sum_score = intval($result['score']) + intval($total_score);
+            }
+            else{
+                $new_sum_score = intval($result['score']);
+            }
 
             // อัปเดตคะแนนของ Candidate
             Candidate::where('id', $result['candidate_id'])->update([
-                'sum_score' => $result['score'],
+                'sum_score' => $new_sum_score,
             ]);
         }
 
+        // return $check_data ;
         return "SUCCESS" ;
 
     }
@@ -359,6 +395,52 @@ class ScoresController extends Controller
             ->get();
 
         return $data ;
+
+    }
+
+    function clear_score($id , $user_id , $year_id){
+
+        $data_user = User::where('id' , $user_id)->first();
+        $province_id = $data_user->province_id ;
+
+        if($id == "all"){
+            Score::where('province_id', $province_id)->where('year_id' , $year_id)->delete();
+            Candidate::where('province_id', $province_id)
+                ->where('year_id' , $year_id)
+                ->update([
+                    'sum_score' => null,
+                ]);
+        }
+        else{
+            // Score::where('province_id', $province_id)
+            //     ->where('year_id' , $year_id)
+            //     ->where('polling_unit_id' , $id)
+            //     ->delete();
+
+            // $subquery = Score::selectRaw('polling_unit_id, MAX(CAST(round AS UNSIGNED)) as max_round')
+            //     ->where('province_id', $province_id)
+            //     ->where('year_id', $year_id)
+            //     ->where('polling_unit_id', '!=', $id)
+            //     ->groupBy('polling_unit_id');
+
+
+            // $data_score_candidate = Score::joinSub($subquery, 'max_scores', function ($join) {
+            //     $join->on('scores.polling_unit_id', '=', 'max_scores.polling_unit_id')
+            //          ->whereRaw('CAST(scores.round AS UNSIGNED) = max_scores.max_round');
+            // })
+            // ->where('scores.candidate_id', $result['candidate_id'])
+            // ->groupBy('scores.polling_unit_id', 'max_scores.max_round', 'scores.candidate_id') // เพิ่ม candidate_id ใน GROUP BY
+            // ->selectRaw('scores.polling_unit_id, max_scores.max_round, MAX(scores.score) as score, scores.candidate_id') // เพิ่ม candidate_id
+            // ->get();
+
+            // // คำนวณผลรวมของ score
+            // $total_score = $data_score_candidate->sum('score');
+
+            // return $subquery ;
+
+        }
+
+        return "SUCCESS" ;
 
     }
 }

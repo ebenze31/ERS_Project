@@ -145,9 +145,17 @@
                     // console.log(type_active_sp);
 
                     for (let i = 0; i < type_active_sp.length; i++) {
+
+                        let check_checked = ``;
+                        let check_display = `none`;
+                        if(type_active_sp.length == 1){
+                            check_checked = `checked` ;
+                            check_display = ``;
+                        }
+
                         let html = `
                         <label class="radio">
-                            <input type="radio" name="radio" >
+                            <input type="radio" name="radio" `+check_checked+`>
                             <span class="name max-sm:px-0 px-6 py-2" onclick="open_div_candidates('` + type_active_sp[i] + `');">
                                 ` + type_active_sp[i] + `
                             </span>
@@ -156,7 +164,7 @@
                         document.querySelector('#div_radio_select').insertAdjacentHTML('beforeend', html); // แทรกล่างสุด
 
                         let html_div_input = `
-                        <div class="max-sm:block flex for_data_candidates" name="` + type_active_sp[i] + `" style="display: none;">
+                        <div class="max-sm:block flex for_data_candidates" name="` + type_active_sp[i] + `" style="display: `+check_display+`;">
                             
                         </div>
                     `;
@@ -184,7 +192,7 @@
                             // console.log(data);
 
                             data_candidate = data_candidate.concat(data);
-                            console.log(data_candidate);
+                            // console.log(data_candidate);
 
                             if (data) {
 
@@ -256,7 +264,7 @@
         let div_data_candidates_for_confirm = document.createElement('div'); // Create a div element to hold the content
 
         // Log the filtered candidates
-        console.log(filtered_candidates);
+        // console.log(filtered_candidates);
 
         filtered_candidates.forEach(candidate => {
             let photo = "";
@@ -287,7 +295,7 @@
             div_data_candidates_for_confirm.insertAdjacentHTML('beforeend', html_candidate);
 
             // Log the HTML for debugging
-            console.log(html_candidate);
+            // console.log(html_candidate);
         });
 
         // Use Swal.fire to show the candidates
@@ -350,8 +358,9 @@
                 }
             }).then(function(response) {
                 return response.text();
+                // return response.json();
             }).then(function(data) {
-                // console.log(data);
+                console.log(data);
                 if (data === "SUCCESS") {
                     show_popup_success();
                 }

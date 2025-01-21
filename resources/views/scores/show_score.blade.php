@@ -211,7 +211,7 @@
                                 return scoreB - scoreA;
                             });
 
-                            // console.log(data_scores);
+                            console.log(data_scores);
 
                             let check_name_district = "" ;
                             let check_name_electorate = "" ;
