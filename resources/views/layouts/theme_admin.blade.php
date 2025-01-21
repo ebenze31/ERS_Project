@@ -428,6 +428,7 @@
 	<!-- datatable -->
 	<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
 	<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

@@ -7,7 +7,7 @@
         <h4>
             การลงคะแนน
             <span id="span_count_polling_units" class="d-none" style="font-size: 14px;"></span>
-            <button class="btn btn-warning float-end mx-2" onclick="clear_score('all');">
+            <button class="btn btn-warning float-end mx-2" onclick="confirm_clear_name_user('all');">
                 ล้างคะแนนทั้งหมด
             </button>
         </h4>
@@ -115,6 +115,69 @@
             });
     }
 
+    function confirm_clear_name_user(id) {
+            if (id != "all") {
+                let tr = document.querySelector('#tr_' + id);
+                let tds = tr.querySelectorAll('td'); // Select all <td> elements inside the <tr>
+
+                // Loop through each <td> and log the text content
+
+                // console.log(tr);
+
+                div_data_user.innerHTML = '';
+                if (tds[4].textContent == 'กรุณาเพิ่มชื่อของคุณ') {
+                    Swal.fire({
+                        icon: "error",
+                        title: "เจ้าหน้าที่ยังไม่ได้กรอกข้อมูล",
+                        showConfirmButton: false,
+                        timer: 2000,
+
+                    });
+                } else {
+                    let html_user = `
+                            <div>
+                                <p class="text-center text-[19px] text-[#000] font-bold">อำเภอ : ` + tds[0].textContent + `</p>
+                                <p class="text-center text-[19px] text-[#000] font-bold">เขต : ` + tds[1].textContent + `</p>
+                                <p class="text-center text-[19px] text-[#000] font-bold">ตำบล : ` + tds[2].textContent + `</p>
+                                <p class="text-center text-[19px] text-[#000] font-bold">หน่วย : ` + tds[3].textContent + `</p>
+                                <p class="text-center text-[19px] text-[#000] font-bold">เจ้าหน้าที่ : <span class="text-danger">` + tds[4].textContent + `</span></p>
+                            </div>
+                        `;
+                    div_data_user.insertAdjacentHTML('afterbegin', html_user); // แทรกบนสุด 
+                    Swal.fire({
+                        title: "ต้องการลบข้อมูลเจ้าหน้าที่?",
+                        html: div_data_user.innerHTML, // Use the innerHTML of the div
+                        showDenyButton: false,
+                        showCancelButton: true,
+                        confirmButtonText: "ลบ",
+                        cancelButtonText: "ยกเลิก",
+                        // denyButtonText: `Don't save`
+                    }).then((result) => {
+                        // Handle the confirmation result
+                        if (result.isConfirmed) {
+                            clear_name_user(id)
+                        }
+                    });
+                }
+            }else{
+                Swal.fire({
+                        title: "ต้องการลบคะแนน ทั้งหมด?",
+                        showDenyButton: false,
+                        showCancelButton: true,
+                        confirmButtonText: "ลบ",
+                        cancelButtonText: "ยกเลิก",
+                        icon: "question"
+                        // denyButtonText: `Don't save`
+                    }).then((result) => {
+                        // Handle the confirmation result
+                        if (result.isConfirmed) {
+                            clear_score(id)
+                        }
+                    });
+            }
+
+        }
+
     function clear_score(id){
         // console.log(id);
 
@@ -128,9 +191,18 @@
             .then(response => response.text())
             .then(data => {
                 // console.log(data);
-                if ( data == "SUCCESS" ) {
-                    console.log(data);
-                } 
+                if (data == "SUCCESS") {
+                        // console.log(data);
+                        Swal.fire({
+                            title: "ลบข้อมูลเรียบร้อย",
+                            icon: "success",
+                            buttons: false,
+                            timer: 3000,
+                            showConfirmButton: false,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
             });
     }
 
