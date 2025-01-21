@@ -211,7 +211,7 @@
                                 return scoreB - scoreA;
                             });
 
-                            console.log(data_scores);
+                            // console.log(data_scores);
 
                             let check_name_district = "" ;
                             let check_name_electorate = "" ;
@@ -251,7 +251,7 @@
                                     }
 
                                     let div_district = document.querySelector('div[div_district="'+text_check_div+'"]');
-
+                                    let formattedScore
                                     let photo = "";
                                     if(data_scores[xi].img_candidate){
                                         photo = "{{ url('storage')}}/" + data_scores[xi].img_candidate;
@@ -262,17 +262,21 @@
                                     let name_candidate = "";
                                     if(data_scores[xi].show_parties == "Yes"){
                                         name_candidate = `
-                                            <img src="https://www.viicheck.com/img/logo/profileLine3D.png"  class="h-[20px] my-1 me-2">
-                                            <span>`+data_scores[xi].name_candidate+`</span>
+                                            <div class="flex">
+                                                <img src="https://www.viicheck.com/img/logo/profileLine3D.png"  class="h-[20px] my-1 me-2">
+                                                <p>`+data_scores[xi].name_candidate+`</p>
+                                            </div>
                                         `;
                                     }else{
                                          name_candidate = `
-                                            <span>`+data_scores[xi].name_candidate+`</span>
+                                            <p>`+data_scores[xi].name_candidate+`</p>
                                         `;
                                     }
 
                                     if(!data_scores[xi].sum_score){
-                                        data_scores[xi].sum_score = 0 ;
+                                        formattedScore = 0 ;
+                                    }else{
+                                        formattedScore = Number(data_scores[xi].sum_score).toLocaleString();
                                     }
 
                                     if( data_scores[xi].sum_score && old_electorate != data_scores[xi].name_electorate){
@@ -281,16 +285,19 @@
                                             <div class="flex justify-between items-center my-2">
                                                 <div>
                                                     <div class="flex items-center">
+                                                        <div class="w-[80px]">
+                                                            <p class="text-[35px] ">No.${data_scores[xi].number_candidate}</p>
+                                                        </div>
                                                         <img src="`+photo+`" class="h-[60px] max-w-[60px] my-1 me-2 shadow-xl object-contain">
                                                         <div>
-                                                        <div class="flex items-center">
+                                                        <div class="ms-3 items-center">
                                                             `+name_candidate+`
                                                         </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="text-[#27B004] text-[24px]">
-                                                    `+data_scores[xi].sum_score+`
+                                                    `+formattedScore+`
                                                 </div>
                                             </div>
                                             <hr class="my-3">
@@ -300,12 +307,15 @@
                                     }
                                     else{
                                         let html_candidate = `
-                                            <div class="flex justify-between items-center">
-                                                <div class="flex">
+                                            <div class="flex justify-left items-center">
+                                                    <div class="w-[80px]">
+                                                            <p class="text-[35px] ">No.${data_scores[xi].number_candidate}</p>
+                                                        </div>
+                                                <div class="ms-3">
                                                     `+name_candidate+`
                                                 </div>
                                                 <div class="text-[#4B4B4B] text-[16px]">
-                                                    `+data_scores[xi].sum_score+`
+                                                    `+formattedScore+`
                                                 </div>
                                             </div>
                                             <hr class="my-3">
