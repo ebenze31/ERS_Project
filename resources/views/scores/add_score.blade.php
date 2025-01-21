@@ -143,14 +143,15 @@
                     var type_active = result['active'];
                     var type_active_sp = type_active.split(',');
                     // console.log(type_active_sp);
-
+                    let type_length_1 = ``;
                     for (let i = 0; i < type_active_sp.length; i++) {
 
                         let check_checked = ``;
                         let check_display = `none`;
                         if(type_active_sp.length == 1){
                             check_checked = `checked` ;
-                            check_display = ``;
+                            check_display = `block`;
+                            type_length_1 = type_active_sp[i];
                         }
 
                         let html = `
@@ -215,6 +216,12 @@
                         });
 
                     }
+
+                    setTimeout(() => {
+                        if(type_active_sp.length == 1){
+                            open_div_candidates(type_length_1)
+                        }
+                    }, 1000);
                 }
 
             }).catch(error => {
@@ -334,7 +341,6 @@
                 user_id: "{{ Auth::user()->id }}",
             });
         });
-
 
         // แสดงผลลัพธ์
         if (candidatesData.length < 2) {
