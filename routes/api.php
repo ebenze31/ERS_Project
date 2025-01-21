@@ -51,3 +51,4 @@ Route::get('/get_data_districts/{provinces_id}', 'scoresController@get_data_dist
 Route::get('/get_active_years/{province}', 'YearsController@get_active_years');
 Route::post('/get_candidates_of_electorate_id', 'CandidatesController@get_candidates_of_electorate_id');
 
+Route::get('/get_vote_score_history/{polling_unit_id}', 'scoresController@get_vote_score_historyAPI');

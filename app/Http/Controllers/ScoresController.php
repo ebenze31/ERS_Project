@@ -130,8 +130,30 @@ class ScoresController extends Controller
 
     public function admin_vote_score_view($id)
     {
+        $polling_unit_id = $id;
+        $data_user = Auth::user();
+        $user_id = $data_user->id ;
+        $province = $data_user->province ;
 
-        return view('scores.admin_vote_score_view');
+        $data_polling_units = DB::table('polling_units')
+        ->leftjoin('provinces', 'polling_units.province_id', '=', 'provinces.id')
+        ->leftjoin('districts', 'polling_units.district_id', '=', 'districts.id')
+        ->leftjoin('electorates', 'polling_units.electorate_id', '=', 'electorates.id')
+        ->leftjoin('sub_districts', 'polling_units.sub_district_id', '=', 'sub_districts.id')
+        ->leftjoin('users', 'polling_units.user_id', '=', 'users.id')
+        ->where('provinces.name_province', '=' ,$province)
+        ->where('polling_units.id', '=' ,$polling_unit_id)
+        ->select(
+                'polling_units.*',
+                'provinces.name_province as name_province',
+                'districts.name_district as name_district',
+                'electorates.name_electorate as name_electorate',
+                'sub_districts.name_sub_districts as name_sub_districts',
+                'users.name as name_user'
+            )
+        ->first();
+
+        return view('scores.admin_vote_score_view',compact('polling_unit_id','data_polling_units'));
 
     }
 
@@ -149,10 +171,10 @@ class ScoresController extends Controller
             ->where('provinces.name_province', '=' ,$requestData['userProvince'])
             ->select(
                     'polling_units.*',
-                    'provinces.*',
-                    'districts.*',
-                    'electorates.*',
-                    'sub_districts.*',
+                    'provinces.name_province as name_province',
+                    'districts.name_district as name_district',
+                    'electorates.name_electorate as name_electorate',
+                    'sub_districts.name_sub_districts as name_sub_districts',
                     'users.name as name_user'
                 )
             ->get();
@@ -204,9 +226,9 @@ class ScoresController extends Controller
         $data_Polling_unit = Polling_unit::where('user_id' , $user_id)->first();
         $data_Year = Year::where('status', "Yes")->where('province',$user_province)->first();
         // ดึงค่า round ที่มากที่สุดสำหรับ polling_unit_id
-        $max_round = intval(Score::where('polling_unit_id', $data_Polling_unit->id)
+        $max_round = Score::where('polling_unit_id', $data_Polling_unit->id)
             ->where('year_id', $data_Year->id)
-            ->max('round'));
+            ->max('round');
 
         // ถ้าไม่มีข้อมูลใน Score ให้กำหนดค่าเริ่มต้นเป็น 0
         $update_round_score = $max_round ? $max_round + 1 : 1;
@@ -305,8 +327,8 @@ class ScoresController extends Controller
         $data = DB::table('districts')
             ->leftJoin('candidates', 'districts.id', '=', 'candidates.district_id')
             ->where('districts.province_id', $provinces_id)
-            ->groupBy('districts.name_district', 'districts.id') 
-            ->orderBy('candidates.id', 'asc') 
+            ->groupBy('districts.name_district', 'districts.id')
+            ->orderBy('candidates.id', 'asc')
             ->select(
                 'districts.name_district',
                 'districts.id as district_id'
@@ -315,5 +337,28 @@ class ScoresController extends Controller
 
 
         return $data ;
+    }
+
+    function get_vote_score_historyAPI($polling_unit_id){
+
+        $data = DB::table('scores')
+            ->leftjoin('polling_units', 'scores.polling_unit_id', '=', 'polling_units.id')
+            ->leftjoin('years', 'scores.year_id', '=', 'years.id')
+            ->leftjoin('candidates', 'scores.candidate_id', '=', 'candidates.id')
+            // ->leftjoin('users', 'scores.user_id', '=', 'users.id')
+            ->where('scores.polling_unit_id', $polling_unit_id)
+            ->where('years.status', "Yes")
+            ->select(
+                    'scores.*',
+                    'polling_units.name_polling_unit as name_polling_unit',
+                    'polling_units.eligible_voters as eligible_voters',
+                    'candidates.number as number_candidate',
+                    'candidates.name as name_candidate',
+                    'candidates.name as name_candidate',
+                )
+            ->get();
+
+        return $data ;
+
     }
 }

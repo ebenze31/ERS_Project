@@ -81,9 +81,9 @@
                 // Generate rows dynamically
                 result['polling_units'].forEach(item => {
                     let html_view;
-                    if (item['user_id']) {
-                    html_view = `
-                            <a href="{{ url('/') }}/admin_vote_score_view/${item['user_id']}" title="View Score">
+                    if (item['id']) {
+                        html_view = `
+                            <a href="{{ url('/') }}/admin_vote_score_view/${item['id']}" title="View Score">
                                 <button class="btn btn-info btn-sm">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </button>

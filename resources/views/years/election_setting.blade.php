@@ -190,7 +190,7 @@
             </div>
 
             <!-- Dropdown and Button Section -->
-            <div class="row align-items-center justify-content-between p-3 bg-white">
+            <div class="row align-items-center justify-content-between p-3 ">
                 <!-- Dropdown Wrapper -->
                 <div class="col-12 col-md-3" id="select-wrapper">
 
