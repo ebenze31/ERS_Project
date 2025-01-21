@@ -100,7 +100,7 @@
                             </thead>
                             <tbody>
                                 @foreach($polling_units as $item)
-                                <tr>
+                                <tr id="tr_{{ $item->unit_id }}">
                                     <td>{{ $item->name_district }}</td>
                                     <td>{{ $item->name_electorate }}</td>
                                     <td>{{ explode(" ",$item->name_polling_unit)[0] }}</td>
@@ -175,6 +175,12 @@
         }
 
         function clear_name_user(id){
+
+            if(id != "all"){
+                let tr = document.querySelector('#tr_'+id);
+                console.log(tr);
+            }
+
             fetch("{{ url('/') }}/api/clear_name_user/" + id + "/" + "{{ Auth::user()->id }}")
                 .then(response => response.text())
                 .then(data => {
