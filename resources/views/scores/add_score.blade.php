@@ -342,15 +342,23 @@
             });
         });
 
+        // console.log(div_data_candidates.length);
+
         // แสดงผลลัพธ์
-        if (candidatesData.length < 2) {
-            alert("Not enough data");
-            return;
+        // if (candidatesData.length < 2) {
+        //     alert("Not enough data");
+        //     return;
+        // }
+
+        let sum_score = 0 ;
+        for (let i = 0; i < div_data_candidates.length; i++) {
+            sum_score = parseInt(sum_score) + parseInt(candidatesData[i].value) ;
         }
 
-
-        let sum_score = candidatesData[0].value + candidatesData[1].value;
         let eligible_voters = parseInt("{{ $data_polling_units->eligible_voters }}") || 0;
+
+        // console.log("sum_score >> " + sum_score)
+        // console.log("eligible_voters >> " + eligible_voters)
 
         // Compare sum of values with eligible_voters
         if (sum_score <= eligible_voters) {
@@ -366,7 +374,7 @@
                 return response.text();
                 // return response.json();
             }).then(function(data) {
-                console.log(data);
+                // console.log(data);
                 if (data === "SUCCESS") {
                     show_popup_success();
                 }
