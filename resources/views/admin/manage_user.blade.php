@@ -80,6 +80,8 @@
                             <thead>
                                 <tr>
                                     <th>ชื่อ</th>
+                                    <th>เบอร์</th>
+                                    <th>เบอร์ 2</th>
                                     <th>อำเภอ</th>
                                     <th>เขตเลือกตั้งที่</th>
                                     <th>ตำบล</th>
@@ -146,11 +148,13 @@
                         row.setAttribute("id", "tr_" + item['id']);
 
                         row.innerHTML = `
-                        <td>${item.name_user}</td>
-                        <td>${item.name_district}</td>
-                        <td>${item.name_electorate}</td>
-                        <td>${item.name_polling_unit.split(" ")[0]}</td>
-                        <td>${item.name_polling_unit.split(" ")[2]}</td>
+                        <td>${item.name_user ? item.name_user : ''}</td>
+                        <td>${item.phone_1_user ? item.phone_1_user : ''}</td>
+                        <td>${item.phone_2_user ? item.phone_2_user : ''}</td>
+                        <td>${item.name_district ? item.name_district : ''}</td>
+                        <td>${item.name_electorate  ? item.name_electorate : ''}</td>
+                        <td>${item.name_polling_unit.split(" ")[0]  ? item.name_polling_unit.split(" ")[0] : ''}</td>
+                        <td>${item.name_polling_unit.split(" ")[2]  ? item.name_polling_unit.split(" ")[2] : ''}</td>
                         <td class="text-center">${html_view}</td>
                     `;
 

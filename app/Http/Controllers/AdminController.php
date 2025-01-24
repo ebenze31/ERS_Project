@@ -113,6 +113,8 @@ class AdminController extends Controller
                     'users.id as user_id',
                     'users.name as name_user',
                     'users.status as status_user',
+                    'users.phone_1 as phone_1_user',
+                    'users.phone_2 as phone_2_user',
                 )
             ->get();
 
