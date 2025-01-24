@@ -77,6 +77,9 @@
                 <button id="btn_create_user_units" class="btn btn-info float-end mx-2" onclick="create_user_units();">
                     สร้างรหัสผู้ใช้
                 </button>
+                <a  class="btn btn-primary float-end mx-2" href="{{ url('/polling_units_no_register') }}">
+                    ยังไม่ลงทะเบียน
+                </a>
                 <button class="btn btn-warning float-end mx-2" onclick="confirm_clear_name_user('all');">
                     ล้างข้อมูลทั้งหมด
                 </button>

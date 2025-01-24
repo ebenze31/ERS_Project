@@ -351,12 +351,24 @@ $theme_logo = $theme_data_provinces->logo ;
 							</a>
 						</li>
 						<li class="main-submenu">
-							<a class="sub-menu" href="{{ url('/admin_vote_score') }}">
+							<a class="has-arrow" href="javascript:;">
 								<div class="parent-icon">
 									<i class="fa-solid fa-pen-field"></i>
 								</div>
 								<div class="menu-title">การลงคะแนน</div>
 							</a>
+							<ul>
+								<li>
+									<a href="{{ url('/admin_vote_score') }}" class="sub-menu">
+										<i class="bx bx-right-arrow-alt"></i>ประวัติการลงคะแนน
+									</a>
+								</li>
+								<li>
+									<a href="{{ url('/ลงคะแนนแบบเขต') }}" class="sub-menu">
+										<i class="bx bx-right-arrow-alt"></i>ลงคะแนนแบบเขต
+									</a>
+								</li>
+							</ul>
 						</li>
 						<li class="main-submenu">
 							<a class="has-arrow" href="javascript:;">
