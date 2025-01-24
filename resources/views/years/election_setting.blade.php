@@ -81,7 +81,10 @@
                 <div class="modal-header">
                     <span class="h3" style="font-weight: bold;">เพิ่มปี/รอบการเลือกตั้ง</span>
                     <button class="btn btn-secondary " id="close_modal_create_year" type="button" class="close " data-dismiss="modal" aria-label="Close"
-                    onclick="clearFormFields(); document.getElementById('formTypeCandidate').innerHTML = '';">
+                    onclick="
+                    clearFormFields();
+                    "
+                    >
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -120,7 +123,6 @@
                                 <div class="row mt-3">
                                     <div class="d-flex justify-content-start mb-3">
                                         <span class=" font-weight-bold" style="margin-right: 10px;">ประเภทผู้สมัครที่เปิดใช้ (optional)</span>
-                                        <button onclick="addTypeCandidate()" class="px-3" style="border:#04b360 1px solid; border-radius: 5px;">เพิ่มประเภทผู้สมัคร</button>
                                     </div>
                                     <div id="checkbox-group" class="d-flex flex-wrap gap-3 ">
                                         @forEach($type_candidates as $type)
@@ -138,10 +140,6 @@
                                                 </label>
                                             </div>
                                         @endforeach
-                                    </div>
-                                    <div id="formTypeCandidate" class=" row justify-content-between">
-                                        {{-- <input style="width: 70%;" placeholder="กรอกประเภทผู้สมัคร" class="form-control mr-2" name="nameCandidate" type="text" id="nameCandidate" value="">
-                                        <button onclick="submitCandidate()" style="width: 25%;" class="btn btn-success">ยืนยัน</button> --}}
                                     </div>
                                     <div class="d-none form-group mt-2 {{ $errors->has('active') ? 'has-error' : '' }}">
                                         <label for="active" class="control-label">{{ 'Active' }}</label>
@@ -363,7 +361,7 @@
                 // ปิด modal
                 $('#close_modal_create_year').click();
                 clearFormFields();
-                document.getElementById('formTypeCandidate').innerHTML = ""; // ล้างฟอร์ม
+
             })
             .catch(error => {
                 console.error("Error:", error);
@@ -457,13 +455,10 @@
                                 <div class="row">
                                     <div class="d-flex justify-content-start mb-3">
                                         <span class="mb-2" style="margin-right: 10px;">ประเภทผู้สมัครที่เปิดใช้</span>
-                                        <button onclick="addTypeCandidate_select()" class="px-3" style="border:#04b360 1px solid; border-radius: 5px;">เพิ่มประเภทผู้สมัคร</button>
                                     </div>
                                     <div class="d-flex flex-wrap gap-3" id="candidateTypeCheckboxes">
                                     </div>
-                                    <div id="formTypeCandidate_select" class="w-50 row justify-content-between">
 
-                                    </div>
                                 </div>
 
                                 <div class="my-3">
@@ -593,108 +588,6 @@
 
         // รีเซ็ตสถานะ checkbox "แสดงผล"
         document.getElementById('showPartiesCheckbox').checked = false;
-    }
-
-    function addTypeCandidate() {
-        let form = document.getElementById('formTypeCandidate');
-
-        // ตรวจสอบว่ามีฟอร์มอยู่แล้วหรือไม่
-        if (form.innerHTML.trim() !== "") {
-            form.innerHTML = ""; // ลบฟอร์มออก
-            return;
-        }
-
-        // ลบฟอร์มเก่าที่มีอยู่ (หากมี)
-        form.innerHTML = "";
-
-        // สร้าง HTML ใหม่
-        let formHTML = `
-            <input style="width: 70%;" placeholder="กรอกประเภทผู้สมัคร"
-                class="form-control mr-2" name="nameCandidate" type="text" id="nameCandidate" value="">
-            <button onclick="submitCandidate('modal')" style="width: 25%;" class="btn btn-success">ยืนยัน</button>
-        `;
-
-
-        // แทรก HTML เข้าไปใน div
-        form.innerHTML = formHTML;
-    }
-
-    function addTypeCandidate_select() {
-        let formTypeCandidate_select = document.getElementById('formTypeCandidate_select');
-
-        // ตรวจสอบว่ามีฟอร์มอยู่แล้วหรือไม่
-        if (formTypeCandidate_select.innerHTML.trim() !== "") {
-            formTypeCandidate_select.innerHTML = ""; // ลบฟอร์มออก
-            return;
-        }
-
-         // ลบฟอร์มเก่าที่มีอยู่ (หากมี)
-        formTypeCandidate_select.innerHTML = "";
-
-        // สร้าง HTML ใหม่
-        let formHTML = `
-            <input style="width: 70%;" placeholder="กรอกประเภทผู้สมัคร"
-                class="form-control mr-2" name="nameCandidate" type="text" id="nameCandidate" value="">
-            <button onclick="submitCandidate('form')" style="width: 25%;" class="btn btn-success">ยืนยัน</button>
-        `;
-
-
-        // แทรก HTML เข้าไปใน div
-        formTypeCandidate_select.innerHTML = formHTML;
-    }
-
-    function submitCandidate(from) {
-        const name = document.getElementById('nameCandidate').value;
-
-        if (name.trim() === "") {
-            alert("กรุณากรอกชื่อผู้สมัคร");
-            return;
-        }
-
-        const data_for_add_type_candidate = {
-            userProvince: userProvince,
-            nameCandidate: name
-        };
-
-        console.log(data_for_add_type_candidate);
-
-        // ส่งข้อมูลไปที่เซิร์ฟเวอร์
-        fetch('{{ url('/') }}/api/add_type_candidate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data_for_add_type_candidate),
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => {
-                    // ถ้ามีข้อมูลซ้ำ หรือข้อผิดพลาดจาก API
-                    if (err.error) {
-                        alert(err.error); // แจ้งเตือนข้อความจาก backend
-                        throw new Error(err.error); // หยุดการทำงาน
-                    }
-                });
-            }
-            return response.json();
-        })
-        .then(result => {
-            console.log("result OK");
-            console.log(result.data);
-
-            updateCheckboxGroup(result.data , from); // อัปเดต UI
-            alert('บันทึกข้อมูลสำเร็จ');
-
-            if (document.getElementById('formTypeCandidate')) {
-                document.getElementById('formTypeCandidate').innerHTML = '';
-            }
-            if (document.getElementById('formTypeCandidate_select')) {
-                document.getElementById('formTypeCandidate_select').innerHTML = '';
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            // alert("เกิดข้อผิดพลาดในการสร้างข้อมูล");
-        });
-
     }
 
     function updateCheckboxGroup(types , from) {

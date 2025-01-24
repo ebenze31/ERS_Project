@@ -40,7 +40,6 @@ Route::get('/activeStatusYear', 'YearsController@activeStatusYearAPI');
 
 Route::post('/create_new_year', 'YearsController@create_new_yearAPI');
 Route::post('/update_new_year', 'YearsController@update_new_yearAPI');
-Route::post('/add_type_candidate', 'YearsController@add_type_candidateAPI');
 
 Route::get('/admin_vote_score', 'scoresController@admin_vote_scoreAPI');
 Route::post('/send_score', 'scoresController@send_score');
@@ -53,3 +52,5 @@ Route::get('/get_active_years/{province}', 'YearsController@get_active_years');
 Route::post('/get_candidates_of_electorate_id', 'CandidatesController@get_candidates_of_electorate_id');
 
 Route::get('/get_vote_score_history/{polling_unit_id}', 'scoresController@get_vote_score_historyAPI');
+Route::get('/manage_user_data', 'AdminController@get_manage_user_dataAPI');
+Route::post('/update_manage_user', 'AdminController@update_user_dataAPI');

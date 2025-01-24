@@ -89,12 +89,12 @@
                 <input type="text" class="form-control" id="type-inputs" placeholder="กรอกประเภทผู้สมัคร">
             </div>
         </div>
-        <div class="col-2 d-none">
+        {{-- <div class="col-2 d-none">
             <!-- Toggle Button -->
             <button type="button" class="btn btn-secondary btn-block w-100" id="toggle-inputs">
                 เพิ่มข้อมูลใหม่
             </button>
-        </div>
+        </div> --}}
     </div>
 
     <!-- Hidden Input -->
@@ -252,7 +252,7 @@
     const selectElements = document.getElementById('type-selects');
     const inputElements = document.getElementById('type-inputs');
     const hiddenInputs = document.getElementById('type-hiddens');
-    const toggleButtons = document.getElementById('toggle-inputs');
+    // const toggleButtons = document.getElementById('toggle-inputs');
 
     // กำหนดค่าจาก Select ไปยัง Hidden Input
     selectElements.addEventListener('change', function () {
@@ -265,25 +265,25 @@
     });
 
     // ฟังก์ชันสลับระหว่าง Select และ Input
-    toggleButtons.addEventListener('click', function () {
-        if (selectWrappers.classList.contains('d-none')) {
-            // แสดง Select และซ่อน Input
-            selectWrappers.classList.remove('d-none');
-            inputWrappers.classList.add('d-none');
-            toggleButtons.textContent = 'เพิ่มข้อมูลใหม่';
+    // toggleButtons.addEventListener('click', function () {
+    //     if (selectWrappers.classList.contains('d-none')) {
+    //         // แสดง Select และซ่อน Input
+    //         selectWrappers.classList.remove('d-none');
+    //         inputWrappers.classList.add('d-none');
+    //         toggleButtons.textContent = 'เพิ่มข้อมูลใหม่';
 
-            // อัปเดต Hidden Input จาก Select
-            hiddenInputs.value = selectElements.value;
-        } else {
-            // แสดง Input และซ่อน Select
-            selectWrappers.classList.add('d-none');
-            inputWrappers.classList.remove('d-none');
-            toggleButtons.textContent = 'ตัวเลือก';
+    //         // อัปเดต Hidden Input จาก Select
+    //         hiddenInputs.value = selectElements.value;
+    //     } else {
+    //         // แสดง Input และซ่อน Select
+    //         selectWrappers.classList.add('d-none');
+    //         inputWrappers.classList.remove('d-none');
+    //         toggleButtons.textContent = 'ตัวเลือก';
 
-            // อัปเดต Hidden Input จาก Input
-            hiddenInputs.value = inputElements.value;
-        }
-    });
+    //         // อัปเดต Hidden Input จาก Input
+    //         hiddenInputs.value = inputElements.value;
+    //     }
+    // });
 
     // ตั้งค่าเริ่มต้นให้ Hidden Input
     hiddenInputs.value = selectElements.value; // ค่าเริ่มต้นมาจาก Select

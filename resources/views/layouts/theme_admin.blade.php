@@ -363,7 +363,7 @@
 									</a>
 								</li>
 								<li>
-									<a href="authentication-signin.html">
+									<a href="{{ url('/manage_user') }}">
 										<i class="bx bx-right-arrow-alt"></i>จัดการผู้ใช้
 									</a>
 								</li>

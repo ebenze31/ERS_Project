@@ -271,31 +271,6 @@ class YearsController extends Controller
         return response()->json(['success' => true, 'data' => $year_after_update]);
     }
 
-    public function add_type_candidateAPI(Request $request)
-    {
-        // Validate input
-        // $validator = Validator::make($request->all(), [
-        //     'nameCandidate' => 'required|string|max:255', // ชื่อจำเป็น เป็นข้อความ และไม่เกิน 255 ตัวอักษร
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'errors' => $validator->errors(),
-        //     ], 400); // ส่งสถานะ 400 (Bad Request) ถ้าการตรวจสอบล้มเหลว
-        // }
-
-        // บันทึกข้อมูลลงฐานข้อมูล
-        Type_candidate::firstOrCreate([
-            'name' => $request->nameCandidate,
-            'province' => $request->userProvince,
-        ]);
-
-        $type_candidate = Type_candidate::where('province',$request->userProvince)->get();
-
-        return response()->json(['success' => true, 'data' => $type_candidate]);
-    }
-
 
     function get_active_years($province){
 
