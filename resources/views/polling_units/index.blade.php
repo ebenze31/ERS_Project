@@ -94,6 +94,8 @@
                                     <th>ตำบล</th>
                                     <th>หน่วยเลือกตั้งที่</th>
                                     <th>เจ้าหน้าที่</th>
+                                    <th>เบอร์</th>
+                                    <th>เบอร์ 2</th>
                                     <th>จำนวนผู้มีสิทธิ</th>
                                     <th></th>
                                 </tr>
@@ -106,6 +108,8 @@
                                     <td>{{ explode(" ",$item->name_polling_unit)[0] }}</td>
                                     <td>{{ explode(" ",$item->name_polling_unit)[2] }}</td>
                                     <td>{{ $item->name_user }}</td>
+                                    <td>{{ $item->phone_1_user }}</td>
+                                    <td>{{ $item->phone_2_user }}</td>
                                     <td>{{ $item->eligible_voters }}</td>
                                     <td>
                                         <center>

@@ -1,28 +1,29 @@
 <!doctype html>
 <html lang="en">
 @php
-	$theme_user_province = Auth::user()->province ;
-	$theme_data_provinces = App\Models\Province::where('name_province' , $theme_user_province)->first();
+$theme_user_province = Auth::user()->province ;
+$theme_data_provinces = App\Models\Province::where('name_province' , $theme_user_province)->first();
 
-	$theme_province_id = "" ;
-	if( !empty($theme_data_provinces->id) ){
-		$theme_province_id = $theme_data_provinces->id ;
-	}
+$theme_province_id = "" ;
+if( !empty($theme_data_provinces->id) ){
+$theme_province_id = $theme_data_provinces->id ;
+}
 
-	$theme_logo = "" ;
-	if( !empty($theme_data_provinces->logo) ){
-		$theme_logo = $theme_data_provinces->logo ;
-	}
+$theme_logo = "" ;
+if( !empty($theme_data_provinces->logo) ){
+$theme_logo = $theme_data_provinces->logo ;
+}
 @endphp
+
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
 	@if( !empty($theme_logo) )
-		<link rel="icon" href="{{ url('storage')}}/{{ $theme_logo }}" type="image/png" />
+	<link rel="icon" href="{{ url('storage')}}/{{ $theme_logo }}" type="image/png" />
 	@else
-		<link rel="icon" href="{{ url('/images/logos/default_logo.png') }}" type="image/png" />
+	<link rel="icon" href="{{ url('/images/logos/default_logo.png') }}" type="image/png" />
 	@endif
 	<!--plugins-->
 	<link href="{{ asset('assets/plugins/simplebar/css/simplebar.css')}}" rel="stylesheet" />
@@ -40,15 +41,22 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css')}}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css')}}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css')}}" />
-    <!-- fontawesome icon -->
-    <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
- 	<link href="https://kit-pro.fontawesome.com/releases/v6.4.2/css/pro.min.css" rel="stylesheet">
+	<!-- fontawesome icon -->
+	<link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
+	<link href="https://kit-pro.fontawesome.com/releases/v6.4.2/css/pro.min.css" rel="stylesheet">
 
- 	<!-- datatable -->
- 	<link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
+	<!-- datatable -->
+	<link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
 
 	<title>Admin - ERS</title>
 </head>
+<style>
+	.topbar-nav .metismenu a.active {
+		color: #ffffff !important;
+		text-decoration: none !important;
+		background: #8833ff !important;
+	}
+</style>
 
 <body>
 	<!--wrapper-->
@@ -62,9 +70,9 @@
 						<div class="topbar-logo-header">
 							<div class="">
 								@if( !empty($theme_logo) )
-									<img src="{{ url('storage')}}/{{ $theme_logo }}" class="logo-icon" alt="logo icon">
+								<img src="{{ url('storage')}}/{{ $theme_logo }}" class="logo-icon" alt="logo icon">
 								@else
-									<img src="{{ url('/images/logos/default_logo.png') }}" class="logo-icon" alt="logo icon">
+								<img src="{{ url('/images/logos/default_logo.png') }}" class="logo-icon" alt="logo icon">
 								@endif
 							</div>
 							<div class="">
@@ -75,7 +83,7 @@
 						<div class="top-menu-left d-none d-lg-block ps-3">
 							<ul class="nav">
 								ระบบการจัดการรายงานผลการเลือกตั้ง (อย่างไม่เป็นทางการ)
-						  	</ul>
+							</ul>
 						</div>
 						<div class="search-bar flex-grow-1">
 							<div class="position-relative search-bar-box">
@@ -86,11 +94,11 @@
 						<div class="top-menu ms-auto">
 							<ul class="navbar-nav align-items-center d-none">
 								<li class="nav-item mobile-search-icon">
-									<a class="nav-link" href="#">	<i class='bx bx-search'></i>
+									<a class="nav-link" href="#"> <i class='bx bx-search'></i>
 									</a>
 								</li>
 								<li class="nav-item dropdown dropdown-large">
-									<a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">	<i class='bx bx-category'></i>
+									<a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <i class='bx bx-category'></i>
 									</a>
 									<div class="dropdown-menu dropdown-menu-end">
 										<div class="row row-cols-3 g-3 p-3">
@@ -145,7 +153,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">New Customers<span class="msg-time float-end">14 Sec
-													ago</span></h6>
+																ago</span></h6>
 														<p class="msg-info">5 new user registered</p>
 													</div>
 												</div>
@@ -156,7 +164,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">New Orders <span class="msg-time float-end">2 min
-													ago</span></h6>
+																ago</span></h6>
 														<p class="msg-info">You have recived new orders</p>
 													</div>
 												</div>
@@ -167,7 +175,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">24 PDF File<span class="msg-time float-end">19 min
-													ago</span></h6>
+																ago</span></h6>
 														<p class="msg-info">The pdf files generated</p>
 													</div>
 												</div>
@@ -178,7 +186,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">Time Response <span class="msg-time float-end">28 min
-													ago</span></h6>
+																ago</span></h6>
 														<p class="msg-info">5.1 min avarage time response</p>
 													</div>
 												</div>
@@ -189,7 +197,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">New Product Approved <span
-													class="msg-time float-end">2 hrs ago</span></h6>
+																class="msg-time float-end">2 hrs ago</span></h6>
 														<p class="msg-info">Your new product has approved</p>
 													</div>
 												</div>
@@ -200,7 +208,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">New Comments <span class="msg-time float-end">4 hrs
-													ago</span></h6>
+																ago</span></h6>
 														<p class="msg-info">New customer comments recived</p>
 													</div>
 												</div>
@@ -211,7 +219,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">Your item is shipped <span class="msg-time float-end">5 hrs
-													ago</span></h6>
+																ago</span></h6>
 														<p class="msg-info">Successfully shipped your item</p>
 													</div>
 												</div>
@@ -222,7 +230,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">New 24 authors<span class="msg-time float-end">1 day
-													ago</span></h6>
+																ago</span></h6>
 														<p class="msg-info">24 new authors joined last week</p>
 													</div>
 												</div>
@@ -233,7 +241,7 @@
 													</div>
 													<div class="flex-grow-1">
 														<h6 class="msg-name">Defense Alerts <span class="msg-time float-end">2 weeks
-													ago</span></h6>
+																ago</span></h6>
 														<p class="msg-info">45% less alerts last 4 weeks</p>
 													</div>
 												</div>
@@ -263,6 +271,7 @@
 										</a>
 									</div>
 								</li>
+
 							</ul>
 						</div>
 						<div class="user-box dropdown">
@@ -281,8 +290,8 @@
 									<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
 										<i class='bx bx-log-out-circle'></i><span>Logout</span>
 										<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-	                                        @csrf
-	                                    </form>
+											@csrf
+										</form>
 									</a>
 								</li>
 							</ul>
@@ -305,15 +314,15 @@
 				</div>
 				<nav class="topbar-nav">
 					<ul class="metismenu" id="menu">
-						<li>
-							<a href="{{ url('/for_admin') }}" class="">
+						<li class="main-submenu">
+							<a href="{{ url('/for_admin') }}" class="sub-menu">
 								<div class="parent-icon">
 									<i class="fa-solid fa-house"></i>
 								</div>
 								<div class="menu-title">หน้าแรก</div>
 							</a>
 						</li>
-						<li>
+						<li class="main-submenu">
 							<a class="has-arrow" href="javascript:;">
 								<div class="parent-icon">
 									<i class="fa-solid fa-user-tie"></i>
@@ -322,34 +331,34 @@
 							</a>
 							<ul>
 								<li>
-									<a href="{{ url('/candidates') }}">
+									<a href="{{ url('/candidates') }}" class="sub-menu">
 										<i class="bx bx-right-arrow-alt"></i>รายชื่อผู้สมัคร
 									</a>
 								</li>
 								<li>
-									<a href="{{ url('/add_candidates') }}">
+									<a href="{{ url('/add_candidates') }}" class="sub-menu">
 										<i class="bx bx-right-arrow-alt"></i>เพิ่มผู้สมัคร
 									</a>
 								</li>
 							</ul>
 						</li>
-						<li>
-							<a href="{{ url('/polling_units') }}" class="">
+						<li class="main-submenu">
+							<a href="{{ url('/polling_units') }}" class="sub-menu">
 								<div class="parent-icon">
 									<i class="fa-duotone fa-solid fa-building-flag"></i>
 								</div>
 								<div class="menu-title">หน่วยเลือกตั้ง</div>
 							</a>
 						</li>
-						<li>
-                            <a class="" href="{{ url('/admin_vote_score') }}">
+						<li class="main-submenu">
+							<a class="sub-menu" href="{{ url('/admin_vote_score') }}">
 								<div class="parent-icon">
 									<i class="fa-solid fa-pen-field"></i>
 								</div>
 								<div class="menu-title">การลงคะแนน</div>
 							</a>
 						</li>
-						<li>
+						<li class="main-submenu">
 							<a class="has-arrow" href="javascript:;">
 								<div class="parent-icon">
 									<i class="fa-solid fa-bars"></i>
@@ -358,28 +367,28 @@
 							</a>
 							<ul>
 								<li>
-									<a href="{{ url('/political_parties') }}">
+									<a href="{{ url('/political_parties') }}" class="sub-menu">
 										<i class="bx bx-right-arrow-alt"></i>เพิ่มพรรคการเมือง
 									</a>
 								</li>
 								<li>
-									<a href="{{ url('/manage_user') }}">
+									<a href="{{ url('/manage_user') }}" class="sub-menu">
 										<i class="bx bx-right-arrow-alt"></i>จัดการผู้ใช้
 									</a>
 								</li>
-                                <li>
-									<a href="{{ url('/election_setting') }}">
+								<li>
+									<a href="{{ url('/election_setting') }}" class="sub-menu">
 										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าการเลือกตั้ง
 									</a>
 								</li>
 								<li>
-									<a href="{{ url('/set_system') }}">
+									<a href="{{ url('/set_system') }}" class="sub-menu">
 										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าระบบ
 									</a>
 								</li>
 								@if(Auth::user()->role == "dev-admin")
 								<li>
-									<a href="{{ url('/add_districts') }}" target="_blank">
+									<a href="{{ url('/add_districts') }}" target="_blank" class="sub-menu">
 										<i class="bx bx-right-arrow-alt"></i>Add Districts (For DEV)
 									</a>
 								</li>
@@ -393,7 +402,7 @@
 		</div>
 		<!--end header wrapper-->
 
-        <!-- CONTENT -->
+		<!-- CONTENT -->
 		<div class="page-wrapper">
 			<div class="page-content">
 				<div class="container-fluid">
@@ -428,8 +437,33 @@
 	<!-- datatable -->
 	<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
 	<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+	<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+			check_submenu()
+		});
+
+		function check_submenu() {
+			let menu = $('.sub-menu');
+			var winlocation = window.location.href.split('?')[0]; // Get current URL without query params
+			let activeClassAdded = false; // Flag to check if active class is added
+
+			for (i = 0; i < menu.length; i++) {
+				let submenu = menu[i];
+				let menuLink = submenu.getAttribute("href");
+
+				// Check if current URL matches the menu link
+				if (winlocation.includes(menuLink)) {
+					submenu.classList.add("active"); // Add active class to the submenu
+					submenu.closest('.main-submenu').querySelector('a').classList.add("active"); // Add active class to parent menu
+					activeClassAdded = true;
+				}
+			}
+
+		}
+	</script>
+	</script>
 </body>
 
 </html>
