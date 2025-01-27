@@ -118,7 +118,7 @@
                         </select>
 
                         <select id="search_polling_unit" name="search_polling_unit" class="form-control mb-0 width_responsive">
-                            <option value="">ค้นหาจากหน่วย</option>
+                            <option value="">ค้นหาจากตำบล</option>
                             @if(isset($data_search['search_polling_unit']))
                                 <option selected value="{{ $data_search['search_polling_unit'] }}">{{ $data_search['search_polling_unit'] }}</option>
                             @endif
@@ -342,7 +342,7 @@
                         // ไม่ลบข้อมูล
                         setUserToggle(user_id, false ,"not_delete"); // ส่ง parameter ว่าง
                         Swal.fire({
-                            title:"<h3 style='font-weight: bold;'>สถานะถูกปิดแล้ว (ข้อมูลไม่ถูกลบ)?</h3>",
+                            title:"<h3 style='font-weight: bold;'>สถานะถูกปิดแล้ว (ข้อมูลไม่ถูกลบ)</h3>",
                             icon: "success",
                             timer: 2000,
                             showConfirmButton: false
@@ -642,7 +642,7 @@
                 // เพิ่มตัวเลือกแรก
                 let firstOption = document.createElement('option');
                 firstOption.value = '';
-                firstOption.textContent = 'ค้นหาจากหน่วยเลือกตั้ง';
+                firstOption.textContent = 'ค้นหาจากตำบล';
                 pollingUnitSelect.appendChild(firstOption);
 
                 // สร้าง object เพื่อเก็บชื่อที่ซ้ำกัน
