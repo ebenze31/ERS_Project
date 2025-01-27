@@ -1,6 +1,21 @@
 @extends('layouts.theme_admin')
 
 @section('content')
+
+
+<!-- DataTables CSS CDN -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables JS CDN -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+
+<style>
+    .dataTables_filter ,.fixedHeader-floating{
+        display: none;
+    }
+</style>
 <div class="card">
 
 
@@ -14,27 +29,31 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="table_polling_units" class="table table-striped table-bordered" style="width:100%">
+                        <table id="table_polling_units"  class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>อำเภอ</th>
-                                    <th>ตำบล</th>
                                     <th>เขตเลือกตั้งที่</th>
-                                    <!-- <th>ตำบล</th> -->
+                                    <th>ตำบล</th>
                                     <th>หน่วยเลือกตั้งที่</th>
+                                </tr>
+                                <tr>
+                                    <th><input type="text" style="width:100%;" placeholder="ค้นหา อำเภอ" /></th>
+                                    <th><input type="text" style="width:100%;" placeholder="ค้นหา เขตเลือกตั้งที่" /></th>
+                                    <th><input type="text" style="width:100%;" placeholder="ค้นหา ตำบล" /></th>
+                                    <th><input type="text" style="width:100%;" placeholder="ค้นหา หน่วยเลือกตั้งที่" /></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($polling_units as $item)
-                                    <tr >
-                                        <td>
-                                        {{ $item->name_district }}
-                                        </td>
-                                    <td>{{ $item->name_sub_district }}</td>  <!-- ตำบล -->
-                                        <td>{{ $item->name_electorate }}</td>  <!-- เขตเลือกตั้งที่ -->
-                                        <td>{{ $item->polling_unit_numbers }}</td>  <!-- หน่วยเลือกตั้งที่ รวมเป็นกลุ่ม -->
-                                    </tr>
+                                <tr>
+                                    <td>{{ $item->name_district }}</td>
+                                    <td>{{ $item->name_electorate }}</td> <!-- เขตเลือกตั้งที่ -->
+                                    <td>{{ $item->name_sub_district }}</td> <!-- ตำบล -->
+                                    <td>{{ $item->polling_unit_numbers }}</td> <!-- หน่วยเลือกตั้งที่ รวมเป็นกลุ่ม -->
+                                </tr>
                                 @endforeach
+                                <!-- Add more rows as needed -->
                             </tbody>
                         </table>
                     </div>
@@ -49,46 +68,31 @@
         document.addEventListener("DOMContentLoaded", function() {
 
         });
-
     </script>
+
+    
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        var otable = $('#table_polling_units').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true,
+            paging: false,
+        });
+
+        // Apply the search to each column based on input in the header
+        $('#table_polling_units thead tr:eq(1) th').each(function(i) {
+            $('input', this).on('keyup change', function() {
+                if (otable.column(i).search() !== this.value) {
+                    otable
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+    });
+</script>
 </div>
-<!-- name_polling_unit : เทศบาลเมืองกาญจนบุรี หน่วยที่ 1
-province_id : 3
-district_id : 69
-district_id : 62
 
-name_polling_unit : เทศบาลเมืองกาญจนบุรี หน่วยที่ 2
-province_id : 3
-district_id : 69
-district_id : 62
-
-name_polling_unit : เทศบาลเมืองกาญจนบุรี หน่วยที่ 3
-province_id : 3
-district_id : 69
-district_id : 62
-
-name_polling_unit : เทศบาลเมืองกาญจนบุรี หน่วยที่ 4
-province_id : 3
-district_id : 69
-district_id : 62
-
-name_polling_unit : ตำบลท่ามะขาม หน่วยที่ 1
-province_id : 3
-district_id : 69
-district_id : 62
-
-name_polling_unit : ตำบลท่ามะขาม หน่วยที่ 2
-province_id : 3
-district_id : 69
-district_id : 62
-
-name_polling_unit : ตำบลท่ามะขาม หน่วยที่ 3
-province_id : 3
-district_id : 69
-district_id : 63
-
-
-อำเภอ	เขตเลือกตั้งที่	ตำบล	หน่วยเลือกตั้งที่
-เมืองกาญจนบุรี	1	เทศบาลเมืองกาญจนบุรี	1,2,3,4
-เมืองกาญจนบุรี	1	ตำบลท่ามะขาม	1,2,3
-@endsection -->
+@endsection
