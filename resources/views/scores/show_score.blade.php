@@ -72,8 +72,13 @@
 <img src="{{ url('storage')}}/{{ $data_provinces->banner_mobile }}"  alt="Logo" class="mb-1 shadow-xl banner-mobile">
 <!-- <img src="{{url('/images/2.png')}}" alt="Logo" class="w-full my-1 mt-[48px] shadow-xl"> -->
 
+<div class="mr-[50px] mt-[20px]">
+    <p style="float: right;">อัปเดตล่าสุด {{ date("H:i") }} น.</p>
+    <br>
+</div>
+
 <div class="max-sm:mx-2 mx-10 max-h-fit">
-    <div class="w-100  mt-[10px] flex justify-center  h-100 overflow-auto  ">
+    <div class="w-100  mt-[0px] flex justify-center  h-100 overflow-auto  ">
 
         <div class="block  w-full  mt-5">
             <div class="w-full flex items-center justify-center flex-shrink-0 ">
@@ -81,7 +86,6 @@
                 <div class="w-full bg-white shadow-lg border border-gray-200 rounded-[12px] shadow  white:bg-gray-800 white:border-gray-700 mx-3 p-5 mt-0 mb-10">
                     <div class="w-full flex items-center justify-between mb-5">
                         <!-- <p class="text-[30px] font-extrabold header-text">อำเภอเมืองกาญ</p> -->
-
                         <!--HTML CODE-->
                         <!-- <button>aasd</button> -->
                         <div class="bg-white flex flex-col justify-center">
@@ -90,6 +94,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="w-full relative">
                         <div class="swiper multiple-slide-carousel swiper-container relative">
                             <div id="div_item_carousel" class="swiper-wrapper mb-0">
@@ -126,7 +131,7 @@
                         </div>
 
 
-                        <script>
+                        <!-- <script>
                             var swiper = new Swiper(".multiple-slide-carousel", {
                                 loop: true,
                                 spaceBetween: 20,
@@ -140,7 +145,32 @@
                                     prevEl: ".multiple-slide-carousel .swiper-button-prev",
                                 },
                             });
+                        </script> -->
+
+                        <script>
+                            var Current_slide = 0 ;
+                            var swiper = new Swiper(".multiple-slide-carousel", {
+                                loop: true,
+                                spaceBetween: 20,
+                                slidesPerView: 1,
+                                autoplay: {
+                                    delay: 10000,
+                                    disableOnInteraction: false,
+                                },
+                                navigation: {
+                                    nextEl: ".multiple-slide-carousel .swiper-button-next",
+                                    prevEl: ".multiple-slide-carousel .swiper-button-prev",
+                                },
+                                on: {
+                                    slideChange: function () {
+                                        // ตรวจสอบ index ปัจจุบัน
+                                        console.log("Current slide index:", this.realIndex);
+                                        Current_slide = this.realIndex ;
+                                    },
+                                },
+                            });
                         </script>
+
 
                        
                     </div>
@@ -152,9 +182,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             get_data_scores();
+            setInterval(get_scores_loop, 20000);
+
+            // setInterval(() => {
+            //     location.reload(); // รีโหลดหน้า
+            // }, 300000);
         });
 
         function get_data_scores(){
+
+            console.log('get_data_scores');
 
             fetch("{{ url('/') }}/api/get_data_districts/"+ "{{ $data_provinces->id }}")
             .then(response => {
@@ -242,7 +279,7 @@
                                                         อำเภอ`+data_scores[xi].name_district+` เขต `+data_scores[xi].name_electorate+`
                                                     </span>
                                                 </div>
-                                                <div div_district="`+data_scores[xi].name_district+`_`+data_scores[xi].name_electorate+`" class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
+                                                <div name_div="div_district" div_district="`+data_scores[xi].name_district+`_`+data_scores[xi].name_electorate+`" class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
 
                                                 </div>
                                             </div>
@@ -342,6 +379,26 @@
                 console.error('Error:', error);
             });
         }
+
+        function get_scores_loop(){
+
+            console.log('get_scores_loop');
+
+            let divElements = document.querySelectorAll('div[name_div="div_district"]');
+            divElements.forEach(div => {
+                // console.log(div);
+                div.innerHTML = "" ;
+            });
+
+            if (typeof Current_slide === "number" && !isNaN(Current_slide)) {
+                swiper.slideTo(Current_slide);
+            } else {
+                console.error("Current_slide is not a valid number:", Current_slide);
+            }
+
+
+        }
+
     </script>
 
     @endsection

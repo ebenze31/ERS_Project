@@ -177,9 +177,37 @@ class ScoresController extends Controller
                     'districts.name_district as name_district',
                     'electorates.name_electorate as name_electorate',
                     'sub_districts.name_sub_districts as name_sub_districts',
-                    'users.name as name_user'
+                    'users.name as name_user',
+                    'users.phone_1 as phone_1_user',
+                    'users.phone_2 as phone_2_user',
                 )
             ->get();
+
+        // ดึงข้อมูลปีที่ใช้สำหรับการคำนวณ
+        $data_Year = Year::where('status', 'Yes')->where('province', $requestData['userProvince'])->first();
+
+        // ตรวจสอบว่าพบข้อมูลปีหรือไม่
+        if ($data_Year) {
+            // Loop ผ่าน polling_units และเพิ่ม max_round
+            foreach ($data['polling_units'] as $polling_unit) {
+                // ดึง id ของ polling_unit
+                $id = $polling_unit->id;
+
+                // หา max_round ของ polling_unit นี้
+                $max_round = Score::where('polling_unit_id', $id)
+                    ->where('year_id', $data_Year->id)
+                    ->selectRaw('MAX(CAST(round AS UNSIGNED)) as max_round')
+                    ->value('max_round');
+
+                // เพิ่ม max_round เข้าไปในข้อมูล polling_unit
+                $polling_unit->max_round = $max_round; // ถ้าไม่มีค่า max_round ให้ตั้งเป็น 0
+            }
+        } else {
+            // ถ้าไม่พบ $data_Year
+            foreach ($data['polling_units'] as $polling_unit) {
+                $polling_unit->max_round = 0; // ตั้งค่า default เป็น 0
+            }
+        }
 
         $data['count'] = count($data['polling_units']);
 
@@ -190,6 +218,18 @@ class ScoresController extends Controller
         return $data;
 
     }
+
+    // function check_count_score_unit($unit_id , $province){
+
+    //     $data_Year = Year::where('status' , "Yes")->where('province' , $province)->first();
+
+    //     $max_round = Score::where('polling_unit_id', $id)
+    //         ->where('year_id', $data_Year->id)
+    //         ->selectRaw('MAX(CAST(round AS UNSIGNED)) as max_round')
+    //         ->value('max_round');
+
+    //     return $max_round ;
+    // }
 
     function add_score(){
 

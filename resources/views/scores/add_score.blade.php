@@ -181,6 +181,8 @@
                             "electorate_id": "{{ $data_polling_units->electorate_id }}",
                         };
 
+                        // console.log(data_arr);
+
                         fetch("{{ url('/') }}/api/get_candidates_of_electorate_id", {
                             method: 'post',
                             body: JSON.stringify(data_arr),
@@ -339,10 +341,12 @@
                 id: input.id,
                 value: parseInt(input.value) || 0, // Convert value to number, default to 0 if NaN
                 user_id: "{{ Auth::user()->id }}",
+                select_type: current_select_type,
             });
         });
 
-        // console.log(div_data_candidates.length);
+        // console.log(candidatesData);
+        // return ;
 
         // แสดงผลลัพธ์
         // if (candidatesData.length < 2) {

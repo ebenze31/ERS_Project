@@ -1,21 +1,33 @@
 @extends('layouts.theme_admin')
 
 @section('content')
+
    <!-- ข้อมูลหน่วย -->
    <div class="row justify-content-center p-4">
-    <div class="card-header">
-        <h4>
-            การลงคะแนน
-            <span id="span_count_polling_units" class="d-none" style="font-size: 14px;"></span>
-            <button class="btn btn-warning float-end mx-2" onclick="confirm_clear_name_user('all');">
-                ล้างคะแนนทั้งหมด
-            </button>
-        </h4>
-    </div>
     <div class="card-body">
         <div class="card">
+            <!-- From Uiverse.io by guilhermeyohan --> 
             <div class="card-body">
-                <div class="table-responsive">
+
+                <button id="btn_view_max_all" class="btn btn-sm btn-primary" style="width:150px;" onclick="click_view_max_round('all');">
+                    ทั้งหมด
+                </button>
+                <button id="btn_view_max_Yes" class="btn btn-sm btn-outline-success" style="width:150px;" onclick="click_view_max_round('Yes');">
+                    ลงคะแนนแล้ว
+                </button>
+                <button id="btn_view_max_No" class="btn btn-sm btn-outline-secondary" style="width:150px;" onclick="click_view_max_round('No');">
+                    ไม่มีการเพิ่มคะแนน
+                </button>
+
+                <span id="count_display" style="margin-left: 15px;">
+                    0 รายการ
+                </span>
+
+                <button class="btn btn-sm btn-warning float-end mx-2" onclick="confirm_clear_name_user('all');">
+                    ล้างคะแนนทั้งหมด
+                </button>
+
+                <div class="table-responsive mt-3">
                     <table id="table_polling_units" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
@@ -23,6 +35,10 @@
                                 <th>เขตเลือกตั้งที่</th>
                                 <th>ตำบล</th>
                                 <th>หน่วยเลือกตั้งที่</th>
+                                <th>เจ้าหน้าที่</th>
+                                <th>เบอร์</th>
+                                <th>เบอร์ 2</th>
+                                <th>จำนวนครั้ง</th>
                                 <th>จำนวนผู้มีสิทธิ</th>
                                 <th></th>
                             </tr>
@@ -50,9 +66,16 @@
 
     document.addEventListener('DOMContentLoaded', (event) => {
         getdata_admin_vote_score();
+
+        setInterval(() => {
+            getdata_admin_vote_score();
+        }, 300000);
+        // }, 5000);
     });
     // คะแนนเฉลี่ยต่อเคสเจ้าหน้าที่
     function getdata_admin_vote_score() {
+
+        // console.log('getdata_admin_vote_score');
 
         fetch("{{ url('/') }}/api/admin_vote_score?userProvince=" + userProvince)
         .then(response => {
@@ -62,14 +85,13 @@
                 return response.json();
             })
             .then(result => {
-                // console.log("Response from server:", result);
+                // console.log(result);
+
+                document.getElementById('count_display').textContent = `${result['count']} รายการ`;
 
                 // Clear existing rows
                 const tbody = document.getElementById("polling_units_body");
                 tbody.innerHTML = "";
-
-                const count_polling_units = document.querySelector('#span_count_polling_units');
-                count_polling_units.innerHTML = `(ทั้งหมด ${result['count']} หน่วย)`;
 
                 // Generate rows dynamically
                 result['polling_units'].forEach(item => {
@@ -93,19 +115,42 @@
                                 </a>
                             </center>`;
                     }
+
                     let row = document.createElement("tr");
                         row.setAttribute("id", "tr_"+item['id']);
+
+                    if(item.max_round){
+                        row.setAttribute("max_round", "Yes");
+                    }
+                    else{
+                        row.setAttribute("max_round", "No");
+                    }
 
                     row.innerHTML = `
                         <td>${item.name_district}</td>
                         <td>${item.name_electorate}</td>
                         <td>${item.name_polling_unit.split(" ")[0]}</td>
                         <td>${item.name_polling_unit.split(" ")[2]}</td>
+                        <td>${item.name_user}</td>
+                        <td>${item.phone_1_user ?? ''}</td>
+                        <td>${item.phone_2_user ?? ''}</td>
+                        <td>${item.max_round ?? 'ไม่มีการเพิ่ม'}</td>
                         <td>${item.eligible_voters}</td>
                         <td>${html_view}</td>
                     `;
 
                     tbody.appendChild(row);
+
+                    // fetch("{{ url('/') }}/api/check_count_score_unit/" + item['id'] + "/" + "{{ Auth::user()->province }}")
+                    //     .then(response => response.text())
+                    //     .then(data => {
+                    //         console.log(data);
+                    //         if (data) {
+                                
+                    //         } 
+                    //     });
+
+                    
                 });
 
             })
@@ -161,7 +206,7 @@
                 }
             }else{
                 Swal.fire({
-                        title: "ต้องการลบคะแนน ทั้งหมด?",
+                        title: "ต้องการลบคะแนน ทั้งหมด?<br><span style='font-size: 18px;color:red;'>คะแนนของทุกหน่วยในรอบการเลือกตั้งนี้จะถูกลบ</span>",
                         showDenyButton: false,
                         showCancelButton: true,
                         confirmButtonText: "ลบ",
@@ -204,6 +249,65 @@
                         });
                     }
             });
+    }
+
+    function click_view_max_round(type){
+        // console.log(type);
+
+        // ปุ่มทั้งหมด
+        const btnAll = document.getElementById('btn_view_max_all');
+        const btnYes = document.getElementById('btn_view_max_Yes');
+        const btnNo = document.getElementById('btn_view_max_No');
+
+        // รีเซ็ต class ให้ปุ่มทุกปุ่มกลับไปเป็น outline
+        btnAll.classList.remove('btn-primary');
+        btnAll.classList.add('btn-outline-primary');
+
+        btnYes.classList.remove('btn-success');
+        btnYes.classList.add('btn-outline-success');
+
+        btnNo.classList.remove('btn-secondary');
+        btnNo.classList.add('btn-outline-secondary');
+
+        // ตั้งค่า class สำหรับปุ่มที่ถูกเลือก
+        if (type === 'all') {
+            btnAll.classList.remove('btn-outline-primary');
+            btnAll.classList.add('btn-primary');
+        } else if (type === 'Yes') {
+            btnYes.classList.remove('btn-outline-success');
+            btnYes.classList.add('btn-success');
+        } else if (type === 'No') {
+            btnNo.classList.remove('btn-outline-secondary');
+            btnNo.classList.add('btn-secondary');
+        }
+
+        const rows = document.querySelectorAll('#table_polling_units tbody tr');
+        let count = 0; // ตัวนับสำหรับแถวที่แสดงผล
+
+        rows.forEach(row => {
+            // ดึงค่า max_round ของแต่ละ tr
+            const maxRound = row.getAttribute('max_round');
+
+            // ตรวจสอบ type และจัดการการแสดงผล
+            if (type === 'all') {
+                // แสดงทุกแถว
+                row.style.display = '';
+                count++; // เพิ่มตัวนับ
+            } else if (type === 'Yes' && maxRound === 'Yes') {
+                // แสดงเฉพาะแถวที่ max_round = Yes
+                row.style.display = '';
+                count++; // เพิ่มตัวนับ
+            } else if (type === 'No' && maxRound === 'No') {
+                // แสดงเฉพาะแถวที่ max_round = No
+                row.style.display = '';
+                count++; // เพิ่มตัวนับ
+            } else {
+                // ซ่อนแถวที่ไม่ตรงกับเงื่อนไข
+                row.style.display = 'none';
+            }
+        });
+
+        document.getElementById('count_display').textContent = `${count} รายการ`;
     }
 
 </script>
