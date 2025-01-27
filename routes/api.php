@@ -55,3 +55,8 @@ Route::post('/get_candidates_of_electorate_id', 'CandidatesController@get_candid
 Route::get('/get_vote_score_history/{polling_unit_id}', 'scoresController@get_vote_score_historyAPI');
 Route::get('/manage_user_data', 'AdminController@get_manage_user_dataAPI');
 Route::post('/update_manage_user', 'AdminController@update_user_dataAPI');
+Route::post('/multi_update_manage_users', 'AdminController@multi_update_user_dataAPI');
+Route::post('/get_district', 'AdminController@get_district_dataAPI');
+Route::post('/get_polling_unit', 'AdminController@get_polling_unit_dataAPI');
+
+
