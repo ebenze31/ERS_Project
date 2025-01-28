@@ -139,8 +139,14 @@ class AdminController extends Controller
         }
 
         if (!empty($requestData['search_polling_unit'])) {
-            $query->where('polling_units.name_polling_unit', 'like', '%' . $requestData['search_polling_unit'] . '%');
+            $searchTerm = $requestData['search_polling_unit'];
+
+            $query->whereRaw("SUBSTRING_INDEX(polling_units.name_polling_unit, ' ', 1) = ?", [$searchTerm]);
         }
+
+        // if (!empty($requestData['search_polling_unit'])) {
+        //     $query->where('polling_units.name_polling_unit', $requestData['search_polling_unit']);
+        // }
 
         // ดึงข้อมูลจากฐานข้อมูล
         $data['users'] = $query->get();
