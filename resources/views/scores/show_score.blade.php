@@ -160,8 +160,8 @@
 
         document.addEventListener('DOMContentLoaded', (event) => {
             get_data_scores();
-            // setInterval(get_scores_loop, 300000);
-            setInterval(get_scores_loop, 20000);
+            setInterval(get_scores_loop, 300000);
+            // setInterval(get_scores_loop, 20000);
             start_carousel();
 
             // setInterval(() => {
