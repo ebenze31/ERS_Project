@@ -15,6 +15,7 @@ use App\Models\Year;
 use App\User;
 use App\Models\Candidate;
 use App\Models\District;
+use App\Models\Electorate;
 
 class ScoresController extends Controller
 {
@@ -483,4 +484,91 @@ class ScoresController extends Controller
         return "SUCCESS" ;
 
     }
+
+    public function score_of_electorate()
+    {
+
+        $data_user = Auth::user();
+        $province = $data_user->province ;
+
+        $data_Year = Year::where('status' , "Yes")->where('province' , $province)->first();
+
+        $data = DB::table('candidates')
+            ->leftjoin('years', 'candidates.year_id', '=', 'years.id')
+            ->leftjoin('electorates', 'candidates.electorate_id', '=', 'electorates.id')
+            ->leftjoin('districts', 'candidates.district_id', '=', 'districts.id')
+            ->where('years.status', "Yes")
+            ->select(
+                    'candidates.*',
+                    'electorates.name_electorate',
+                    'electorates.score_of_electorate as check_score_of_electorate',
+                    'districts.name_district',
+                )
+            ->get();
+
+        $groupedData = $data->groupBy('electorate_id');
+
+
+        // echo "<pre>";
+        // print_r($groupedData);
+        // echo "<pre>";
+        // exit();
+
+        return view('scores.score_of_electorate', compact('province','data_Year','groupedData'));
+
+    }
+
+    public function send_score_of_electorate(Request $request)
+    {
+        // รับข้อมูล JSON ที่ส่งมาจาก client
+        $scores = $request->json()->all();
+
+        // ตัวแปรสำหรับเก็บข้อมูลที่แยกออกมา
+        $electorates = []; // เก็บ electorateId
+        $candidatesScores = []; // เก็บ candidateId และคะแนน
+
+        // ลูปผ่านข้อมูลแต่ละ electorateId
+        foreach ($scores as $electorateId => $candidates) {
+            // เก็บ electorateId
+            $electorates[] = $electorateId;
+
+            // ลูปผ่านข้อมูลของแต่ละ candidate
+            foreach ($candidates as $candidateId => $score) {
+                // เก็บคะแนนของแต่ละ candidateId
+                $candidatesScores[] = [
+                    'electorateId' => $electorateId,
+                    'candidateId' => $candidateId,
+                    'score' => $score
+                ];
+            }
+        }
+
+        // electorates
+        DB::table('electorates')->update(['score_of_electorate' => null]);
+
+        foreach ($electorates as $electorateId) {
+            DB::table('electorates')
+                ->where('id', $electorateId)
+                ->update(['score_of_electorate' => 'Yes']);
+        }
+
+        // candidates
+        DB::table('candidates')->update(['score_of_electorate' => null]);
+
+        foreach ($candidatesScores as $candidateScore) {
+            DB::table('candidates')
+                ->where('id', $candidateScore['candidateId'])
+                ->update(['score_of_electorate' => $candidateScore['score']]);
+        }
+
+        // return response()->json([
+        //     'status' => 'SUCCESS',
+        //     'electorates' => $electorates, // ส่งข้อมูล electorateId
+        //     'candidatesScores' => $candidatesScores // ส่งข้อมูล candidateId และคะแนน
+        // ]);
+
+        return "SUCCESS" ;
+    }
+
+
 }

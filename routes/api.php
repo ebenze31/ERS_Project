@@ -44,6 +44,7 @@ Route::post('/update_new_year', 'YearsController@update_new_yearAPI');
 // Route::get('/check_count_score_unit/{unit_id}/{province}', 'scoresController@check_count_score_unit');
 Route::get('/admin_vote_score', 'scoresController@admin_vote_scoreAPI');
 Route::post('/send_score', 'scoresController@send_score');
+Route::post('/send_score_of_electorate', 'scoresController@send_score_of_electorate');
 Route::get('/get_record_score/{user_id}', 'scoresController@get_record_score');
 Route::get('/get_data_scores/{district_id}', 'scoresController@get_data_scores');
 Route::get('/get_data_districts/{provinces_id}', 'scoresController@get_data_districts');

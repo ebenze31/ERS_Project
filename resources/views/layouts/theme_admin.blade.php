@@ -364,7 +364,7 @@ $theme_logo = $theme_data_provinces->logo ;
 									</a>
 								</li>
 								<li>
-									<a href="{{ url('/ลงคะแนนแบบเขต') }}" class="sub-menu">
+									<a href="{{ url('/score_of_electorate') }}" class="sub-menu">
 										<i class="bx bx-right-arrow-alt"></i>ลงคะแนนแบบเขต
 									</a>
 								</li>

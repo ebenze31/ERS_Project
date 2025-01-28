@@ -431,7 +431,8 @@ class Polling_unitsController extends Controller
         DB::raw("GROUP_CONCAT(CAST(SUBSTRING_INDEX(name_polling_unit, ' ', -1) AS UNSIGNED) ORDER BY CAST(SUBSTRING_INDEX(name_polling_unit, ' ', -1) AS UNSIGNED) ASC) as polling_unit_numbers"),  // รวมหน่วยเลือกตั้งเรียงตามลำดับ
     )
     ->groupBy('name_sub_district', 'electorates.name_electorate', 'districts.name_district')  // GroupBy ตามชื่อตำบล, เขตเลือกตั้ง และอำเภอ
-    ->orderBy('districts.name_district')
+    // ->orderBy('districts.name_district')
+    ->orderBy('polling_units.id')
     ->get();
 
         $count_units = count($polling_units);

@@ -25,7 +25,7 @@ class Electorate extends Model
      *
      * @var array
      */
-    protected $fillable = ['name_electorate', 'province_id', 'district_id'];
+    protected $fillable = ['name_electorate', 'province_id', 'district_id','score_of_electorate'];
 
     
 }
