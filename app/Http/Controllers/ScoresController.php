@@ -388,8 +388,10 @@ class ScoresController extends Controller
                     'candidates.img_url as img_url_candidate',
                     'candidates.number as number_candidate',
                     'candidates.sum_score as sum_score',
+                    'candidates.score_of_electorate as score_of_electorate',
                     'districts.name_district',
                     'electorates.name_electorate',
+                    'electorates.score_of_electorate as check_electorate',
                     'years.show_parties',
                     'political_parties.name as name_political_partie',
                 )

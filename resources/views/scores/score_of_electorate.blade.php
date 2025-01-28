@@ -195,7 +195,17 @@ input:checked + .slider:before {
         }).then((result) => {
             // Handle the confirmation result
             if (result.isConfirmed) {
-                submitScores();
+
+                Swal.fire({
+                    title: "ส่งคะแนนเรียบร้อยแล้ว!",
+                    icon: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                setInterval(() => {
+                    submitScores();
+                }, 3000);
             }
         });
     }

@@ -73,7 +73,7 @@
 <!-- <img src="{{url('/images/2.png')}}" alt="Logo" class="w-full my-1 mt-[48px] shadow-xl"> -->
 
 <div class="mr-[50px] mt-[20px]">
-    <p style="float: right;">อัปเดตล่าสุด {{ date("H:i") }} น.</p>
+    <p id="update_time" style="float: right;">อัปเดตล่าสุด {{ date("H:i") }} น.</p>
     <br>
 </div>
 
@@ -146,33 +146,6 @@
                                 },
                             });
                         </script> -->
-
-                        <script>
-                            var Current_slide = 0 ;
-                            var swiper = new Swiper(".multiple-slide-carousel", {
-                                loop: true,
-                                spaceBetween: 20,
-                                slidesPerView: 1,
-                                autoplay: {
-                                    delay: 10000,
-                                    disableOnInteraction: false,
-                                },
-                                navigation: {
-                                    nextEl: ".multiple-slide-carousel .swiper-button-next",
-                                    prevEl: ".multiple-slide-carousel .swiper-button-prev",
-                                },
-                                on: {
-                                    slideChange: function () {
-                                        // ตรวจสอบ index ปัจจุบัน
-                                        console.log("Current slide index:", this.realIndex);
-                                        Current_slide = this.realIndex ;
-                                    },
-                                },
-                            });
-                        </script>
-
-
-                       
                     </div>
                 </div>
             </div>
@@ -180,9 +153,16 @@
     </div>
 
     <script>
+
+        // สร้าง Swiper แค่ครั้งเดียวใน start_carousel
+        let swiper;
+        var Current_slide = 0 ;
+
         document.addEventListener('DOMContentLoaded', (event) => {
             get_data_scores();
+            // setInterval(get_scores_loop, 300000);
             setInterval(get_scores_loop, 20000);
+            start_carousel();
 
             // setInterval(() => {
             //     location.reload(); // รีโหลดหน้า
@@ -191,7 +171,7 @@
 
         function get_data_scores(){
 
-            console.log('get_data_scores');
+            // console.log('get_data_scores');
 
             fetch("{{ url('/') }}/api/get_data_districts/"+ "{{ $data_provinces->id }}")
             .then(response => {
@@ -234,6 +214,20 @@
                         })
                         .then(data_scores => {
                             // จัดเรียงข้อมูลโดย name_electorate ก่อน และตามด้วย sum_score
+                            // data_scores.sort((a, b) => {
+                            //     // เรียงตาม name_electorate (จากน้อยไปมาก)
+                            //     const electorateComparison = a.name_electorate.localeCompare(b.name_electorate, 'th', { numeric: true });
+                            //     if (electorateComparison !== 0) {
+                            //         return electorateComparison;
+                            //     }
+
+                            //     // หาก name_electorate เท่ากัน เรียงตาม sum_score (จากมากไปน้อย)
+                            //     const scoreA = a.sum_score === null ? 0 : a.sum_score;
+                            //     const scoreB = b.sum_score === null ? 0 : b.sum_score;
+
+                            //     return scoreB - scoreA;
+                            // });
+
                             data_scores.sort((a, b) => {
                                 // เรียงตาม name_electorate (จากน้อยไปมาก)
                                 const electorateComparison = a.name_electorate.localeCompare(b.name_electorate, 'th', { numeric: true });
@@ -241,9 +235,25 @@
                                     return electorateComparison;
                                 }
 
-                                // หาก name_electorate เท่ากัน เรียงตาม sum_score (จากมากไปน้อย)
-                                const scoreA = a.sum_score === null ? 0 : a.sum_score;
-                                const scoreB = b.sum_score === null ? 0 : b.sum_score;
+                                // หาก name_electorate เท่ากัน
+                                if (a.check_electorate === 'Yes' && b.check_electorate === 'Yes') {
+                                    // เรียงตาม score_of_electorate (จากมากไปน้อย)
+                                    const scoreA = parseInt(a.score_of_electorate, 10) || 0;
+                                    const scoreB = parseInt(b.score_of_electorate, 10) || 0;
+                                    return scoreB - scoreA;
+                                } else if (a.check_electorate === 'Yes') {
+                                    // ถ้า a เป็น Yes ให้เรียงตาม score_of_electorate มากสุดก่อน
+                                    const scoreA = parseInt(a.score_of_electorate, 10) || 0;
+                                    return scoreA - 0;
+                                } else if (b.check_electorate === 'Yes') {
+                                    // ถ้า b เป็น Yes ให้เรียงตาม score_of_electorate มากสุดก่อน
+                                    const scoreB = parseInt(b.score_of_electorate, 10) || 0;
+                                    return 0 - scoreB;
+                                }
+
+                                // ถ้า check_electorate ไม่ใช่ Yes ให้เรียงตาม sum_score มากสุดก่อน
+                                const scoreA = parseInt(a.sum_score, 10) || 0;
+                                const scoreB = parseInt(b.sum_score, 10) || 0;
 
                                 return scoreB - scoreA;
                             });
@@ -310,14 +320,28 @@
                                         `;
                                     }
 
-                                    if(!data_scores[xi].sum_score){
-                                        formattedScore = 0 ;
-                                    }else{
-                                        formattedScore = Number(data_scores[xi].sum_score).toLocaleString();
+                                    let check_score = null ;
+                                    if(data_scores[xi].check_electorate == "Yes"){
+                                        if(!data_scores[xi].score_of_electorate){
+                                            formattedScore = 0 ;
+                                        }else{
+                                            formattedScore = Number(data_scores[xi].score_of_electorate).toLocaleString();
+                                            check_score = data_scores[xi].score_of_electorate ;
+                                        }
+                                    }
+                                    else{
+                                        if(!data_scores[xi].sum_score){
+                                            formattedScore = 0 ;
+                                        }else{
+                                            formattedScore = Number(data_scores[xi].sum_score).toLocaleString();
+                                            check_score = data_scores[xi].sum_score ;
+                                        }
                                     }
 
-                                    if( data_scores[xi].sum_score && old_electorate != data_scores[xi].name_electorate){
+                                    if( check_score && old_electorate != data_scores[xi].name_electorate){
+
                                         old_electorate = data_scores[xi].name_electorate;
+
                                         let html_candidate_leader = `
                                             <div class="flex justify-between items-center my-2">
                                                 <div>
@@ -380,22 +404,260 @@
             });
         }
 
-        function get_scores_loop(){
-
-            console.log('get_scores_loop');
+        function get_scores_loop() {
+            // console.log('get_scores_loop');
+            // console.log(Current_slide);
 
             let divElements = document.querySelectorAll('div[name_div="div_district"]');
             divElements.forEach(div => {
-                // console.log(div);
-                div.innerHTML = "" ;
+                div.innerHTML = "";
             });
 
             if (typeof Current_slide === "number" && !isNaN(Current_slide)) {
-                swiper.slideTo(Current_slide);
+                // หากมี swiper อยู่แล้ว, ให้ทำลายมันก่อน
+                if (swiper) {
+                    swiper.destroy(true, true); // destroy() จะลบ swiper และ reset ค่า
+                    swiper = null;  // รีเซ็ตตัวแปร swiper
+                }
+
+                // ตั้งค่า Current_slide ก่อนที่จะสร้าง Swiper ใหม่
+                let slideIndex = Current_slide + 1 ;
+                // สร้าง swiper ใหม่
+                start_carousel();
+                // เลื่อนไปที่ Current_slide
+                swiper.slideTo(slideIndex);
+
+                create_new_html();
             } else {
                 console.error("Current_slide is not a valid number:", Current_slide);
             }
+        }
 
+        function start_carousel() {
+            swiper = new Swiper(".multiple-slide-carousel", {
+                loop: true,
+                spaceBetween: 20,
+                slidesPerView: 1,
+                autoplay: {
+                    delay: 10000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: ".multiple-slide-carousel .swiper-button-next",
+                    prevEl: ".multiple-slide-carousel .swiper-button-prev",
+                },
+                initialSlide: Current_slide, // ตั้งค่าเริ่มต้นเป็น Current_slide
+                on: {
+                    slideChange: function () {
+                        Current_slide = this.realIndex;
+                    },
+                },
+            });
+        }
+
+        function create_new_html(){
+
+            let now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let date_now =  hours + ":" + minutes;
+            document.querySelector('#update_time').innerHTML = 'อัปเดตล่าสุด '+date_now+' น.';
+
+            fetch("{{ url('/') }}/api/get_data_districts/"+ "{{ $data_provinces->id }}")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network ตอบสนองไม่ OK " + response.statusText);
+                }
+                return response.json();
+            })
+            .then(result => {
+                // console.log(result);
+
+                if(result){
+                    
+                    for (let i = 0; i < result.length; i++) {
+
+                        fetch("{{ url('/') }}/api/get_data_scores/"+ result[i].district_id)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Network ตอบสนองไม่ OK " + response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data_scores => {
+
+                            data_scores.sort((a, b) => {
+                                // เรียงตาม name_electorate (จากน้อยไปมาก)
+                                const electorateComparison = a.name_electorate.localeCompare(b.name_electorate, 'th', { numeric: true });
+                                if (electorateComparison !== 0) {
+                                    return electorateComparison;
+                                }
+
+                                // หาก name_electorate เท่ากัน
+                                if (a.check_electorate === 'Yes' && b.check_electorate === 'Yes') {
+                                    // เรียงตาม score_of_electorate (จากมากไปน้อย)
+                                    const scoreA = parseInt(a.score_of_electorate, 10) || 0;
+                                    const scoreB = parseInt(b.score_of_electorate, 10) || 0;
+                                    return scoreB - scoreA;
+                                } else if (a.check_electorate === 'Yes') {
+                                    // ถ้า a เป็น Yes ให้เรียงตาม score_of_electorate มากสุดก่อน
+                                    const scoreA = parseInt(a.score_of_electorate, 10) || 0;
+                                    return scoreA - 0;
+                                } else if (b.check_electorate === 'Yes') {
+                                    // ถ้า b เป็น Yes ให้เรียงตาม score_of_electorate มากสุดก่อน
+                                    const scoreB = parseInt(b.score_of_electorate, 10) || 0;
+                                    return 0 - scoreB;
+                                }
+
+                                // ถ้า check_electorate ไม่ใช่ Yes ให้เรียงตาม sum_score มากสุดก่อน
+                                const scoreA = parseInt(a.sum_score, 10) || 0;
+                                const scoreB = parseInt(b.sum_score, 10) || 0;
+
+                                return scoreB - scoreA;
+                            });
+
+                            // console.log(data_scores);
+
+                            let check_name_district = "" ;
+                            let check_name_electorate = "" ;
+                            let old_electorate = "" ;
+
+                            if(data_scores){
+                                for (let xi = 0; xi < data_scores.length; xi++) {
+                                    // console.log(data_scores[xi].name_district);
+                                    // console.log(data_scores[xi].name_electorate);
+
+                                    let div_name_district = document.querySelector('div[name_district="' + data_scores[xi].name_district + '"]');
+
+                                    let text_check_div = data_scores[xi].name_district + '_' + data_scores[xi].name_electorate ;
+                                    let check_div = document.querySelector('div[div_district="'+text_check_div+'"]');
+
+                                    if(check_div){
+                                        // ไม่ทำอะไร
+                                    }
+                                    else{
+
+                                        check_name_district = data_scores[xi].name_district;
+                                        check_name_electorate = data_scores[xi].name_electorate;
+
+                                        let html_district = `
+                                            <div class="mb-[60px] max-sm:w-full  mx-3 max-sm:mx-0 ">
+                                                <div class="card-header flex justify-between items-center bg-[#D9D9D9] p-2 rounded-tl-[10px] rounded-tr-[10px] ">
+                                                    <span class="font-bold text-[16px]">
+                                                        อำเภอ`+data_scores[xi].name_district+` เขต `+data_scores[xi].name_electorate+`
+                                                    </span>
+                                                </div>
+                                                <div name_div="div_district" div_district="`+data_scores[xi].name_district+`_`+data_scores[xi].name_electorate+`" class="card-content bg-[#F4F4F4] py-2 px-4 rounded-bl-[10px] rounded-br-[10px] font-bold h-full">
+
+                                                </div>
+                                            </div>
+                                        `;
+                                        div_name_district.insertAdjacentHTML('beforeend', html_district); // แทรกล่างสุด
+                                    }
+
+                                    let div_district = document.querySelector('div[div_district="'+text_check_div+'"]');
+                                    let formattedScore
+                                    let photo = "";
+                                    if(data_scores[xi].img_candidate){
+                                        photo = "{{ url('storage')}}/" + data_scores[xi].img_candidate;
+                                    }else{
+                                        photo = data_scores[xi].img_url_candidate;
+                                    }
+
+                                    let name_candidate = "";
+                                    if(data_scores[xi].show_parties == "Yes"){
+                                        name_candidate = `
+                                            <div class="flex">
+                                                <img src="https://www.viicheck.com/img/logo/profileLine3D.png"  class="h-[20px] my-1 me-2">
+                                                <p>`+data_scores[xi].name_candidate+`</p>
+                                            </div>
+                                        `;
+                                    }else{
+                                         name_candidate = `
+                                            <p>`+data_scores[xi].name_candidate+`</p>
+                                        `;
+                                    }
+
+                                    let check_score = null ;
+                                    if(data_scores[xi].check_electorate == "Yes"){
+                                        if(!data_scores[xi].score_of_electorate){
+                                            formattedScore = 0 ;
+                                        }else{
+                                            formattedScore = Number(data_scores[xi].score_of_electorate).toLocaleString();
+                                            check_score = data_scores[xi].score_of_electorate ;
+                                        }
+                                    }
+                                    else{
+                                        if(!data_scores[xi].sum_score){
+                                            formattedScore = 0 ;
+                                        }else{
+                                            formattedScore = Number(data_scores[xi].sum_score).toLocaleString();
+                                            check_score = data_scores[xi].sum_score ;
+                                        }
+                                    }
+
+                                    if( check_score && old_electorate != data_scores[xi].name_electorate){
+                                        old_electorate = data_scores[xi].name_electorate;
+                                        let html_candidate_leader = `
+                                            <div class="flex justify-between items-center my-2">
+                                                <div>
+                                                    <div class="flex items-center">
+                                                        <div class="w-[80px]">
+                                                            <p class="text-[35px] text-[#27B004]">No.${data_scores[xi].number_candidate}</p>
+                                                        </div>
+                                                        <img src="`+photo+`" class="h-[60px] max-w-[60px] my-1 me-2 shadow-xl object-contain">
+                                                        <div>
+                                                        <div class="ms-3 items-center">
+                                                            `+name_candidate+`
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-[24px]">
+                                                    `+formattedScore+`
+                                                </div>
+                                            </div>
+                                            <hr class="my-3">
+                                        `;
+
+                                        div_district.insertAdjacentHTML('beforeend', html_candidate_leader); // แทรกล่างสุด
+                                    }
+                                    else{
+                                        let html_candidate = `
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex items-center">
+                                                    <div class="w-[50px]">
+                                                        <p class="text-[22px] ">No.${data_scores[xi].number_candidate}</p>
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        `+name_candidate+`
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="text-[#4B4B4B] text-[16px]">
+                                                    `+formattedScore+`
+                                                </div>
+                                            </div>
+                                            <hr class="my-3">
+                                        `;
+
+                                        div_district.insertAdjacentHTML('beforeend', html_candidate); // แทรกล่างสุด
+                                        
+                                    }
+
+                                }
+                            }
+
+                        }).catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+
+                }
+
+            }).catch(error => {
+                console.error('Error:', error);
+            });
 
         }
 

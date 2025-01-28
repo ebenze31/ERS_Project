@@ -229,7 +229,7 @@
                     return response.json();
                 })
                 .then(result => {
-                    console.log("Response from server:", result);
+                    // console.log("Response from server:", result);
 
                     // Clear existing rows
                     const tbody = document.getElementById("users_body");
@@ -357,7 +357,7 @@
 
         async function setUserToggle(user_id, isActive, toggle_status) {
             const currentStatus = isActive ? 'active' : null;
-            console.log(currentStatus);
+            // console.log(currentStatus);
 
             const data_for_update = {
                 user_id: user_id,
@@ -375,10 +375,10 @@
                     body: JSON.stringify(data_for_update)
                 });
                 const result = await response.json();
-                console.log(result);
+                // console.log(result);
 
                 if (result.success) {
-                    console.log('ข้อมูลอัพเดตสำเร็จ');
+                    // console.log('ข้อมูลอัพเดตสำเร็จ');
 
                     const item = result.data; // ดึงข้อมูลจาก result.data
 
@@ -417,7 +417,7 @@
                 }
 
                 else {
-                    console.log('เกิดข้อผิดพลาดในการอัพเดตข้อมูล');
+                    // console.log('เกิดข้อผิดพลาดในการอัพเดตข้อมูล');
                 }
             } catch (error) {
                 console.error('Error updating settings:', error);
@@ -490,7 +490,7 @@
 
         async function multiSetUsersToggle(user_ids, isActive, toggle_status) {
             const currentStatus = isActive ? 'active' : null;
-            console.log(currentStatus);
+            // console.log(currentStatus);
 
             const data_for_update = {
                 user_ids: user_ids, // ส่งเป็น array
@@ -509,10 +509,10 @@
                 });
 
                 const result = await response.json();
-                console.log(result);
+                // console.log(result);
 
                 if (result.success) {
-                    console.log('ข้อมูลอัพเดตสำเร็จ');
+                    // console.log('ข้อมูลอัพเดตสำเร็จ');
 
                     const updatedUsers = result.data; // รับข้อมูลผู้ใช้ที่อัพเดตแล้วจาก backend
 
@@ -554,7 +554,7 @@
                         }
                     });
                 } else {
-                    console.log('เกิดข้อผิดพลาดในการอัพเดตข้อมูล');
+                    // console.log('เกิดข้อผิดพลาดในการอัพเดตข้อมูล');
                 }
             } catch (error) {
                 console.error('Error updating settings:', error);
@@ -581,7 +581,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 // ถ้ามีข้อมูลมา ให้สร้าง dropdown ใหม่
                 let electorateSelect = document.getElementById('search_electorate');
                 electorateSelect.innerHTML = '';  // ล้างค่าปัจจุบันก่อน
@@ -634,7 +634,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 // ถ้ามีข้อมูลมา ให้สร้าง dropdown ใหม่สำหรับ polling_unit
                 let pollingUnitSelect = document.getElementById('search_polling_unit');
                 pollingUnitSelect.innerHTML = '';  // ล้างค่าปัจจุบันก่อน
@@ -662,7 +662,7 @@
                     pollingUnitsMap[baseName].push(pollingUnit.id);
                 });
 
-                console.log("pollingUnitsMap :"+pollingUnitsMap);
+                // console.log("pollingUnitsMap :"+pollingUnitsMap);
 
                 // เพิ่มตัวเลือกจากข้อมูลที่ได้
                 for (let baseName in pollingUnitsMap) {
