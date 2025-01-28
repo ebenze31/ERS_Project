@@ -116,78 +116,16 @@
                     <small id="color_old_3" class="p-1">สีเดิม : {{ isset($data_province->color_3) ? $data_province->color_3 : 'ไม่มี'}}</small>
                 </div>
             </div>
+            <hr>
 
             <div class="form-group mt-4">
                 <button style="float:right" class="btn btn-success w-25" type="submit"
-                    onclick="">ยืนยัน</button>
+                    onclick="">บันทึกข้อมูล</button>
             </div>
         </form>
     </div>
 
     <script>
-        // function submitform() {
-        //     let isValid = true;
-
-        //     // ลบข้อความ error เก่า
-        //     document.querySelectorAll('.help-block').forEach(el => el.remove());
-
-        //     // ตรวจสอบไฟล์โลโก้
-        //     const logoInput = document.getElementById('logo');
-        //     if (!logoInput.value.trim()) {
-        //         showError(logoInput, 'กรุณาอัปโหลดโลโก้');
-        //         isValid = false;
-        //     }
-
-        //     // ตรวจสอบไฟล์แบนเนอร์
-        //     const bannerInput = document.getElementById('banner');
-        //     if (!bannerInput.value.trim()) {
-        //         showError(bannerInput, 'กรุณาอัปโหลดแบนเนอร์');
-        //         isValid = false;
-        //     }
-
-        //     // ตรวจสอบไฟล์แบนเนอร์
-        //     const banner_mobileInput = document.getElementById('banner_mobile');
-        //     if (!banner_mobileInput.value.trim()) {
-        //         showError(banner_mobileInput, 'กรุณาอัปโหลดแบนเนอร์(มือถือ)');
-        //         isValid = false;
-        //     }
-
-        //     // ตรวจสอบสีพื้นหลัก
-        //     const mainColorInput = document.getElementById('main_color');
-        //     if (!mainColorInput.value.trim() || !isValidColor(mainColorInput.value.trim())) {
-        //         showError(mainColorInput, 'กรุณากรอกโค้ดสีที่ถูกต้อง เช่น #ff0000');
-        //         isValid = false;
-        //     }
-
-        //     // ตรวจสอบสีตัวหนังสือหัวข้อ
-        //     const headTextColorInput = document.getElementById('head_text_color');
-        //     if (!headTextColorInput.value.trim() || !isValidColor(headTextColorInput.value.trim())) {
-        //         showError(headTextColorInput, 'กรุณากรอกโค้ดสีที่ถูกต้อง เช่น #ff0000');
-        //         isValid = false;
-        //     }
-
-        //     // ตรวจสอบสีตัวหนังสือในปุ่ม
-        //     const buttonTextColorInput = document.getElementById('button_text_color');
-        //     if (!buttonTextColorInput.value.trim() || !isValidColor(buttonTextColorInput.value.trim())) {
-        //         showError(buttonTextColorInput, 'กรุณากรอกโค้ดสีที่ถูกต้อง เช่น #ff0000');
-        //         isValid = false;
-        //     }
-
-        //     // หยุดการส่งฟอร์มถ้ามีข้อผิดพลาด
-        //     if (!isValid) {
-        //         event.preventDefault();
-        //     }
-
-        //     // create_data();
-        // };
-
-        // function showError(input, message) {
-        //     const errorElement = document.createElement('p');
-        //     errorElement.className = 'text-danger help-block';
-        //     errorElement.textContent = message;
-        //     input.closest('.form-group').appendChild(errorElement);
-        // }
-
 
         function isValidColor(color) {
             const s = new Option().style;
@@ -258,7 +196,17 @@
                         `${label} ต้องมีขนาด ${requiredWidth}x${requiredHeight} พิกเซลเท่านั้น, ขนาดที่อัปโหลดคือ ${img.width}x${img.height} พิกเซล`
                     );
                     input.value = ""; // ล้างค่าไฟล์
+                    return; // หยุดการทำงานถ้าขนาดไม่ตรง
                 }
+
+                // ถ้าขนาดถูกต้อง ให้แสดง preview image
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgElement = document.querySelector(`#${input.id}-img`);
+                    imgElement.src = e.target.result;
+                    imgElement.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
             };
 
             // สร้าง URL ของไฟล์เพื่อใช้ในการโหลด
@@ -269,37 +217,38 @@
                 img.onload();
             }
         }
+
     </script>
 
     <script>
         // ตัวอย่างการแสดงภาพเก่าจากฐานข้อมูล
-        const logoImage = '{{ url('storage')}}/{{ $data_province->logo }}'; // ใส่เส้นทางรูปภาพโลโก้ที่เก็บในฐานข้อมูล
-        const bannerImage = '{{ url('storage')}}/{{ $data_province->banner }}'; // ใส่เส้นทางแบนเนอร์เก่าจากฐานข้อมูล
-        const bannerMobileImage = '{{ url('storage')}}/{{ $data_province->banner_mobile }}'; // ใส่เส้นทางแบนเนอร์มือถือเก่าจากฐานข้อมูล
+        const logoImage = '{{ $data_province->logo }}'; // ใส่เส้นทางรูปภาพโลโก้ที่เก็บในฐานข้อมูล
+        const bannerImage = '{{ $data_province->banner }}'; // ใส่เส้นทางแบนเนอร์เก่าจากฐานข้อมูล
+        const bannerMobileImage = '{{ $data_province->banner_mobile }}'; // ใส่เส้นทางแบนเนอร์มือถือเก่าจากฐานข้อมูล
 
         // ฟังก์ชันสำหรับแสดงภาพเก่า
         function showImagePreview(inputId, previewId, imgId, imagePath) {
             const inputElement = document.getElementById(inputId);
             const previewElement = document.getElementById(previewId);
             const imgElement = document.getElementById(imgId);
-
+            console.log(imagePath);
             if (imagePath) {
-                imgElement.src = imagePath;
-                imgElement.style.display = 'block'; // แสดงรูปภาพเก่า
+                imgElement.src = '{{ url('storage') }}/' + imagePath;
+                imgElement.style.display = 'block';
             }
 
-            // เมื่อเลือกไฟล์ใหม่จาก input[type="file"]
-            inputElement.addEventListener('change', () => {
-                const file = inputElement.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        imgElement.src = e.target.result;
-                        imgElement.style.display = 'block'; // แสดงรูปใหม่ที่เลือก
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+            // // เมื่อเลือกไฟล์ใหม่จาก input[type="file"]
+            // inputElement.addEventListener('change', () => {
+            //     const file = inputElement.files[0];
+            //     if (file) {
+            //         const reader = new FileReader();
+            //         reader.onload = function(e) {
+            //             imgElement.src = e.target.result;
+            //             imgElement.style.display = 'block'; // แสดงรูปใหม่ที่เลือก
+            //         };
+            //         reader.readAsDataURL(file);
+            //     }
+            // });
         }
 
         // เรียกใช้ฟังก์ชันสำหรับแสดงภาพเก่า
