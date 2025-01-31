@@ -322,34 +322,39 @@ $theme_logo = $theme_data_provinces->logo ;
 								<div class="menu-title">หน้าแรก</div>
 							</a>
 						</li>
-						<li class="main-submenu">
-							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon">
-									<i class="fa-solid fa-user-tie"></i>
-								</div>
-								<div class="menu-title">ผู้สมัคร</div>
-							</a>
-							<ul>
-								<li>
-									<a href="{{ url('/candidates') }}" class="sub-menu">
-										<i class="bx bx-right-arrow-alt"></i>รายชื่อผู้สมัคร
+
+						@if(Auth::check())
+                    		@if(Auth::user()->role != "admin-view")
+								<li class="main-submenu">
+									<a class="has-arrow" href="javascript:;">
+										<div class="parent-icon">
+											<i class="fa-solid fa-user-tie"></i>
+										</div>
+										<div class="menu-title">ผู้สมัคร</div>
+									</a>
+									<ul>
+										<li>
+											<a href="{{ url('/candidates') }}" class="sub-menu">
+												<i class="bx bx-right-arrow-alt"></i>รายชื่อผู้สมัคร
+											</a>
+										</li>
+										<li>
+											<a href="{{ url('/add_candidates') }}" class="sub-menu">
+												<i class="bx bx-right-arrow-alt"></i>เพิ่มผู้สมัคร
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="main-submenu">
+									<a href="{{ url('/polling_units') }}" class="sub-menu">
+										<div class="parent-icon">
+											<i class="fa-duotone fa-solid fa-building-flag"></i>
+										</div>
+										<div class="menu-title">หน่วยเลือกตั้ง</div>
 									</a>
 								</li>
-								<li>
-									<a href="{{ url('/add_candidates') }}" class="sub-menu">
-										<i class="bx bx-right-arrow-alt"></i>เพิ่มผู้สมัคร
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="main-submenu">
-							<a href="{{ url('/polling_units') }}" class="sub-menu">
-								<div class="parent-icon">
-									<i class="fa-duotone fa-solid fa-building-flag"></i>
-								</div>
-								<div class="menu-title">หน่วยเลือกตั้ง</div>
-							</a>
-						</li>
+							@endif
+						@endif
 						<li class="main-submenu">
 							<a class="has-arrow" href="javascript:;">
 								<div class="parent-icon">
@@ -363,50 +368,58 @@ $theme_logo = $theme_data_provinces->logo ;
 										<i class="bx bx-right-arrow-alt"></i>ประวัติการลงคะแนน
 									</a>
 								</li>
-								<li>
-									<a href="{{ url('/score_of_electorate') }}" class="sub-menu">
-										<i class="bx bx-right-arrow-alt"></i>ลงคะแนนแบบเขต
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="main-submenu">
-							<a class="has-arrow" href="javascript:;">
-								<div class="parent-icon">
-									<i class="fa-solid fa-bars"></i>
-								</div>
-								<div class="menu-title">อื่นๆ</div>
-							</a>
-							<ul>
-								<li>
-									<a href="{{ url('/political_parties') }}" class="sub-menu">
-										<i class="bx bx-right-arrow-alt"></i>เพิ่มพรรคการเมือง
-									</a>
-								</li>
-								<li>
-									<a href="{{ url('/manage_user') }}" class="sub-menu">
-										<i class="bx bx-right-arrow-alt"></i>จัดการผู้ใช้
-									</a>
-								</li>
-								<li>
-									<a href="{{ url('/election_setting') }}" class="sub-menu">
-										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าการเลือกตั้ง
-									</a>
-								</li>
-								<li>
-									<a href="{{ url('/set_system') }}" class="sub-menu">
-										<i class="bx bx-right-arrow-alt"></i>ตั้งค่าระบบ
-									</a>
-								</li>
-								@if(Auth::user()->role == "dev-admin")
-								<li>
-									<a href="{{ url('/add_districts') }}" target="_blank" class="sub-menu">
-										<i class="bx bx-right-arrow-alt"></i>Add Districts (For DEV)
-									</a>
-								</li>
+								@if(Auth::check())
+		                    		@if(Auth::user()->role != "admin-view")
+										<li>
+											<a href="{{ url('/score_of_electorate') }}" class="sub-menu">
+												<i class="bx bx-right-arrow-alt"></i>ลงคะแนนแบบเขต
+											</a>
+										</li>
+									@endif
 								@endif
 							</ul>
 						</li>
+						@if(Auth::check())
+		                    @if(Auth::user()->role != "admin-view")
+								<li class="main-submenu">
+									<a class="has-arrow" href="javascript:;">
+										<div class="parent-icon">
+											<i class="fa-solid fa-bars"></i>
+										</div>
+										<div class="menu-title">อื่นๆ</div>
+									</a>
+									<ul>
+										<li>
+											<a href="{{ url('/political_parties') }}" class="sub-menu">
+												<i class="bx bx-right-arrow-alt"></i>เพิ่มพรรคการเมือง
+											</a>
+										</li>
+										<li>
+											<a href="{{ url('/manage_user') }}" class="sub-menu">
+												<i class="bx bx-right-arrow-alt"></i>จัดการผู้ใช้
+											</a>
+										</li>
+										<li>
+											<a href="{{ url('/election_setting') }}" class="sub-menu">
+												<i class="bx bx-right-arrow-alt"></i>ตั้งค่าการเลือกตั้ง
+											</a>
+										</li>
+										<li>
+											<a href="{{ url('/set_system') }}" class="sub-menu">
+												<i class="bx bx-right-arrow-alt"></i>ตั้งค่าระบบ
+											</a>
+										</li>
+										@if(Auth::user()->role == "dev-admin")
+										<li>
+											<a href="{{ url('/add_districts') }}" target="_blank" class="sub-menu">
+												<i class="bx bx-right-arrow-alt"></i>Add Districts (For DEV)
+											</a>
+										</li>
+										@endif
+									</ul>
+								</li>
+							@endif
+						@endif
 					</ul>
 				</nav>
 			</div>

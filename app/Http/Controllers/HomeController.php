@@ -27,7 +27,7 @@ class HomeController extends Controller
         // return view('home');
         $role = Auth::user()->role;
 
-        if ($role === 'dev-admin' || $role === 'admin') {
+        if ($role === 'dev-admin' || $role === 'admin' || $role === 'admin-view') {
             return redirect('/for_admin');
         } elseif ($role === 'officer') {
             $name_user = Auth::user()->name;
@@ -37,7 +37,7 @@ class HomeController extends Controller
                 return redirect('/add_score');
             }
         } else {
-            return redirect('/home');
+            return redirect('/show_score/3');
         }
     }
 }

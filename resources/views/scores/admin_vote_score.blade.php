@@ -23,9 +23,13 @@
                     0 รายการ
                 </span>
 
-                <button class="btn btn-sm btn-warning float-end mx-2" onclick="confirm_clear_name_user('all');">
-                    ล้างคะแนนทั้งหมด
-                </button>
+                @if(Auth::check())
+                    @if(Auth::user()->role != "admin-view")
+                        <button class="btn btn-sm btn-warning float-end mx-2" onclick="confirm_clear_name_user('all');">
+                            ล้างคะแนนทั้งหมด
+                        </button>
+                    @endif
+                @endif
 
                 <div class="table-responsive mt-3">
                     <table id="table_polling_units" class="table table-striped table-bordered" style="width:100%">
